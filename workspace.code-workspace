@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../eleven-plus-frontend"
+		}
+	],
+  "remoteAuthority": "wsl+Ubuntu-18.04",
+  "settings": {}
+}
