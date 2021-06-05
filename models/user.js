@@ -34,43 +34,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  getQuestions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Question",
-    },
-  ],
-  sentQuestions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Question",
-    },
-  ],
-  answers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Answer",
-    },
-  ],
-  likedQuestions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Question",
-    },
-  ],
-  following: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  followers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  date: Date,
+  dateCreated: {
+    type: String,
+    required: true,
+  },
 })
 
 userSchema.plugin(uniqueValidator)

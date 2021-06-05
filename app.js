@@ -2,7 +2,6 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
-const notesRouter = require("./controllers/notes")
 const testsRouter = require("./controllers/tests")
 const middleware = require("./utils/middleware")
 const logger = require("./utils/logger")
@@ -28,7 +27,6 @@ app.use(express.static("build"))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use("/api/notes", notesRouter)
 app.use("/tests", testsRouter)
 
 app.use(middleware.unknownEndpoint)
