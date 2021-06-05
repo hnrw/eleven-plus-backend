@@ -59,24 +59,24 @@ const test = [
     correct: 8,
     options: [20, 15, 7, 8],
   },
-  {
-    question: "What is 6 + 3?",
-    multi: true,
-    correct: 9,
-    options: [11, 3, 4, 9],
-  },
-  {
-    question: "What is 6 + 9?",
-    multi: true,
-    correct: 15,
-    options: [5, 14, 7, 15],
-  },
-  {
-    question: "What is 6 + 5?",
-    multi: true,
-    correct: 11,
-    options: [16, 4, 2, 11],
-  },
+  // {
+  //   question: "What is 6 + 3?",
+  //   multi: true,
+  //   correct: 9,
+  //   options: [11, 3, 4, 9],
+  // },
+  // {
+  //   question: "What is 6 + 9?",
+  //   multi: true,
+  //   correct: 15,
+  //   options: [5, 14, 7, 15],
+  // },
+  // {
+  //   question: "What is 6 + 5?",
+  //   multi: true,
+  //   correct: 11,
+  //   options: [16, 4, 2, 11],
+  // },
 ]
 
 testsRouter.get("/", async (request, response) => {
