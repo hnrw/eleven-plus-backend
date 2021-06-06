@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
-const usersRouter = require(./controller/users)
+const usersRouter = require("./controllers/users")
 const testsRouter = require("./controllers/tests")
 const problemsRouter = require("./controllers/problems")
 
