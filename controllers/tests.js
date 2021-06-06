@@ -22,11 +22,12 @@ testsRouter.post("/", async (request, response) => {
     num,
   })
 
+  const savedTest = await test.save()
+
   problems.map(async (p) => {
-    await createProblem(p)
+    await createProblem(p, savedTest.id)
   })
 
-  const savedTest = await test.save()
   response.send(savedTest)
 })
 

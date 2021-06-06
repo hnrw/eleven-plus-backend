@@ -16,6 +16,9 @@ const problem = new mongoose.Schema({
       type: String,
     },
   ],
+  test: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
   answers: [
     {
       type: mongoose.Schema.Types.ObjectId,
