@@ -2,6 +2,46 @@ const testsRouter = require("express").Router()
 const _ = require("lodash")
 const Test = require("../models/test")
 const verifyUser = require("../helpers/verifyUser")
+const { createProblem } = require("../services/problemService")
+
+testsRouter.get("/", async (request, response) => {
+  const tests = await Test.find({})
+  response.send(tests)
+})
+
+testsRouter.get("/:id", async (request, response) => {
+  const id = request.params
+  const test = await Test.findById(id)
+  response.send(test)
+})
+
+testsRouter.post("/", async (request, response) => {
+  const { num, problems } = request.body
+
+  const test = new Test({
+    num,
+  })
+
+  problems.map(async (p) => {
+    await createProblem(p)
+  })
+
+  const savedTest = await test.save()
+  response.send(savedTest)
+})
+
+testsRouter.delete("/", async (request, response) => {
+  const admin = await verifyUser(request, response)
+
+  if (admin.email !== "pannicope@gmail.com") {
+    return response.status(400).json({ error: "unauthorized" })
+  }
+  const { id } = request.params
+  await Test.findByIdAndRemove(id)
+  return response.status(204).end()
+})
+
+module.exports = testsRouter
 
 // const randInt = (max) => Math.floor(Math.random() * max)
 
@@ -80,37 +120,3 @@ const verifyUser = require("../helpers/verifyUser")
 //   //   options: [16, 4, 2, 11],
 //   // },
 // ]
-
-testsRouter.get("/", async (request, response) => {
-  const tests = await Test.find({})
-  response.send(tests)
-})
-
-testsRouter.get("/:id", async (request, response) => {
-  const id = request.params
-  const test = await Test.findById(id)
-  response.send(test)
-})
-
-testsRouter.post("/", async (request, response) => {
-  const { num, problems } = request.body
-  const test = new Test({
-    num,
-    problems,
-  })
-
-  const savedTest = await test.save()
-  response.send(savedTest)
-})
-
-testsRouter.delete("/", async (request, response) => {
-  const admin = await verifyUser(request, response)
-
-  if (admin.email !== "pannicope@gmail.com") {
-    return response.status(400).json({ error: "unauthorized" })
-  }
-  const { id } = request.params
-  await Test.findByIdAndRemove(id)
-  return response.status(204).end()
-})
-module.exports = testsRouter
