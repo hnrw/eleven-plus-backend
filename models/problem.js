@@ -16,6 +16,11 @@ const problem = new mongoose.Schema({
       type: String,
     },
   ],
+  answers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 })
 
 problem.plugin(uniqueValidator)

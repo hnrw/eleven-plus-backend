@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  answers: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
 })
 
 userSchema.plugin(uniqueValidator)
