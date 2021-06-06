@@ -3,7 +3,7 @@ const Problem = require("../models/problem")
 const verifyUser = require("../helpers/verifyUser")
 
 problemsRouter.get("/", async (request, response) => {
-  const problems = await Problem.find({})
+  const problems = await Problem.find({}).populate("problems", { id: 1 })
   response.send(problems)
 })
 

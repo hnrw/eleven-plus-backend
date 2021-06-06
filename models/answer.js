@@ -5,12 +5,15 @@ const uniqueValidator = require("mongoose-unique-validator")
 const answer = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   problem: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Problem",
   },
   test: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Test",
   },
 })
 

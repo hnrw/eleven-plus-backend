@@ -5,7 +5,7 @@ const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 
 testsRouter.get("/", async (request, response) => {
-  const tests = await Test.find({})
+  const tests = await Test.find({}).populate("problems")
   response.send(tests)
 })
 

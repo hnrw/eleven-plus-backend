@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
   },
   answers: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Answer",
   },
 })
 

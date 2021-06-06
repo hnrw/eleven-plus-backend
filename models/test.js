@@ -10,6 +10,7 @@ const test = new mongoose.Schema({
   problems: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Problem",
     },
   ],
 })
