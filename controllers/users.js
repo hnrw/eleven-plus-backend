@@ -10,14 +10,9 @@ usersRouter.get("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
-usersRouter.get("/data", async (request, response) => {
-  const user = await verifyUser(request, response)
-  return response.status(200).send(user)
-})
-
-usersRouter.get("/:username", async (request, response) => {
-  const { username } = request.params
-  const service = await userService.getProfile(username)
+usersRouter.get("/:id", async (request, response) => {
+  const { id } = request.params
+  const service = await userService.getProfile(id)
 
   return response.status(service.status).send(service.data)
 })
@@ -30,33 +25,23 @@ usersRouter.get("/search/:searchParam", async (request, response) => {
 })
 
 usersRouter.post("/", async (request, response) => {
-  const { email, username, name, password, admin, requestUser } = request.body
-
-  const service = await userService.createUser(
-    email,
-    username,
-    name,
-    password,
-    admin,
-    requestUser
-  )
-
+  const service = await userService.createUser(request.body)
   response.status(service.status).send(service.data)
 })
 
-usersRouter.put("/", async (request, response) => {
-  const requestFromUser = await verifyUser(request, response)
-  const { userId, data } = request.body
+// usersRouter.put("/", async (request, response) => {
+//   const requestFromUser = await verifyUser(request, response)
+//   const { userId, data } = request.body
 
-  const service = await userService.editUser(userId, requestFromUser, data)
+//   const service = await userService.editUser(userId, requestFromUser, data)
 
-  return response.status(service.status).send(service.data)
-})
+//   return response.status(service.status).send(service.data)
+// })
 
 usersRouter.delete("/:id", async (request, response) => {
   const admin = await verifyUser(request, response)
 
-  if (admin.username !== "henry") {
+  if (admin.email !== "pannicope@gmail.com") {
     return response.status(400).json({ error: "unauthorized" })
   }
   const { id } = request.params

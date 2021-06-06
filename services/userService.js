@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const Fuse = require("fuse.js")
 const User = require("../models/user")
 const sendEmail = require("../helpers/sendEmail")
 
@@ -31,8 +32,8 @@ const getUsers = async (user) => {
   }
 }
 
-const getProfile = async (username) => {
-  const user = await User.findOne({ username })
+const getProfile = async (id) => {
+  const user = await User.findById(id)
   // .populate({
   //   path: "getQuestions",
   //   select: { content: 1, date: 1, answer: 1, fromUser: 1, likedBy: 1 },
@@ -61,12 +62,9 @@ const getProfile = async (username) => {
   // })
 
   // don't return private info
-  // dunno how to remove id
   user.email = undefined
-  user.admin = undefined
-  user.credits = undefined
-  user.balance = undefined
-  user.paypal = undefined
+  user.dob = undefined
+  user.gender = undefined
 
   return {
     status: 200,
@@ -74,15 +72,30 @@ const getProfile = async (username) => {
   }
 }
 
-const createUser = async (
-  email,
-  username,
-  name,
-  password,
-  admin,
-  requestUser
-) => {
-  if (password.length < 0) {
+const searchUsers = async (searchParam) => {
+  const users = await User.find({})
+
+  const options = {
+    minMatchCharLength: 3,
+    keys: ["name", "parentName"],
+  }
+
+  const fuse = new Fuse(users, options)
+
+  const results = fuse.search(searchParam)
+  // fuse returns an object of item and refIndex. We only need item, which contains the user obj
+  const usersResult = results.map((result) => result.item)
+
+  return {
+    status: 200,
+    data: usersResult,
+  }
+}
+
+const createUser = async (data) => {
+  const { email, name, parentName, dob, gender, password } = data
+
+  if (password.length < 3) {
     return { status: 400, data: { error: "password length too short" } }
   }
 
@@ -96,21 +109,17 @@ const createUser = async (
 
   const user = new User({
     email,
-    username,
     name,
+    parentName,
+    dob,
+    gender,
     passwordHash,
-    admin: admin || false,
-    credits: 0,
     profilePicture:
       "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
-    balance: 0,
-    paypal: "",
-    dateCreated: new Date(),
+    dateCreated: Date.now(),
   })
 
   const savedUser = await user.save()
-
-  sendEmail.newUser(username, name, email)
 
   const userForToken = {
     email: savedUser.email,
@@ -124,74 +133,77 @@ const createUser = async (
     data: {
       token,
       email: savedUser.email,
-      username: savedUser.username,
       name: savedUser.name,
       id: savedUser.id,
     },
   }
 }
 
-const editUser = async (userId, requestFromUser, data) => {
-  const user = await User.findById(userId)
+// const editUser = async (userId, requestFromUser, data) => {
+//   const user = await User.findById(userId)
 
-  // check user is editing their own account
-  if (userId !== requestFromUser.id && requestFromUser.username !== "henry") {
-    return {
-      status: 400,
-      data: { error: "unauthorized" },
-    }
-  }
+//   // check user is editing their own account
+//   if (
+//     userId !== requestFromUser.id &&
+//     requestFromUser.email !== "pannicope@gmail.com"
+//   ) {
+//     return {
+//       status: 400,
+//       data: { error: "unauthorized" },
+//     }
+//   }
 
-  // update fields if they are provided in data
-  if (data.name) {
-    user.name = data.name
-  }
+//   // update fields if they are provided in data
+//   if (data.name) {
+//     user.name = data.name
+//   }
 
-  if (data.bio) {
-    user.bio = data.bio
-  }
+//   if (data.parentName) {
+//     user.parentName = data.parentName
+//   }
 
-  if (data.paypal) {
-    user.paypal = data.paypal
-  }
+//   if (data.paypal) {
+//     user.paypal = data.paypal
+//   }
 
-  if ("charityName" in data) {
-    user.charityName = data.charityName
-  }
+//   if ("charityName" in data) {
+//     user.charityName = data.charityName
+//   }
 
-  if ("charityWebsite" in data) {
-    user.charityWebsite = data.charityWebsite
-  }
+//   if ("charityWebsite" in data) {
+//     user.charityWebsite = data.charityWebsite
+//   }
 
-  // only admin can edit some fields
-  if (requestFromUser.username === "henry") {
-    if (data.email) {
-      user.email = data.email
-    }
+//   // only admin can edit some fields
+//   if (requestFromUser.username === "henry") {
+//     if (data.email) {
+//       user.email = data.email
+//     }
 
-    if (data.username) {
-      user.username = data.username
-    }
-    if (data.credits) {
-      user.credits = data.credits
-    }
+//     if (data.username) {
+//       user.username = data.username
+//     }
+//     if (data.credits) {
+//       user.credits = data.credits
+//     }
 
-    if (data.balance) {
-      user.balance = data.balance
-    }
-  }
+//     if (data.balance) {
+//       user.balance = data.balance
+//     }
+//   }
 
-  const savedUser = await user.save()
+//   const savedUser = await user.save()
 
-  return {
-    status: 200,
-    data: savedUser,
-  }
-}
+//   return {
+//     status: 200,
+//     data: savedUser,
+//   }
+// }
 
 module.exports = {
   getUsers,
   createUser,
-  editUser,
+  // editUser,
   getProfile,
+  searchUsers,
 }
