@@ -2,7 +2,10 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
+const usersRouter = require(./controller/users)
 const testsRouter = require("./controllers/tests")
+const problemsRouter = require("./controllers/problems")
+
 const middleware = require("./utils/middleware")
 const logger = require("./utils/logger")
 const config = require("./utils/config")
@@ -27,7 +30,9 @@ app.use(express.static("build"))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
+app.use("/users", usersRouter)
 app.use("/tests", testsRouter)
+app.use("/problems", problemsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
