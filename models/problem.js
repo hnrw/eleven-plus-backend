@@ -5,7 +5,7 @@ const uniqueValidator = require("mongoose-unique-validator")
 const problem = new mongoose.Schema({
   question: {
     type: String,
-    unique: true,
+    // unique: true,
   },
   correct: {
     type: String,
