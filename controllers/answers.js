@@ -28,12 +28,11 @@ answersRouter.post("/", async (request, response) => {
 
   const savedAnswer = await answer.save()
 
-  user.answers = user.answers.concat(savedAnswer)
-  user.save()
-
-  const problem = await Problem.findById(problemId)
-  problem.answers = problem.answers.concat(savedAnswer)
-  problem.save()
+  await user.updateOne({ $push: { answers: savedAnswer } })
+  await Problem.updateOne(
+    { _id: problemId },
+    { $push: { answers: savedAnswer } }
+  )
 
   response.send(savedAnswer)
 })
