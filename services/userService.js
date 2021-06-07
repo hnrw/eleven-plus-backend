@@ -103,7 +103,7 @@ const createUser = async (data) => {
     passwordHash,
     profilePicture:
       "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
-    dateCreated: Date.now(),
+    date: Date.now(),
   })
 
   const savedUser = await user.save()

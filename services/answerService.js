@@ -11,6 +11,7 @@ const createAnswer = async (data) => {
     selected,
     problem: problemId,
     user,
+    date: Date.now(),
   })
   const savedAnswer = await answer.save()
 

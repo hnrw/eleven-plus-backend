@@ -24,6 +24,7 @@ answersRouter.post("/", async (request, response) => {
     selected,
     problem: problemId,
     user,
+    date: Date.now(),
   })
 
   const savedAnswer = await answer.save()

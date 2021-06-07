@@ -10,6 +10,7 @@ const createProblem = async (problemData, testId) => {
     correct,
     options,
     test: testId,
+    date: Date.now(),
   })
 
   const savedProblem = await problem.save()

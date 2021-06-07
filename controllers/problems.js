@@ -13,6 +13,7 @@ problemsRouter.post("/", async (request, response) => {
     question,
     correct,
     options,
+    date: Date.now(),
   })
 
   const savedProblem = await problem.save()

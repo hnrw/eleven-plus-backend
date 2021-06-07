@@ -28,6 +28,7 @@ testsRouter.post("/", async (request, response) => {
 
   const test = new Test({
     num: lastNum + 1,
+    date: Date.now(),
   })
 
   const savedTest = await test.save()
@@ -68,6 +69,7 @@ testsRouter.post("/submit", async (request, response) => {
     num: test.num,
     percent,
     gradedProblems,
+    date: Date.now(),
   })
 
   const savedGradedTest = await gradedTest.save()
