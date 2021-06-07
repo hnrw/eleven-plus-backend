@@ -16,10 +16,14 @@ testsRouter.get("/:id", async (request, response) => {
 })
 
 testsRouter.post("/", async (request, response) => {
-  const { num, problems } = request.body
+  const { problems } = request.body
+
+  const tests = await Test.find({})
+  const lastTest = tests[tests.length - 1]
+  const lastNum = (lastTest && lastTest.num) || 0
 
   const test = new Test({
-    num,
+    num: lastNum + 1,
   })
 
   const savedTest = await test.save()
