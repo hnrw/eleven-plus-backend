@@ -64,6 +64,8 @@ testsRouter.post("/submit", async (request, response) => {
     test: test._id,
     user: user._id,
     marks,
+    total: test.problems.length,
+    num: test.num,
     percent,
     gradedProblems,
   })

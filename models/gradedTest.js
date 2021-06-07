@@ -6,7 +6,15 @@ const gradedTest = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  total: {
+    type: Number,
+    required: true,
+  },
   percent: {
+    type: Number,
+    required: true,
+  },
+  num: {
     type: Number,
     required: true,
   },
