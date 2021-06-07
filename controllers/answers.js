@@ -17,16 +17,25 @@ answersRouter.get("/:id", async (request, response) => {
 })
 
 answersRouter.post("/", async (request, response) => {
-  const { selected, problem, user } = request.body
+  const user = await verifyUser(request, response)
+  const { selected, problemId } = request.body
 
   const answer = new Answer({
     selected,
-    problem,
+    problem: problemId,
     user,
   })
 
   const savedAnswer = await answer.save()
 
+  user.answers = user.answers.concat(savedAnswer)
+  user.save()
+
+  const problem = await Problem.findById(problemId)
+  problem.answers = problem.answers.concat(savedAnswer)
+  problem.save()
+
   response.send(savedAnswer)
 })
+
 module.exports = answersRouter
