@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema({
       ref: "Answer",
     },
   ],
+  gradedTests: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Answer",
+    },
+  ],
 })
 
 userSchema.plugin(uniqueValidator)

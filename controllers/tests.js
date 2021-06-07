@@ -68,6 +68,9 @@ testsRouter.post("/submit", async (request, response) => {
 
   const savedGradedTest = gradedTest.save()
 
+  user.gradedTests = user.gradedTests.concat(savedGradedTest)
+  await user.save()
+
   answers.forEach((a) => {
     answerService.createAnswer({
       user,
