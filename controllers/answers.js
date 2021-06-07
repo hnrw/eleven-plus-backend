@@ -17,11 +17,10 @@ answersRouter.get("/:id", async (request, response) => {
 })
 
 answersRouter.post("/", async (request, response) => {
-  const { selected, test, problem, user } = request.body
+  const { selected, problem, user } = request.body
 
   const answer = new Answer({
     selected,
-    test,
     problem,
     user,
   })
