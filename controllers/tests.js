@@ -1,6 +1,8 @@
 const testsRouter = require("express").Router()
 const _ = require("lodash")
 const Test = require("../models/test")
+const Problem = require("../models/problem")
+const Answer = require("../models/answer")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 
@@ -35,14 +37,22 @@ testsRouter.post("/", async (request, response) => {
   response.send(savedTest)
 })
 
-testsRouter.delete("/", async (request, response) => {
+testsRouter.delete("/:id", async (request, response) => {
   const admin = await verifyUser(request, response)
 
   if (admin.email !== "pannicope@gmail.com") {
     return response.status(400).json({ error: "unauthorized" })
   }
+
   const { id } = request.params
   await Test.findByIdAndRemove(id)
+
+  const problems = await Problem.find({})
+  problems.forEach(async (p) => {
+    if (p.test.equals(id)) {
+      console.log(p)
+    }
+  })
   return response.status(204).end()
 })
 
