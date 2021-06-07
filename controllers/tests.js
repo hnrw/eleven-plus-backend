@@ -12,7 +12,7 @@ testsRouter.get("/", async (request, response) => {
 })
 
 testsRouter.get("/:id", async (request, response) => {
-  const id = request.params
+  const { id } = request.params
   const test = await Test.findById(id)
   response.send(test)
 })
@@ -35,6 +35,37 @@ testsRouter.post("/", async (request, response) => {
   })
 
   response.send(savedTest)
+})
+
+testsRouter.post("/submit", async (request, response) => {
+  const user = await verifyUser(request, response)
+  const { testId, answers } = request.body
+
+  const test = await Test.findById(testId).populate("problems")
+
+  const gradedProblems = test.problems.map((p) => {
+    const submitted = answers.find((a) => p.equals(a.problemId))
+    return {
+      question: p.question,
+      correct: p.correct,
+      selected: submitted.selected,
+    }
+  })
+
+  const marks = gradedProblems.filter((p) => p.selected === p.correct).length
+  const totalMarks = gradedProblems.length
+  const percent = Math.round((100 / totalMarks) * marks)
+
+  const gradedTest = {
+    num: test.num,
+    test: test.id,
+    user: user.id,
+    marks,
+    percent,
+    gradedProblems,
+  }
+
+  response.send(gradedTest)
 })
 
 testsRouter.delete("/:id", async (request, response) => {
