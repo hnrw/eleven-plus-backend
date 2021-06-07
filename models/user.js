@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
   gradedTests: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Answer",
+      ref: "GradedTest",
     },
   ],
 })

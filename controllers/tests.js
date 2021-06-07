@@ -44,29 +44,31 @@ testsRouter.post("/submit", async (request, response) => {
   const { testId, answers } = request.body
 
   const test = await Test.findById(testId).populate("problems")
+  const problems = await Problem.find({ test: test._id })
 
-  const gradedProblems = test.problems.map((p) => {
+  const gradedProblems = problems.map((p) => {
     const submitted = answers.find((a) => p.equals(a.problemId))
-    return {
+    const gp = {
       question: p.question,
       correct: p.correct,
       selected: submitted.selected,
     }
+    return gp
   })
 
   const marks = gradedProblems.filter((p) => p.selected === p.correct).length
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
-  const gradedTest = new Test({
-    test: test.id,
-    user: user.id,
+  const gradedTest = new GradedTest({
+    test: test._id,
+    user: user._id,
     marks,
     percent,
     gradedProblems,
   })
 
-  const savedGradedTest = gradedTest.save()
+  const savedGradedTest = await gradedTest.save()
 
   user.gradedTests = user.gradedTests.concat(savedGradedTest)
   await user.save()

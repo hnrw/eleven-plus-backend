@@ -5,27 +5,14 @@ const User = require("../models/user")
 const sendEmail = require("../helpers/sendEmail")
 
 const getUsers = async (user) => {
-  if (user.email !== "pannicope@gmail.com") {
-    return {
-      status: 400,
-      data: { error: "unauthorized" },
-    }
-  }
+  // if (user.email !== "pannicope@gmail.com") {
+  //   return {
+  //     status: 400,
+  //     data: { error: "unauthorized" },
+  //   }
+  // }
 
-  const users = await User.find({})
-  // .populate({
-  //   path: "getQuestions",
-  //   select: { content: 1, date: 1, answer: 1 },
-  //   populate: {
-  //     path: "answer",
-  //     select: { content: 1, date: 1 },
-  //   },
-  // })
-  // .populate("sentQuestions", {
-  //   content: 1,
-  //   date: 1,
-  // })
-
+  const users = await User.find({}).populate("gradedTests")
   return {
     status: 200,
     data: users,

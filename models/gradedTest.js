@@ -10,10 +10,13 @@ const gradedTest = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  gradedProblems: {
-    type: mongoose.Mixed,
-    required: true,
-  },
+  gradedProblems: [
+    {
+      correct: String,
+      selected: String,
+      question: String,
+    },
+  ],
   test: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Test",
@@ -22,13 +25,6 @@ const gradedTest = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-
-  problems: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Problem",
-    },
-  ],
 })
 
 gradedTest.plugin(uniqueValidator)
