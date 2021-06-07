@@ -9,7 +9,8 @@ const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
 
 gradedTestsRouter.get("/", async (request, response) => {
-  const gradedTests = await GradedTest.find({})
+  const user = verifyUser(request, response)
+  const gradedTests = await GradedTest.find({ user })
   response.send(gradedTests)
 })
 
