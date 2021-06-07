@@ -15,7 +15,8 @@ const createProblem = async (problemData, testId) => {
   const savedProblem = await problem.save()
 
   const test = await Test.findById(testId)
-  await test.update({ $push: { problems: savedProblem } })
+  await test.updateOne({ $push: { problems: savedProblem } })
+  // wait test.update({ $push: { problems: savedProblem } })
 
   return {
     status: 200,
