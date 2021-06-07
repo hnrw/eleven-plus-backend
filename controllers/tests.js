@@ -5,6 +5,7 @@ const Problem = require("../models/problem")
 const Answer = require("../models/answer")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
+const answerService = require("../services/answerService")
 
 testsRouter.get("/", async (request, response) => {
   const tests = await Test.find({}).populate("problems")
@@ -64,6 +65,14 @@ testsRouter.post("/submit", async (request, response) => {
     percent,
     gradedProblems,
   }
+
+  answers.forEach((a) => {
+    answerService.createAnswer({
+      user,
+      problemId: a.problemId,
+      selected: a.selected,
+    })
+  })
 
   response.send(gradedTest)
 })
