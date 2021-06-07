@@ -3,6 +3,7 @@ const _ = require("lodash")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
 const Answer = require("../models/answer")
+const GradedTest = require("../models/gradedTest")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
@@ -57,14 +58,15 @@ testsRouter.post("/submit", async (request, response) => {
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
-  const gradedTest = {
-    num: test.num,
+  const gradedTest = new Test({
     test: test.id,
     user: user.id,
     marks,
     percent,
     gradedProblems,
-  }
+  })
+
+  const savedGradedTest = gradedTest.save()
 
   answers.forEach((a) => {
     answerService.createAnswer({
@@ -74,7 +76,7 @@ testsRouter.post("/submit", async (request, response) => {
     })
   })
 
-  response.send(gradedTest)
+  response.send(savedGradedTest)
 })
 
 testsRouter.delete("/:id", async (request, response) => {
