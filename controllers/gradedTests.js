@@ -27,7 +27,7 @@ gradedTestsRouter.get("/:id", async (request, response) => {
 })
 
 gradedTestsRouter.get("/all", async (request, response) => {
-  const gradedTests = await GradedTest.find()
+  const gradedTests = await GradedTest.find({})
   response.send(gradedTests)
 })
 
