@@ -50,7 +50,7 @@ testsRouter.delete("/:id", async (request, response) => {
   const problems = await Problem.find({})
   problems.forEach(async (p) => {
     if (p.test.equals(id)) {
-      console.log(p)
+      await p.remove(p)
     }
   })
   return response.status(204).end()
