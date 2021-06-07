@@ -4,8 +4,9 @@ const verifyUser = require("../helpers/verifyUser")
 const userService = require("../services/userService")
 
 usersRouter.get("/", async (request, response) => {
-  const user = await verifyUser(request, response)
-  const service = await userService.getUsers(user)
+  // const user = await verifyUser(request, response)
+  // const service = await userService.getUsers(user)
+  const service = await userService.getUsers()
 
   response.status(service.status).send(service.data)
 })
