@@ -38,10 +38,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  answers: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Answer",
-  },
+  answers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Answer",
+    },
+  ],
 })
 
 userSchema.plugin(uniqueValidator)
