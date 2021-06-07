@@ -13,6 +13,10 @@ const test = new mongoose.Schema({
       ref: "Problem",
     },
   ],
+  date: {
+    type: String,
+    required: true,
+  },
 })
 
 test.plugin(uniqueValidator)

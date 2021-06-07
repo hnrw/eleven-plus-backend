@@ -15,6 +15,10 @@ const answer = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Problem",
   },
+  date: {
+    type: String,
+    required: true,
+  },
 })
 
 answer.plugin(uniqueValidator)

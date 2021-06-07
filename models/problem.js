@@ -24,6 +24,10 @@ const problem = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
+  date: {
+    type: String,
+    required: true,
+  },
 })
 
 problem.plugin(uniqueValidator)
