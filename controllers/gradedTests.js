@@ -14,9 +14,15 @@ gradedTestsRouter.get("/", async (request, response) => {
 })
 
 gradedTestsRouter.get("/:id", async (request, response) => {
+  const user = await verifyUser(request, response)
   const { id } = request.params
   const gradedTest = await GradedTest.findById(id)
-  response.send(gradedTest)
+
+  if (gradedTest.user.equals(user._id)) {
+    return response.status(400).send({ error: "unauthorized" })
+  }
+
+  return response.send(gradedTest)
 })
 
 module.exports = gradedTestsRouter
