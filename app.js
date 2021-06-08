@@ -8,6 +8,7 @@ const problemsRouter = require("./controllers/problems")
 const answersRouter = require("./controllers/answers")
 const gradedTestsRouter = require("./controllers/gradedTests")
 const loginRouter = require("./controllers/login")
+const checkoutRouter = require("./controllers/checkout")
 
 const middleware = require("./utils/middleware")
 const logger = require("./utils/logger")
@@ -41,7 +42,9 @@ app.use("/tests", testsRouter)
 app.use("/problems", problemsRouter)
 app.use("/answers", answersRouter)
 app.use("/graded-tests", gradedTestsRouter)
+
 app.use("/login", loginRouter)
+app.use("/checkout", checkoutRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
