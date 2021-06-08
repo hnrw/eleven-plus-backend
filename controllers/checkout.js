@@ -33,8 +33,8 @@ checkoutRouter.post("/", async (req, res) => {
     mode: "payment",
     // customer_email: email,
     metadata: {
-      username,
-      credits: item,
+      // username,
+      // credits: item,
     },
     success_url: successUrl,
     cancel_url: cancelUrl,
