@@ -1,5 +1,8 @@
+require("dotenv").config()
+
 const checkoutRouter = require("express").Router()
 
+console.log(process.env.STRIPE_SECRET)
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 checkoutRouter.post("/", async (req, res) => {
@@ -30,12 +33,12 @@ checkoutRouter.post("/", async (req, res) => {
         quantity: 1,
       },
     ],
-    mode: "payment",
+    mode: "subscription",
     // customer_email: email,
-    metadata: {
-      // username,
-      // credits: item,
-    },
+    // metadata: {
+    // username,
+    // credits: item,
+    // },
     success_url: successUrl,
     cancel_url: cancelUrl,
   })
