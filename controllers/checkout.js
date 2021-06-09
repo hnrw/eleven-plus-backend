@@ -1,12 +1,15 @@
 require("dotenv").config()
+const bcrypt = require("bcrypt")
 
 const checkoutRouter = require("express").Router()
 
-console.log(process.env.STRIPE_SECRET)
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 checkoutRouter.post("/", async (req, res) => {
-  const { item, email, username, returnToUser } = req.body
+  const { item, email, parentName, password } = req.body
+
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash(password, saltRounds)
 
   let price
   if (item === "27") {
@@ -17,13 +20,8 @@ checkoutRouter.post("/", async (req, res) => {
     price = process.env.STRIPE_PRICE_270
   }
 
-  let successUrl = `${process.env.FRONTEND}`
-  let cancelUrl = `${process.env.FRONTEND}`
-
-  // if (returnToUser) {
-  //   successUrl = `${process.env.DOMAIN}/${returnToUser}`
-  //   cancelUrl = `${process.env.DOMAIN}/${returnToUser}`
-  // }
+  const successUrl = `${process.env.FRONTEND}`
+  const cancelUrl = `${process.env.FRONTEND}`
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -34,11 +32,11 @@ checkoutRouter.post("/", async (req, res) => {
       },
     ],
     mode: "subscription",
-    // customer_email: email,
-    // metadata: {
-    // username,
-    // credits: item,
-    // },
+    customer_email: email,
+    metadata: {
+      parentName,
+      passwordHash,
+    },
     success_url: successUrl,
     cancel_url: cancelUrl,
   })
