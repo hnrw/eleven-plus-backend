@@ -8,7 +8,9 @@ const problemsRouter = require("./controllers/problems")
 const answersRouter = require("./controllers/answers")
 const gradedTestsRouter = require("./controllers/gradedTests")
 const loginRouter = require("./controllers/login")
+
 const checkoutRouter = require("./controllers/checkout")
+const webhooksRouter = require("./controllers/webhook")
 
 const middleware = require("./utils/middleware")
 const logger = require("./utils/logger")
@@ -32,9 +34,19 @@ mongoose
     logger.error("error connection to MongoDB:", error.message)
   })
 
+const unless = (path, excludedMiddleware) => {
+  // allows webhook to work since it needs raw input, not processed json
+  return (req, res, next) => {
+    if (path === req.path) {
+      return next()
+    }
+    return excludedMiddleware(req, res, next)
+  }
+}
+
 app.use(cors())
 app.use(express.static("build"))
-app.use(express.json())
+app.use(unless("/webhook", express.json()))
 app.use(middleware.requestLogger)
 
 app.use("/users", usersRouter)
@@ -45,6 +57,7 @@ app.use("/graded-tests", gradedTestsRouter)
 
 app.use("/login", loginRouter)
 app.use("/checkout", checkoutRouter)
+app.use("/webhook", webhooksRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
