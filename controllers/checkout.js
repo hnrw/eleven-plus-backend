@@ -13,11 +13,9 @@ checkoutRouter.post("/", async (req, res) => {
 
   let price
   if (item === "27") {
-    price = process.env.STRIPE_PRICE_27
-  } else if (item === "37") {
-    price = process.env.STRIPE_PRICE_37
+    price = process.env.STRIPE_PRICE_MONTH
   } else if (item === "270") {
-    price = process.env.STRIPE_PRICE_270
+    price = process.env.STRIPE_PRICE__YEAR
   }
 
   const successUrl = `${process.env.FRONTEND}`
