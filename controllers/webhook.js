@@ -6,19 +6,27 @@ const userService = require("../services/userService")
 const logger = require("../utils/logger")
 
 const endpointSecret = process.env.ENDPOINT_SECRET
+const time32days = 3600 * 1000 * 24 * 32
+const subEnds = Date.now() + time32days
 
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
   logger.info("Fulfilling order", session)
 
   const customer = await stripe.customers.retrieve(session.customer)
+  const user = await User.findById(customer.metadata.id)
 
-  const time32days = 3600 * 1000 * 24 * 32
+  if (user) {
+    user.subEnds = subEnds
+    await user.save()
+    return
+  }
+
   const response = await userService.createUser({
     email: customer.email,
     password: "123",
     stripeId: customer.id,
-    subEnds: Date.now() + time32days,
+    subEnds,
   })
   const savedUser = response.data
 
