@@ -12,10 +12,10 @@ checkoutRouter.post("/", async (req, res) => {
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
   let price
-  if (item === "27") {
+  if (item === "month") {
     price = process.env.STRIPE_PRICE_MONTH
-  } else if (item === "270") {
-    price = process.env.STRIPE_PRICE__YEAR
+  } else if (item === "year") {
+    price = process.env.STRIPE_PRICE_YEAR
   }
 
   const successUrl = `${process.env.FRONTEND}/login`
