@@ -13,9 +13,17 @@ const fufillOrder = async (session) => {
 
   const customer = await stripe.customers.retrieve(session.customer)
 
-  userService.createUser({
+  const time32days = 3600 * 1000 * 24 * 32
+  const response = await userService.createUser({
     email: customer.email,
     password: "123",
+    stripeId: customer.id,
+    subEnds: Date.now() + time32days,
+  })
+  const savedUser = response.data
+
+  stripe.customers.update(session.customer, {
+    metadata: { dbId: savedUser.id },
   })
 }
 

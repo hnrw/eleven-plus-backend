@@ -34,6 +34,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  stripeId: {
+    type: String,
+    required: true,
+  },
+  subEnds: {
+    type: Number,
+    required: true,
+  },
   date: {
     type: String,
     required: true,

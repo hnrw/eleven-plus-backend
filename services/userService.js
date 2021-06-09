@@ -80,7 +80,16 @@ const searchUsers = async (searchParam) => {
 }
 
 const createUser = async (data) => {
-  const { email, name, parentName, dob, gender, password } = data
+  const {
+    email,
+    name,
+    parentName,
+    dob,
+    gender,
+    password,
+    stripeId,
+    subEnds,
+  } = data
 
   if (password.length < 3) {
     return { status: 400, data: { error: "password length too short" } }
@@ -103,6 +112,8 @@ const createUser = async (data) => {
     passwordHash,
     profilePicture:
       "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
+    stripeId,
+    subEnds,
     date: Date.now(),
   })
 
