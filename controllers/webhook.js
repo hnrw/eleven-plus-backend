@@ -23,7 +23,7 @@ const fufillOrder = async (session) => {
   const savedUser = response.data
 
   stripe.customers.update(session.customer, {
-    metadata: { dbId: savedUser.id },
+    metadata: { id: savedUser.id, email: savedUser.id },
   })
 }
 
