@@ -18,8 +18,8 @@ checkoutRouter.post("/", async (req, res) => {
     price = process.env.STRIPE_PRICE__YEAR
   }
 
-  const successUrl = `${process.env.FRONTEND}`
-  const cancelUrl = `${process.env.FRONTEND}`
+  const successUrl = `${process.env.FRONTEND}/login`
+  const cancelUrl = `${process.env.FRONTEND}/signup`
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
