@@ -29,6 +29,7 @@ bouncedUsersRouter.post("/", async (req, res) => {
   }
 
   if (existingBounced) {
+    existingBounced.parentName = parentName
     existingBounced.date = Date.now()
     await existingBounced.save()
     return res.status(200).end()
