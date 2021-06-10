@@ -37,7 +37,8 @@ testsRouter.post("/", async (request, response) => {
   const { problems } = request.body
 
   const tests = await Test.find({})
-  const lastTest = tests[tests.length - 1]
+  const lastTest = _.maxBy(tests, (test) => test.num)
+  // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
   const test = new Test({
