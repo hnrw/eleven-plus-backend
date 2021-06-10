@@ -1,11 +1,11 @@
 require("dotenv").config()
 const bcrypt = require("bcrypt")
 
-const checkoutRouter = require("express").Router()
+const stripeRouter = require("express").Router()
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
-checkoutRouter.post("/", async (req, res) => {
+stripeRouter.post("/checkout", async (req, res) => {
   const { item, email, parentName, password } = req.body
 
   const saltRounds = 10
@@ -42,4 +42,16 @@ checkoutRouter.post("/", async (req, res) => {
   res.json({ id: session.id })
 })
 
-module.exports = checkoutRouter
+stripeRouter.post("/customer-portal", async (request, response) => {
+  const returnUrl = process.env.DOMAIN
+
+  const portalsession = await stripe.billingPortal.sessions.create({
+    customer: "{{CUSTOMER_ID}}",
+    return_url: returnUrl,
+  })
+
+  response.send({
+    url: portalsession.url,
+  })
+})
+module.exports = stripeRouter

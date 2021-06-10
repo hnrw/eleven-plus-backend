@@ -9,7 +9,7 @@ const answersRouter = require("./controllers/answers")
 const gradedTestsRouter = require("./controllers/gradedTests")
 const loginRouter = require("./controllers/login")
 
-const checkoutRouter = require("./controllers/checkout")
+const stripeRouter = require("./controllers/stripe")
 const webhooksRouter = require("./controllers/webhook")
 
 const middleware = require("./utils/middleware")
@@ -56,7 +56,7 @@ app.use("/answers", answersRouter)
 app.use("/graded-tests", gradedTestsRouter)
 
 app.use("/login", loginRouter)
-app.use("/checkout", checkoutRouter)
+app.use("/stripe", stripeRouter)
 app.use("/webhook", webhooksRouter)
 
 app.use(middleware.unknownEndpoint)
