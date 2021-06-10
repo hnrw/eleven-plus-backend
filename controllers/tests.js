@@ -17,6 +17,12 @@ testsRouter.get("/:id", async (request, response) => {
   response.send(test)
 })
 
+testsRouter.get("/next", async (req, res) => {
+  const user = await verifyUser(req, res)
+  const gradedTests = await GradedTest.find({ user: user._id })
+  console.log(gradedTests)
+})
+
 testsRouter.post("/", async (request, response) => {
   const { problems } = request.body
 
