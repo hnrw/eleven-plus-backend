@@ -11,6 +11,21 @@ testsRouter.get("/", async (request, response) => {
   response.send(tests)
 })
 
+testsRouter.get("/next", async (req, res) => {
+  const user = await verifyUser(req, res)
+  const gradedTests = await GradedTest.find({ user })
+  const lastDone = _.maxBy(gradedTests, (gt) => gt.num)
+  const nextTest = await Test.findOne({ num: lastDone.num + 1 }).populate(
+    "problems"
+  )
+
+  if (nextTest) {
+    res.send(nextTest)
+  } else {
+    res.send("no more tests")
+  }
+})
+
 testsRouter.get("/:id", async (request, response) => {
   const { id } = request.params
   const test = await Test.findById(id)
