@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const Fuse = require("fuse.js")
 const User = require("../models/user")
+const BouncedUser = require("../models/bouncedUser")
 const sendEmail = require("../helpers/sendEmail")
 
 const getUsers = async (user) => {
@@ -123,6 +124,8 @@ const createUser = async (data) => {
     email: savedUser.email,
     id: savedUser._id,
   }
+
+  await BouncedUser.findOneAndRemove({ email: savedUser.email })
 
   const token = jwt.sign(userForToken, process.env.SECRET)
 
