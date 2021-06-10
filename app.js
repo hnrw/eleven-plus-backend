@@ -7,8 +7,9 @@ const testsRouter = require("./controllers/tests")
 const problemsRouter = require("./controllers/problems")
 const answersRouter = require("./controllers/answers")
 const gradedTestsRouter = require("./controllers/gradedTests")
-const loginRouter = require("./controllers/login")
+const bouncedUsersRouter = require("./controllers/bouncedUsers")
 
+const loginRouter = require("./controllers/login")
 const stripeRouter = require("./controllers/stripe")
 const webhooksRouter = require("./controllers/webhook")
 
@@ -54,6 +55,7 @@ app.use("/tests", testsRouter)
 app.use("/problems", problemsRouter)
 app.use("/answers", answersRouter)
 app.use("/graded-tests", gradedTestsRouter)
+app.use("/bounced-users", bouncedUsersRouter)
 
 app.use("/login", loginRouter)
 app.use("/stripe", stripeRouter)
