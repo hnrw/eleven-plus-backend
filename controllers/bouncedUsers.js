@@ -1,8 +1,6 @@
 const bouncedUsersRouter = require("express").Router()
 const User = require("../models/user")
 const BouncedUser = require("../models/bouncedUser")
-const verifyUser = require("../helpers/verifyUser")
-const userService = require("../services/userService")
 
 bouncedUsersRouter.get("/", async (req, res) => {
   // const user = await verifyUser(request, response)
@@ -18,6 +16,7 @@ bouncedUsersRouter.get("/:id", async (req, res) => {
   res.send(bouncedUser)
 })
 
+// eslint-disable-next-line consistent-return
 bouncedUsersRouter.post("/", async (req, res) => {
   const { parentName, email } = req.body
 

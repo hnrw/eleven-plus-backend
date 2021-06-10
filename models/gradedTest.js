@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const mongoose = require("mongoose")
 const uniqueValidator = require("mongoose-unique-validator")
 

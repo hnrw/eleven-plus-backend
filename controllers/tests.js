@@ -1,8 +1,6 @@
 const testsRouter = require("express").Router()
-const _ = require("lodash")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
-const Answer = require("../models/answer")
 const GradedTest = require("../models/gradedTest")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")

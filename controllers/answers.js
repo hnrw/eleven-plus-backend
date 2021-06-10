@@ -1,6 +1,4 @@
 const answersRouter = require("express").Router()
-const _ = require("lodash")
-const Test = require("../models/test")
 const Problem = require("../models/problem")
 const Answer = require("../models/answer")
 const verifyUser = require("../helpers/verifyUser")
