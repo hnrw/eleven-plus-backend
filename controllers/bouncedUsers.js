@@ -21,12 +21,17 @@ bouncedUsersRouter.get("/:id", async (req, res) => {
 bouncedUsersRouter.post("/", async (req, res) => {
   const { parentName, email } = req.body
 
-  const existing = await BouncedUser.find({ email })
+  const existingBounced = await BouncedUser.findOne({ email })
 
-  if (existing) {
-    existing.date = Date.now()
-    await existing.save()
-    return
+  const existingUser = await User.findOne({ email })
+  if (existingUser) {
+    return res.status(400).send({ error: "email already in use" })
+  }
+
+  if (existingBounced) {
+    existingBounced.date = Date.now()
+    await existingBounced.save()
+    return res.status(200).end()
   }
 
   const bouncedUser = new BouncedUser({
