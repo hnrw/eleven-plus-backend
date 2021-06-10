@@ -34,7 +34,7 @@ const gradedTest = new mongoose.Schema({
     ref: "User",
   },
   date: {
-    type: String,
+    type: Number,
     required: true,
   },
 })

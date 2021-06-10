@@ -25,7 +25,7 @@ const problem = new mongoose.Schema({
     },
   ],
   date: {
-    type: String,
+    type: Number,
     required: true,
   },
 })

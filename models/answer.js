@@ -16,8 +16,7 @@ const answer = new mongoose.Schema({
     ref: "Problem",
   },
   date: {
-    type: String,
-    required: true,
+    type: Number,
   },
 })
 
