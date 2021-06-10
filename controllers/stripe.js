@@ -43,10 +43,11 @@ stripeRouter.post("/checkout", async (req, res) => {
 })
 
 stripeRouter.post("/customer-portal", async (request, response) => {
-  const returnUrl = process.env.DOMAIN
+  const { customerId } = request.body
+  const returnUrl = process.env.FRONTEND
 
   const portalsession = await stripe.billingPortal.sessions.create({
-    customer: "{{CUSTOMER_ID}}",
+    customer: customerId,
     return_url: returnUrl,
   })
 
