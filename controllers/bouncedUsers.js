@@ -21,9 +21,18 @@ bouncedUsersRouter.get("/:id", async (req, res) => {
 bouncedUsersRouter.post("/", async (req, res) => {
   const { parentName, email } = req.body
 
+  const existing = await BouncedUser.find({ email })
+
+  if (existing) {
+    existing.date = Date.now()
+    await existing.save()
+    return
+  }
+
   const bouncedUser = new BouncedUser({
     parentName,
     email,
+    date: Date.now(),
   })
 
   const savedUser = await bouncedUser.save()
