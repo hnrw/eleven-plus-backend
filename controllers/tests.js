@@ -29,7 +29,7 @@ testsRouter.get("/next", async (req, res) => {
 
 testsRouter.get("/:id", async (request, response) => {
   const { id } = request.params
-  const test = await Test.findById(id)
+  const test = await Test.findById(id).populate("problems")
   response.send(test)
 })
 
