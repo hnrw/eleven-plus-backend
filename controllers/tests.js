@@ -16,7 +16,9 @@ testsRouter.get("/next", async (req, res) => {
   const user = await verifyUser(req, res)
   const gradedTests = await GradedTest.find({ user })
   const lastDone = _.maxBy(gradedTests, (gt) => gt.num)
-  const nextTest = await Test.findOne({ num: lastDone.num + 1 }).populate(
+  const lastDoneNum = (lastDone && lastDone.num) || 0
+
+  const nextTest = await Test.findOne({ num: lastDoneNum + 1 }).populate(
     "problems"
   )
 
