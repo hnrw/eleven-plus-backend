@@ -64,7 +64,9 @@ gradedTestsRouter.post("/submit", async (request, response) => {
   const savedGradedTest = await gradedTest.save()
 
   user.gradedTests = user.gradedTests.concat(savedGradedTest)
-  user.score = _.meanBy(user.gradedTests, (gt) => gt.percent)
+
+  const usersGrades = await GradedTest.find({ user }).populate("gradedProblems")
+  user.score = _.meanBy(usersGrades, (gt) => gt.percent)
 
   await user.save()
 
