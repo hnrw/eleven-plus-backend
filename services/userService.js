@@ -140,20 +140,7 @@ const createUser = async (data) => {
   }
 }
 
-const editUser = async (userId, requestFromUser, data) => {
-  const user = await User.findById(userId)
-
-  // check user is editing their own account
-  if (
-    userId !== requestFromUser.id &&
-    requestFromUser.email !== "pannicope@gmail.com"
-  ) {
-    return {
-      status: 400,
-      data: { error: "unauthorized" },
-    }
-  }
-
+const editUser = async (user, data) => {
   let fieldToUpdate = {
     firstName: data.firstName,
     lastName: data.lastName,

@@ -30,14 +30,14 @@ usersRouter.post("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
-// usersRouter.put("/", async (request, response) => {
-//   const requestFromUser = await verifyUser(request, response)
-//   const { userId, data } = request.body
+usersRouter.put("/", async (request, response) => {
+  const requestFromUser = await verifyUser(request, response)
+  const { data } = request.body
 
-//   const service = await userService.editUser(userId, requestFromUser, data)
+  const service = await userService.editUser(requestFromUser, data)
 
-//   return response.status(service.status).send(service.data)
-// })
+  return response.status(service.status).send(service.data)
+})
 
 usersRouter.delete("/:id", async (request, response) => {
   const admin = await verifyUser(request, response)
