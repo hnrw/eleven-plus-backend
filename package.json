@@ -39,6 +39,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^5.8.9",
     "mongoose-unique-validator": "^2.0.3",
+    "postmark": "^2.7.4",
     "stripe": "^8.154.0"
   }
 }
