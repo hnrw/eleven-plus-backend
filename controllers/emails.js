@@ -21,12 +21,12 @@ emailsRouter.post("/password", async (request, response) => {
   }
   const token = jwt.sign(userForToken, user.passwordHash)
 
-  const resetUrl = `${process.env.DOMAIN}/reset-password/${token}/${user._id}`
+  const resetUrl = `${process.env.FRONTEND}/reset-password/${token}/${user._id}`
 
   // doesn't await because this takes a long time
   // makes it slow to show success message on front end
   // just validate that the email exists in db, and send success
-  sendEmail.passwordReset(email, resetUrl)
+  sendEmail.passwordReset({ email, resetUrl })
 
   return response.status(200).end()
 })
