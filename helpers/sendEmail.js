@@ -1,20 +1,9 @@
 // Require:
 const postmark = require("postmark")
 
-// Send an email:
-const client = new postmark.ServerClient(process.env.POSTMARK_SECRET)
-
-client.sendEmailWithTemplate({
-  From: "test@waterfrontlearn.com",
-  To: "a@waterfrontlearn.com",
-  TemplateAlias: "password-reset",
-  TemplateModel: {
-    action_url: "www.google.com",
-  },
-})
-
 const passwordReset = (data) => {
   const { email, resetUrl } = data
+  const client = new postmark.ServerClient(process.env.POSTMARK_SECRET)
 
   client.sendEmailWithTemplate({
     From: "support@waterfrontlearn.com",
@@ -25,6 +14,7 @@ const passwordReset = (data) => {
     },
   })
 }
+
 // const AWS = require("aws-sdk")
 
 // const SES_CONFIG = {
