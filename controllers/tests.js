@@ -55,7 +55,6 @@ testsRouter.post("/", async (request, response) => {
   response.send(savedTest)
 })
 
-
 testsRouter.delete("/:id", async (request, response) => {
   const admin = await verifyUser(request, response)
 

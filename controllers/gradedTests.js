@@ -1,4 +1,5 @@
 const gradedTestsRouter = require("express").Router()
+const _ = require("lodash")
 const GradedTest = require("../models/gradedTest")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
@@ -63,6 +64,8 @@ gradedTestsRouter.post("/submit", async (request, response) => {
   const savedGradedTest = await gradedTest.save()
 
   user.gradedTests = user.gradedTests.concat(savedGradedTest)
+  user.score = _.meanBy(user.gradedTests, (gt) => gt.percent)
+
   await user.save()
 
   answers.forEach((a) => {
