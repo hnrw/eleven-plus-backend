@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  score: {
+    type: Number,
+  },
   date: {
     type: Number,
     required: true,
