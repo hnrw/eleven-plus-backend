@@ -145,7 +145,7 @@ const editUser = async (user, data) => {
     firstName: data.firstName,
     lastName: data.lastName,
     dob: data.dob,
-    gender: data.dob,
+    gender: data.gender,
   }
 
   Object.keys(fieldToUpdate).forEach((key) => {
