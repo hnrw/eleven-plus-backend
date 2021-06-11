@@ -32,7 +32,7 @@ usersRouter.post("/", async (request, response) => {
 
 usersRouter.put("/", async (request, response) => {
   const requestFromUser = await verifyUser(request, response)
-  const { data } = request.body
+  const data = request.body
 
   const service = await userService.editUser(requestFromUser, data)
 
