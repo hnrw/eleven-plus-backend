@@ -10,7 +10,7 @@ const gradedTestsRouter = require("./controllers/gradedTests")
 const bouncedUsersRouter = require("./controllers/bouncedUsers")
 const profileUsersRouter = require("./controllers/profiles")
 const emailsRouter = require("./controllers/emails")
-const testSessionsRouter = require("./controllers/testSessionsRouter")
+const testSessionsRouter = require("./controllers/testSessions")
 
 const loginRouter = require("./controllers/login")
 const stripeRouter = require("./controllers/stripe")
