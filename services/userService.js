@@ -141,19 +141,19 @@ const createUser = async (data) => {
 }
 
 const editUser = async (user, data) => {
-  let fieldToUpdate = {
+  const fieldToUpdate = {
     firstName: data.firstName,
     lastName: data.lastName,
     dob: data.dob,
     gender: data.dob,
   }
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of Object.entries(fieldToUpdate)) {
+  Object.keys(fieldToUpdate).forEach((key) => {
+    const value = fieldToUpdate[key]
     if (!value) {
       delete fieldToUpdate[key]
     }
-  }
+  })
 
   const savedUser = await User.findByIdAndUpdate(
     user.id,
