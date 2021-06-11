@@ -140,71 +140,53 @@ const createUser = async (data) => {
   }
 }
 
-// const editUser = async (userId, requestFromUser, data) => {
-//   const user = await User.findById(userId)
+const editUser = async (userId, requestFromUser, data) => {
+  const user = await User.findById(userId)
 
-//   // check user is editing their own account
-//   if (
-//     userId !== requestFromUser.id &&
-//     requestFromUser.email !== "pannicope@gmail.com"
-//   ) {
-//     return {
-//       status: 400,
-//       data: { error: "unauthorized" },
-//     }
-//   }
+  // check user is editing their own account
+  if (
+    userId !== requestFromUser.id &&
+    requestFromUser.email !== "pannicope@gmail.com"
+  ) {
+    return {
+      status: 400,
+      data: { error: "unauthorized" },
+    }
+  }
 
-//   // update fields if they are provided in data
-//   if (data.name) {
-//     user.name = data.name
-//   }
+  let fieldToUpdate = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dob: data.dob,
+    gender: data.dob,
+  }
 
-//   if (data.parentName) {
-//     user.parentName = data.parentName
-//   }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [key, value] of Object.entries(fieldToUpdate)) {
+    if (!value) {
+      delete fieldToUpdate[key]
+    }
+  }
 
-//   if (data.paypal) {
-//     user.paypal = data.paypal
-//   }
+  const savedUser = await User.findByIdAndUpdate(
+    user.id,
+    { $set: { ...fieldToUpdate } },
+    {
+      runValidators: true,
+      new: true,
+    }
+  )
 
-//   if ("charityName" in data) {
-//     user.charityName = data.charityName
-//   }
-
-//   if ("charityWebsite" in data) {
-//     user.charityWebsite = data.charityWebsite
-//   }
-
-//   // only admin can edit some fields
-//   if (requestFromUser.username === "henry") {
-//     if (data.email) {
-//       user.email = data.email
-//     }
-
-//     if (data.username) {
-//       user.username = data.username
-//     }
-//     if (data.credits) {
-//       user.credits = data.credits
-//     }
-
-//     if (data.balance) {
-//       user.balance = data.balance
-//     }
-//   }
-
-//   const savedUser = await user.save()
-
-//   return {
-//     status: 200,
-//     data: savedUser,
-//   }
-// }
+  return {
+    status: 200,
+    data: savedUser,
+  }
+}
 
 module.exports = {
   getUsers,
   createUser,
-  // editUser,
+  editUser,
   getProfile,
   searchUsers,
 }
