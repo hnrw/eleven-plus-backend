@@ -12,6 +12,9 @@ testSessionsRouter.get("/", async (req, res) => {
   const user = await verifyUser(req, res)
 
   const testSession = await TestSession.findOne({ user: user.id })
+  if (!testSession) {
+    return res.send("no session exists")
+  }
   res.send(testSession)
 })
 
