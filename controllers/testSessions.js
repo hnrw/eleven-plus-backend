@@ -27,14 +27,22 @@ testSessionsRouter.post("/", async (req, res) => {
   const user = await verifyUser(req, res)
   const { testId } = req.body
 
-  const testSession = new TestSession({
-    user: user.id,
-    test: testId,
-    start: Date.now(),
-  })
+  // Uses try/catch because frontend sometimes tries to make a new session
+  // even when one already exists.
+  // I tried to debug on frontend, but I couldn't figure out what was causing it
+  try {
+    const testSession = new TestSession({
+      user: user.id,
+      test: testId,
+      start: Date.now(),
+    })
 
-  const savedTest = await testSession.save()
-  res.send(savedTest)
+    const savedTestSession = await testSession.save()
+    res.send(savedTestSession)
+  } catch (err) {
+    const testSession = await TestSession.findOne({ user: user._id })
+    res.send(testSession)
+  }
 })
 
 module.exports = testSessionsRouter
