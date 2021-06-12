@@ -42,12 +42,20 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     const gp = {
       question: p.question,
       correct: p.correct,
+      multi: p.multi,
       selected: submitted.selected,
     }
     return gp
   })
 
-  const marks = gradedProblems.filter((p) => p.selected === p.correct).length
+  // const marks = gradedProblems.filter((p) => p.selected === p.correct).length
+  const marks = gradedProblems.filter((p) => {
+    if (p.multi) {
+      return p.selected === p.correct
+    }
+    return Number(p.selected) === Number(p.correct)
+  })
+
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
