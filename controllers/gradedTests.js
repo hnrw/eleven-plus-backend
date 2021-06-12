@@ -54,7 +54,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       return p.selected === p.correct
     }
     return Number(p.selected) === Number(p.correct)
-  })
+  }).length
 
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
