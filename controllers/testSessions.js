@@ -11,7 +11,7 @@ const answerService = require("../services/answerService")
 testSessionsRouter.get("/", async (req, res) => {
   const user = await verifyUser(req, res)
 
-  const testSession = await TestSession.findOne({ user: user.id })
+  const testSession = await TestSession.findOne({ user: user._id })
   if (!testSession) {
     return res.send("no session exists")
   }
