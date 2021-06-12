@@ -3,6 +3,7 @@ const _ = require("lodash")
 const GradedTest = require("../models/gradedTest")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
+const TestSession = require("../models/testSession")
 const verifyUser = require("../helpers/verifyUser")
 const answerService = require("../services/answerService")
 
@@ -69,6 +70,8 @@ gradedTestsRouter.post("/submit", async (request, response) => {
   user.score = _.meanBy(usersGrades, (gt) => gt.percent)
 
   await user.save()
+
+  await TestSession.findOneAndRemove({ user: user._id })
 
   answers.forEach((a) => {
     answerService.createAnswer({
