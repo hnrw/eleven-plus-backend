@@ -7,6 +7,10 @@ const problem = new mongoose.Schema({
     type: String,
     // unique: true,
   },
+  multi: {
+    type: Boolean,
+    required: true,
+  },
   correct: {
     type: String,
     unique: false,
