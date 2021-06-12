@@ -290,18 +290,6 @@ const problems = [
     multi: true,
   },
   {
-    question: "What is the value of 7 in 7 230 000",
-    correct: "answer",
-    options: [
-      "seven hundred million",
-      "seven hundred thousand",
-      "seventy thousand",
-      "seventy million",
-      "seven million",
-    ],
-    multi: true,
-  },
-  {
     question:
       "Roger wants to sprad grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Rgoer's area of soil measure 9 metres by 6 metres?",
     correct: "answer",
@@ -320,6 +308,5 @@ const problems = [
     multi: true,
   },
 ]
-const foo = JSON.stringify(problems)
 
 module.exports = problems

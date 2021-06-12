@@ -6,6 +6,7 @@ const GradedTest = require("../models/gradedTest")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
+const manualProblems = require("../exams/one.js")
 
 testsRouter.get("/", async (request, response) => {
   const tests = await Test.find({}).populate("problems")
@@ -27,6 +28,30 @@ testsRouter.get("/next", async (req, res) => {
   } else {
     res.send("no more tests")
   }
+})
+
+testsRouter.get("/manual", async (request, response) => {
+  console.log(1)
+  const tests = await Test.find({})
+  const lastTest = _.maxBy(tests, (test) => test.num)
+  // const lastTest = tests[tests.length - 1]
+  const lastNum = (lastTest && lastTest.num) || 0
+
+  console.log(1)
+  const test = new Test({
+    num: lastNum + 1,
+    date: Date.now(),
+  })
+  console.log(2)
+
+  const savedTest = await test.save()
+
+  console.log(manualProblems)
+  manualProblems.map(async (p) => {
+    await createProblem(p, savedTest.id)
+  })
+
+  response.send(savedTest)
 })
 
 testsRouter.get("/:id", async (request, response) => {

@@ -9,7 +9,7 @@ const createProblem = async (problemData, testId) => {
     question,
     correct,
     options,
-    multi,
+    multi: multi || false,
     test: testId,
     date: Date.now(),
   })
