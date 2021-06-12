@@ -21,10 +21,11 @@ testSessionsRouter.get("/all", async (req, res) => {
 })
 
 testSessionsRouter.post("/", async (req, res) => {
-  const { userId, testId } = req.body
+  const user = await verifyUser(req, res)
+  const { testId } = req.body
 
   const testSession = new TestSession({
-    user: userId,
+    user: user.id,
     test: testId,
     start: Date.now(),
   })
