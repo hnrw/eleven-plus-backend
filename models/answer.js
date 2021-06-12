@@ -5,7 +5,6 @@ const uniqueValidator = require("mongoose-unique-validator")
 const answer = new mongoose.Schema({
   selected: {
     type: String,
-    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
