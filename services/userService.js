@@ -92,7 +92,7 @@ const createUser = async (data) => {
     subEnds,
   } = data
 
-  if (password.length < 3) {
+  if (password && password.length < 3) {
     return { status: 400, data: { error: "password length too short" } }
   }
 
