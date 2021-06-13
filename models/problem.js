@@ -20,6 +20,9 @@ const problem = new mongoose.Schema({
       type: String,
     },
   ],
+  unit: {
+    type: "String"
+  }
   test: {
     type: mongoose.Schema.Types.ObjectId,
   },
