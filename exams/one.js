@@ -40,12 +40,12 @@ const problems = [
     question:
       "Ted's favourite TV programmer is shown in the evening. It stars and finishes at the times shown on the clocks.\nHow long does the programme last for?",
     correct: "80",
-    unit: "minutes"
+    unit: "minutes",
   },
   {
     question: "What is the area of this shape?",
     correct: "17.5",
-    unit: "cm²s"
+    unit: "cm²s",
   },
   {
     question: "Which of these numbers is smallest?",
@@ -131,7 +131,7 @@ const problems = [
     question:
       "Look at the information on the right for a breakfast cereal. How much carbohydrate would be in a 20 gram serving of cereal?",
     correct: "14",
-    unit: "grams"
+    unit: "grams",
   },
   {
     question:
@@ -155,7 +155,7 @@ const problems = [
     question:
       "Kate buys a second-hand car for £3,080. The original cost of the acar was £6,999. By how much has the car's value decreased?",
     correct: "3919",
-    unit: "£"
+    unit: "£",
   },
   {
     question:
@@ -199,7 +199,7 @@ const problems = [
     question:
       "Look at the volumes shown below. Find the total volume.\n5.555 litres\n5.55 litres\n5.5 litres\n5.0 litres\n0.5 litres",
     correct: "22.105",
-    unit: "litres"
+    unit: "litres",
   },
   {
     question:
@@ -214,7 +214,6 @@ const problems = [
   {
     question: "Find the sum of all the square numebrs between 46 and 91.",
     correct: "194",
-    
   },
   {
     question:
@@ -235,7 +234,7 @@ const problems = [
     question:
       "Mark takes seven 4cm cubes and pacles them end to end to make this shape. He then puts the shpae on a piece of paper, and draws around it with a pencil.\n What is the perimeter of the shape that he draws?",
     correct: "64",
-    unit: "cm"
+    unit: "cm",
   },
   {
     question:
@@ -255,19 +254,19 @@ const problems = [
     question:
       "The table shows the opening times of a cafe. THe cost of running the cafe is £10 per hour.\nHow much more per week does it cost to run the cafe in the sumemr than in the winter?",
     correct: "280",
-    unit: "£"
+    unit: "£",
   },
   {
     question:
       "The net folds up to form a 3-dimensional shape. What is the volume of this shape?",
     correct: "42",
-    unit: "cm³"
+    unit: "cm³",
   },
   {
     question:
       "Katie buys six 1 litre cartons of milk each week. She drinks 350 ml of milk twice a day.\nShe uses the whole carton before she opens a new one.\nHow much milk will be left over after 7 days?",
     correct: "1100",
-    unit: "ml"
+    unit: "ml",
   },
   {
     question:
@@ -302,7 +301,7 @@ const problems = [
     question:
       "Roger wants to sprad grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Rgoer's area of soil measure 9 metres by 6 metres?",
     correct: "23.96",
-    unit: "£"
+    unit: "£",
   },
   {
     question:

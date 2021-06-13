@@ -23,6 +23,10 @@ const problem = new mongoose.Schema({
   unit: {
     type: "String",
   },
+  num: {
+    type: Number,
+    required: true,
+  },
   test: {
     type: mongoose.Schema.Types.ObjectId,
   },

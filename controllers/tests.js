@@ -31,23 +31,20 @@ testsRouter.get("/next", async (req, res) => {
 })
 
 testsRouter.get("/manual", async (request, response) => {
-  console.log(1)
   const tests = await Test.find({})
   const lastTest = _.maxBy(tests, (test) => test.num)
   // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
-  console.log(1)
   const test = new Test({
     num: lastNum + 1,
     date: Date.now(),
   })
-  console.log(2)
 
   const savedTest = await test.save()
 
-  console.log(manualProblems)
-  manualProblems.map(async (p) => {
+  const numberedProblems = manualProblems.map((p, i) => ({ ...p, num: i + 1 }))
+  numberedProblems.map(async (p) => {
     await createProblem(p, savedTest.id)
   })
 
@@ -75,7 +72,8 @@ testsRouter.post("/", async (request, response) => {
 
   const savedTest = await test.save()
 
-  problems.map(async (p) => {
+  const numberedProblems = problems.map((p, i) => ({ ...p, num: i + 1 }))
+  numberedProblems.map(async (p) => {
     await createProblem(p, savedTest.id)
   })
 
