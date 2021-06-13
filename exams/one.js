@@ -52,8 +52,8 @@ const problems = [
     img: "https://i.imgur.com/UPuM2sq.png",
   },
   {
-    question: "What is 46 x 29?",
-    correct: "1334",
+    question: "What is 191 x 7?",
+    correct: "1337",
   },
   {
     question: "Which of these numbers is the smallest?",
