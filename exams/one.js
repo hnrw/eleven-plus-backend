@@ -349,14 +349,8 @@ const problems = [
   {
     question:
       "Lucy wants to buy a T-shirt in a sale. All items in the sale are reduced by 60%.\n What is the sale price of the T-shirt if the original price was £𝑛?",
-    correct: "seven hundred thousand",
-    options: [
-      "seven hundred million",
-      "seven hundred thousand",
-      "𝑛 - 60",
-      "seventy million",
-      "2𝑛 - 6",
-    ],
+    correct: "⅖(𝑛)",
+    options: ["⅖(𝑛)", "⅗(𝑛)", "𝑛 - 60", "𝑛 ÷ 60", "2𝑛 - 6"],
     multi: true,
   },
 ]
