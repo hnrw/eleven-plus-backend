@@ -106,7 +106,7 @@ const createUser = async (data) => {
   let passwordHash
   passwordHash = data.passwordHash
 
-  if (!password) {
+  if (password) {
     const saltRounds = 10
     passwordHash = await bcrypt.hash(password, saltRounds)
   }
