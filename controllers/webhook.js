@@ -24,9 +24,9 @@ const fufillOrder = async (session) => {
 
   const response = await userService.createUser({
     email: customer.email,
-    password: "123",
     stripeId: customer.id,
     subEnds,
+    passwordHash: customer.metadata.password,
   })
   const savedUser = response.data
 

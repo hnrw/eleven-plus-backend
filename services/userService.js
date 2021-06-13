@@ -101,8 +101,15 @@ const createUser = async (data) => {
     return { status: 400, data: { error: "email already in use" } }
   }
 
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  // password hash is from stripe
+  // but to allow free signups, needs to also support passwords
+  let passwordHash
+  passwordHash = data.passwordHash
+
+  if (!password) {
+    const saltRounds = 10
+    passwordHash = await bcrypt.hash(password, saltRounds)
+  }
 
   const user = new User({
     email,
