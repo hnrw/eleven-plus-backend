@@ -171,7 +171,7 @@ const problems = [
   {
     question:
       "Rashid is thinking of a 3D shape. The shape has 4 faces, 4 vertices, and 6 edges. Which of the following could Rashid's shape be?",
-    correct: "triange-based pyramid",
+    correct: "triangle-based pyramid",
     options: [
       "square-based pyramid",
       "triangle-based pyramid",
@@ -264,6 +264,7 @@ const problems = [
       "The table shows how much Ahmed saves each month. What is Ahmed's mean monthly saving for these 6 months?",
     correct: "1.10",
     img: "https://i.imgur.com/jlrPnny.png",
+    unit: "£",
   },
   {
     question:
@@ -341,7 +342,7 @@ const problems = [
   },
   {
     question:
-      "Roger wants to spread grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Roger's area of soil measure 9 metres by 6 metres?",
+      "Roger wants to spread grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Roger's area of soil measure 8 metres by 6 metres?",
     correct: "23.96",
     unit: "£",
   },
