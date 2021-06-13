@@ -41,11 +41,11 @@ const userSchema = new mongoose.Schema({
   },
   stripeId: {
     type: String,
-    required: true,
+    // required: true,
   },
   subEnds: {
     type: Number,
-    required: true,
+    // required: true,
   },
   score: {
     type: Number,
