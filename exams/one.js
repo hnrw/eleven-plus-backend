@@ -1,7 +1,7 @@
 const problems = [
   {
-    question: "What is the value of 7 in 7 230 000",
-    correct: "answer",
+    question: "What is the value of the 7 in 7 230 000",
+    correct: "seven million",
     options: [
       "seven hundred million",
       "seven hundred thousand",
@@ -32,12 +32,12 @@ const problems = [
     multi: true,
     img: "https://i.imgur.com/F1UwIt0.png",
   },
-  {
-    question:
-      "Courtney records the temperature each day for five days.\nOn which day does she record the lowest temperature?",
-    correct: "answer",
-    img: "https://i.imgur.com/eXYrYO4.png",
-  },
+  // {
+  //   question:
+  //     "Courtney records the temperature each day for five days.\nOn which day does she record the lowest temperature?",
+  //   correct: "answer",
+  //   img: "https://i.imgur.com/eXYrYO4.png",
+  // },
   {
     question:
       "Ted's favourite TV programmer is shown in the evening. It starts and finishes at the times shown on the clocks.\nHow long does the programme last for?",
@@ -57,18 +57,18 @@ const problems = [
     options: ["0.81", "1.92", "12.4", "21.42", "0.18"],
     multi: true,
   },
-  {
-    question:
-      "Jane and Sue are playing a game. Jane starts at point (4,3). She moves 1 unit east and 2 units south on the grid. Which point (A,B,C,D or E) does she end up at?",
-    correct: "E",
-    img: "https://i.imgur.com/JO9o1bB.png",
-  },
-  {
-    question:
-      "Lucas lives in Kneesall. He needs to be at his school in Rippen by 8.40am to go on a trip.\nThe timetable shows the bus times.\nWhat is the latest time he can catch a bus?",
-    correct: "8.30",
-    img: "https://i.imgur.com/HxlFUli.png",
-  },
+  // {
+  //   question:
+  //     "Jane and Sue are playing a game. Jane starts at point (4,3). She moves 1 unit east and 2 units south on the grid. Which point (A,B,C,D or E) does she end up at?",
+  //   correct: "E",
+  //   img: "https://i.imgur.com/JO9o1bB.png",
+  // },
+  // {
+  //   question:
+  //     "Lucas lives in Kneesall. He needs to be at his school in Rippen by 8.40am to go on a trip.\nThe timetable shows the bus times.\nWhat is the latest time he can catch a bus?",
+  //   correct: "8.30",
+  //   img: "https://i.imgur.com/HxlFUli.png",
+  // },
   {
     question:
       "The frequency chart shows the results of throwing a dice. How many times was the dice thrown altogether?",
@@ -79,13 +79,14 @@ const problems = [
     question:
       "Macy buys four bunches of flowers. One of the bunches costs £1.99. The other three bunches cost £1.49.\nWhat is the total cost of the flowers?",
     correct: "£6.46",
-    options: ["£6.59", "£6.46", "£5.56", "5.64", "64.60"],
+    options: ["£6.59", "£6.46", "£5.56", "£5.64", "64.60"],
     multi: true,
   },
   {
     question: "Estimate the size of angle x",
     correct: "45°",
     options: ["10°", "95°", "80°", "15°", "45°"],
+    img: "https://i.imgur.com/RJ5y4p1.png",
     multi: true,
   },
   {
@@ -97,7 +98,7 @@ const problems = [
   },
   {
     question:
-      "A regualr heptagon has a perimeter of 56 cm. How long is each side?",
+      "A regular heptagon has a perimeter of 56 cm. How long is each side?",
     correct: "8",
     unit: "cm",
   },
@@ -117,7 +118,7 @@ const problems = [
   },
   {
     question:
-      "The pie chart shows the pets belonging to the children in Sue's class. The total number of pets in the survey is 32.\nWhich of the following is the best estimate for the number of dogs owned by the class?j",
+      "The pie chart shows the pets belonging to the children in Sue's class. The total number of pets in the survey is 32.\nWhich of the following is the best estimate for the number of dogs owned by the class?",
     correct: "9",
     options: ["8", "15", "18", "6", "9"],
     multi: true,
@@ -195,7 +196,7 @@ const problems = [
     img: "https://i.imgur.com/2MseXuy.png",
   },
   {
-    question: "30 x 806 = 24 180\nWhat is 30 x 403?",
+    question: "If 30 x 806 = 24 180. What is 30 x 403?",
     correct: "12 090",
     options: ["1209", "12900", "48 360", "4836", "12 090"],
     multi: true,
@@ -227,10 +228,10 @@ const problems = [
   //   multi: true,
   // },
   {
-    question:
-      "Look at the volumes shown below. Find the total volume.\n5.555 litres\n5.55 litres\n5.5 litres\n5.0 litres\n0.5 litres",
+    question: "Look at the volumes shown below. Find the total volume.",
     correct: "22.105",
     unit: "litres",
+    img: "https://i.imgur.com/9qkMwJf.png",
   },
   {
     question:
@@ -332,9 +333,10 @@ const problems = [
   },
   {
     question:
-      "Which formula can be used to work out the 𝑛th term of this series?\n-1   1   3   5   7",
+      "Which formula can be used to work out the 𝑛th term of this series?",
     correct: "2𝑛 - 3",
     options: ["3𝑛", "𝑛 - 3", "2𝑛 - 3", "2 ÷ 𝑛 - 3", "2𝑛 + 3"],
+    img: "https://i.imgur.com/r7vyW58.png",
     multi: true,
   },
   {
