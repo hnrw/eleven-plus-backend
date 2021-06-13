@@ -26,7 +26,7 @@ const fufillOrder = async (session) => {
     email: customer.email,
     stripeId: customer.id,
     subEnds,
-    passwordHash: customer.metadata.passwordHash,
+    passwordHash: session.metadata.passwordHash,
   })
   const savedUser = response.data
 
@@ -60,7 +60,7 @@ webhooksRouter.post(
     }
 
     switch (event.type) {
-      case "payment_intent.succeeded": {
+      case "checkout.session.completed": {
         const paymentIntent = event.data.object
         await fufillOrder(paymentIntent)
         logger.info(`PaymentIntent for ${paymentIntent.amount} was successful!`)
