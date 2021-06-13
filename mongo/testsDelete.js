@@ -34,6 +34,4 @@ const deleteTests = async () => {
   })
 }
 
-deleteTests()
-
-mongoose.disconnect()
+deleteTests().then((_) => mongoose.connection.close())
