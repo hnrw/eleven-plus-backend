@@ -35,6 +35,14 @@ const fufillOrder = async (session) => {
   })
 }
 
+const updateSubscription = async (session) => {
+  logger.info("Updating subscription", session)
+}
+
+const onPaymentFailed = async (session) => {
+  logger.info("Payemnt failed", session)
+}
+
 webhooksRouter.post(
   "/",
   bodyParser.raw({ type: "application/json" }),
@@ -54,16 +62,16 @@ webhooksRouter.post(
     switch (event.type) {
       case "payment_intent.succeeded": {
         const paymentIntent = event.data.object
-        fufillOrder(paymentIntent)
+        await fufillOrder(paymentIntent)
         logger.info(`PaymentIntent for ${paymentIntent.amount} was successful!`)
-        // Then define and call a method to handle the successful payment intent.
-        // handlePaymentIntentSucceeded(paymentIntent);
         break
       }
-      case "payment_method.attached": {
-        // const paymentMethod = event.data.object
-        // Then define and call a method to handle the successful attachment of a PaymentMethod.
-        // handlePaymentMethodAttached(paymentMethod);
+      case "invoice.paid": {
+        await updateSubscription(event.type)
+        break
+      }
+      case "invoice.payment_failed": {
+        await onPaymentFailed(event.type)
         break
       }
       default:
