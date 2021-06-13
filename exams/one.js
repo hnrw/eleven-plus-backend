@@ -19,7 +19,7 @@ const problems = [
       "12 metres",
       "12 millimetres",
       "1.2 centimetres",
-      "0.12 cenimetres",
+      "0.12 centimetres",
       "0.12 metres",
     ],
     multi: true,
@@ -38,7 +38,7 @@ const problems = [
   },
   {
     question:
-      "Ted's favourite TV programmer is shown in the evening. It stars and finishes at the times shown on the clocks.\nHow long does the programme last for?",
+      "Ted's favourite TV programmer is shown in the evening. It starts and finishes at the times shown on the clocks.\nHow long does the programme last for?",
     correct: "80",
     unit: "minutes",
   },
@@ -48,7 +48,7 @@ const problems = [
     unit: "cm²s",
   },
   {
-    question: "Which of these numbers is smallest?",
+    question: "Which of these numbers is the smallest?",
     correct: "0.18",
     options: ["0.81", "1.92", "12.4", "21.42", "0.18"],
     multi: true,
@@ -60,7 +60,7 @@ const problems = [
   },
   {
     question:
-      "Lucas lives in Kneesall. He needs to be at his school in Rippen by 8.40am to go on a trip.\nThe timetable shows the bus times.\nWhat is the lastest time he can catch a bus?",
+      "Lucas lives in Kneesall. He needs to be at his school in Rippen by 8.40am to go on a trip.\nThe timetable shows the bus times.\nWhat is the latest time he can catch a bus?",
     correct: "8.30",
   },
   {
@@ -70,7 +70,7 @@ const problems = [
   },
   {
     question:
-      "Macy buys four bunches of flowers. One of the bunches cots £1.99. THe other three buches cost £1.49.\nWhat is the total cost of the flowers?",
+      "Macy buys four bunches of flowers. One of the bunches costs £1.99. The other three bunches cost £1.49.\nWhat is the total cost of the flowers?",
     correct: "£6.46",
     options: ["£6.59", "£6.46", "£5.56", "5.64", "64.60"],
     multi: true,
@@ -90,14 +90,14 @@ const problems = [
   },
   {
     question:
-      "The pie chart shows the pets belonging to the children in Sue's class.The total number of pets in the survey is 32.\nWhich of the following is the best estimate for the number of dogs owned by the class?j",
+      "The pie chart shows the pets belonging to the children in Sue's class. The total number of pets in the survey is 32.\nWhich of the following is the best estimate for the number of dogs owned by the class?j",
     correct: "9",
     options: ["8", "15", "18", "6", "9"],
     multi: true,
   },
   {
     question:
-      "Li estimates the answer to 39 x 43 by rounding both numers to the nearest 10 before multiplying them. Whawt answer shoud he get?",
+      "Li estimates the answer to 39 x 43 by rounding both numbers to the nearest 10 before multiplying them. What answer should he get?",
     correct: "1600",
     options: ["1500", "1600", "1200", "2000", "1677"],
     multi: true,
@@ -109,7 +109,7 @@ const problems = [
   },
   {
     question:
-      "Tammy is buying some cakes for her birthday party. Which of the follwing is the cheapest price per cake?",
+      "Tammy is buying some cakes for her birthday party. Which of the following is the cheapest price per cake?",
     correct: "25 for £2",
     options: [
       "15p each",
@@ -122,7 +122,7 @@ const problems = [
   },
   {
     question:
-      "A caterer is making a sauce. She uses 2.25kg of apples for every 1kg of sugar. How many kilograms of apples will she need if shes uses 9kg of sugar?",
+      "A caterer is making a sauce. She uses 2.25kg of apples for every 1kg of sugar. How many kilograms of apples will she need if she uses 9kg of sugar?",
     correct: "20.25 kg",
     options: ["4 kg", "202.5 kg", "2.025 kg", "2025 kg", "20.25 kg"],
     multi: true,
@@ -135,12 +135,12 @@ const problems = [
   },
   {
     question:
-      "A piece of ribbon is 48m long. It is cut into piece that are each 1/3 m long. How many pieces are there?",
+      "A piece of ribbon is 48m long. It is cut into pieces that are each 1/3 m long. How many pieces are there?",
     correct: "144",
   },
   {
     question:
-      "Rashid is thinking of a 3D shape. THe shape has 4 faces, 4 vertices, and 6 edges. Which of the follwing could Rashid's shape be?",
+      "Rashid is thinking of a 3D shape. The shape has 4 faces, 4 vertices, and 6 edges. Which of the following could Rashid's shape be?",
     correct: "triange-based pyramid",
     options: [
       "square-based pyramid",
@@ -153,13 +153,13 @@ const problems = [
   },
   {
     question:
-      "Kate buys a second-hand car for £3,080. The original cost of the acar was £6,999. By how much has the car's value decreased?",
+      "Kate buys a second-hand car for £3,080. The original cost of the a car was £6,999. By how much has the car's value decreased?",
     correct: "3919",
     unit: "£",
   },
   {
     question:
-      "Jonathan's family go on a journey which is shown on this graph. The family stops for a break. How logn does the break last for?",
+      "Jonathan's family go on a journey which is shown on this graph. The family stops for a break. How long does the break last for?",
     correct: "1.5 hours",
     options: ["1.5 hours", "1 hour", "2 hours", "0.5 hour", "1.75 hours"],
     multi: true,
@@ -212,17 +212,17 @@ const problems = [
   //   correct: "",
   // },
   {
-    question: "Find the sum of all the square numebrs between 46 and 91.",
+    question: "Find the sum of all the square numbers between 46 and 91.",
     correct: "194",
   },
   {
     question:
-      "The pictogram show sthe number of awards. Class 7 gained each day in a week.\nHow many more awards did the class get on Thursday than on Wednesday?",
+      "The pictogram shows the number of awards. Class 7 gained each day in a week.\nHow many more awards did the class get on Thursday than on Wednesday?",
     correct: "5",
   },
   {
     question:
-      "A bag contains some striped balls and some spotted balls. The pattern on the balls is either red or yellow.\nThe table on the right show show many of each abll there are.\nWhat percentage of thee balls have a patter of yellow spots?",
+      "A bag contains some striped balls and some spotted balls. The pattern on the balls is either red or yellow.\nThe table on the right show many of each ball there are.\nWhat percentage of the balls have a patter of yellow spots?",
     correct: "30",
   },
   {
@@ -232,7 +232,7 @@ const problems = [
   },
   {
     question:
-      "Mark takes seven 4cm cubes and pacles them end to end to make this shape. He then puts the shpae on a piece of paper, and draws around it with a pencil.\n What is the perimeter of the shape that he draws?",
+      "Mark takes seven 4cm cubes and places them end to end to make this shape. He then puts the shape on a piece of paper, and draws around it with a pencil.\n What is the perimeter of the shape that he draws?",
     correct: "64",
     unit: "cm",
   },
@@ -252,7 +252,7 @@ const problems = [
   },
   {
     question:
-      "The table shows the opening times of a cafe. THe cost of running the cafe is £10 per hour.\nHow much more per week does it cost to run the cafe in the sumemr than in the winter?",
+      "The table shows the opening times of a cafe. The cost of running the cafe is £10 per hour.\nHow much more per week does it cost to run the cafe in the summer than in the winter?",
     correct: "280",
     unit: "£",
   },
@@ -287,7 +287,7 @@ const problems = [
   },
   {
     question:
-      "Look at the function machine of on the right. If the number 25 comes out of the machine what number went in?",
+      "Look at the function machine on the right. If the number 25 comes out of the machine what number went in?",
     correct: "35",
   },
   {
@@ -299,13 +299,13 @@ const problems = [
   },
   {
     question:
-      "Roger wants to sprad grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Rgoer's area of soil measure 9 metres by 6 metres?",
+      "Roger wants to spread grass seed on a rectangular area of soil. A tub of seed costs £5.99 and covers 12 square meters of soil.\n How much will the seed cost altogether if Roger's area of soil measure 9 metres by 6 metres?",
     correct: "23.96",
     unit: "£",
   },
   {
     question:
-      "Lucy wants to buy a T-shirt in a sale. All itesm in the sale are reduced by 60%.\n What is the sale price of the T-shirt if the original price was £𝑛?",
+      "Lucy wants to buy a T-shirt in a sale. All items in the sale are reduced by 60%.\n What is the sale price of the T-shirt if the original price was £𝑛?",
     correct: "seven hundred thousand",
     options: [
       "seven hundred million",
