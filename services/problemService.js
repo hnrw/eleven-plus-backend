@@ -3,7 +3,7 @@ const Test = require("../models/test")
 const verifyUser = require("../helpers/verifyUser")
 
 const createProblem = async (problemData, testId) => {
-  const { question, correct, options, multi, unit, num } = problemData
+  const { question, correct, options, multi, unit, num, img } = problemData
 
   const problem = new Problem({
     question,
