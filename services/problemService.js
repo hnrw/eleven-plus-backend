@@ -13,6 +13,7 @@ const createProblem = async (problemData, testId) => {
     test: testId,
     unit,
     num,
+    img,
     date: Date.now(),
   })
 

@@ -27,6 +27,9 @@ const problem = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  img: {
+    type: String,
+  },
   test: {
     type: mongoose.Schema.Types.ObjectId,
   },
