@@ -21,8 +21,8 @@ const problem = new mongoose.Schema({
     },
   ],
   unit: {
-    type: "String"
-  }
+    type: "String",
+  },
   test: {
     type: mongoose.Schema.Types.ObjectId,
   },
