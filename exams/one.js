@@ -30,22 +30,26 @@ const problems = [
     correct: "hexagon",
     options: ["pentagon", "octagon", "heptagon", "hexagon", "quadrilateral"],
     multi: true,
+    img: "https://i.imgur.com/F1UwIt0.png",
   },
   {
     question:
       "Courtney records the temperature each day for five days.\nOn which day does she record the lowest temperature?",
     correct: "answer",
+    img: "https://i.imgur.com/eXYrYO4.png",
   },
   {
     question:
       "Ted's favourite TV programmer is shown in the evening. It starts and finishes at the times shown on the clocks.\nHow long does the programme last for?",
     correct: "80",
     unit: "minutes",
+    img: "https://i.imgur.com/xlEOK2L.png",
   },
   {
     question: "What is the area of this shape?",
     correct: "17.5",
     unit: "cm²s",
+    img: "https://i.imgur.com/UPuM2sq.png",
   },
   {
     question: "Which of these numbers is the smallest?",
@@ -57,16 +61,19 @@ const problems = [
     question:
       "Jane and Sue are playing a game. Jane starts at point (4,3). She moves 1 unit east and 2 units south on the grid. Which point (A,B,C,D or E) does she end up at?",
     correct: "E",
+    img: "https://i.imgur.com/JO9o1bB.png",
   },
   {
     question:
       "Lucas lives in Kneesall. He needs to be at his school in Rippen by 8.40am to go on a trip.\nThe timetable shows the bus times.\nWhat is the latest time he can catch a bus?",
     correct: "8.30",
+    img: "https://i.imgur.com/HxlFUli.png",
   },
   {
     question:
       "The frequency chart shows the results of throwing a dice. How many times was the dice thrown altogether?",
     correct: "41",
+    img: "https://i.imgur.com/uOAdejZ.png",
   },
   {
     question:
@@ -82,6 +89,26 @@ const problems = [
     multi: true,
   },
   {
+    question: "How much does the kitten weight?",
+    correct: "2.25 kg",
+    options: ["2.05 kg", "2.05 g", "2.25 kg", "0.5 kg", "2.25 g"],
+    multi: true,
+    img: "https://i.imgur.com/lBpb8ck.png",
+  },
+  {
+    question:
+      "A regualr heptagon has a perimeter of 56 cm. How long is each side?",
+    correct: "8",
+    unit: "cm",
+  },
+  {
+    question:
+      "The chart shows the masses of some bags of fruit on sale in a supermarket. Mr Smith buys 1 bag of oranges, 2 bags of bananas, 3 bags of apples and 1 bag of pears. How many kilograms of fruit has he bought?",
+    correct: "3.75",
+    unit: "kg",
+    img: "https://i.imgur.com/yYnW1ul.png",
+  },
+  {
     question:
       "Joe eats three loaves of bread on a seven day holiday. He eats the same amount of bread each day.\nWhat fraction of a loaf does he eat each day of the holiday?",
     correct: "3/7",
@@ -94,6 +121,7 @@ const problems = [
     correct: "9",
     options: ["8", "15", "18", "6", "9"],
     multi: true,
+    img: "https://i.imgur.com/TpZCE0i.png",
   },
   {
     question:
@@ -132,6 +160,7 @@ const problems = [
       "Look at the information on the right for a breakfast cereal. How much carbohydrate would be in a 20 gram serving of cereal?",
     correct: "14",
     unit: "grams",
+    img: "https://i.imgur.com/KNRedQM.png",
   },
   {
     question:
@@ -163,6 +192,7 @@ const problems = [
     correct: "1.5 hours",
     options: ["1.5 hours", "1 hour", "2 hours", "0.5 hour", "1.75 hours"],
     multi: true,
+    img: "https://i.imgur.com/2MseXuy.png",
   },
   {
     question: "30 x 806 = 24 180\nWhat is 30 x 403?",
@@ -176,6 +206,7 @@ const problems = [
     correct: "19.2 m²",
     options: ["3.84 m²", "19.2 m²", "480 m²", "38.4 m²", "192 m²"],
     multi: true,
+    img: "https://i.imgur.com/CTgQ3cp.png",
   },
   {
     question:
@@ -219,22 +250,26 @@ const problems = [
     question:
       "The pictogram shows the number of awards. Class 7 gained each day in a week.\nHow many more awards did the class get on Thursday than on Wednesday?",
     correct: "5",
+    img: "https://i.imgur.com/Jz5dnpG.png",
   },
   {
     question:
       "A bag contains some striped balls and some spotted balls. The pattern on the balls is either red or yellow.\nThe table on the right show many of each ball there are.\nWhat percentage of the balls have a patter of yellow spots?",
     correct: "30",
+    img: "https://i.imgur.com/UGwh4qv.png",
   },
   {
     question:
       "The table shows how much Ahmed saves each month. What is Ahmed's mean monthly saving for these 6 months?",
     correct: "1.10",
+    img: "https://i.imgur.com/jlrPnny.png",
   },
   {
     question:
       "Mark takes seven 4cm cubes and places them end to end to make this shape. He then puts the shape on a piece of paper, and draws around it with a pencil.\n What is the perimeter of the shape that he draws?",
     correct: "64",
     unit: "cm",
+    img: "https://i.imgur.com/XvR07IK.png",
   },
   {
     question:
@@ -242,6 +277,7 @@ const problems = [
     correct: "𝑛²",
     options: ["𝑛 + 1", "𝑛² + 1", "𝑛", "𝑛²", "𝑛² - 1"],
     multi: true,
+    img: "https://i.imgur.com/mLSTFXZ.png",
   },
   {
     question:
@@ -255,12 +291,14 @@ const problems = [
       "The table shows the opening times of a cafe. The cost of running the cafe is £10 per hour.\nHow much more per week does it cost to run the cafe in the summer than in the winter?",
     correct: "280",
     unit: "£",
+    img: "https://i.imgur.com/gV1PIta.png",
   },
   {
     question:
       "The net folds up to form a 3-dimensional shape. What is the volume of this shape?",
     correct: "42",
     unit: "cm³",
+    img: "https://i.imgur.com/KeOUByP.png",
   },
   {
     question:
@@ -274,6 +312,7 @@ const problems = [
     correct: "south west",
     options: ["west", "south west", "south east", "south", "east"],
     multi: true,
+    img: "https://i.imgur.com/BHSkQxF.png",
   },
   // {
   //   question:
@@ -289,6 +328,7 @@ const problems = [
     question:
       "Look at the function machine on the right. If the number 25 comes out of the machine what number went in?",
     correct: "35",
+    img: "https://i.imgur.com/uPt3FGa.png",
   },
   {
     question:
