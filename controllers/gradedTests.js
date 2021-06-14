@@ -45,6 +45,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       multi: p.multi,
       num: p.num,
       img: p.img,
+      options: p.options,
       selected: submitted.selected,
     }
     return gp
