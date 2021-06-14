@@ -26,6 +26,7 @@ const gradedTest = new mongoose.Schema({
       question: String,
       num: Number,
       multi: Boolean,
+      img: String,
     },
   ],
   test: {
