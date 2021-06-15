@@ -6,7 +6,7 @@ const GradedTest = require("../models/gradedTest")
 const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
-const manualProblems = require("../exams/one.js")
+const manualProblems = require("../exams/three.js")
 
 testsRouter.get("/", async (request, response) => {
   const tests = await Test.find({}).populate("problems")

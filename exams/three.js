@@ -7,6 +7,7 @@ const problem = [
     correct: "correctcorrectcorrect",
     options: ["A", "B", "C", "D", "E"],
     multi: true,
+    img: "https://i.imgur.com/j0SGOw8.png",
   },
   {
     question: "Round the follwing number to the nearest tenth. 498.36765321",
@@ -82,13 +83,7 @@ const problem = [
     question:
       "At the local library, 76 books were retunred on the 1st day of the week, of which 24 were overdue. What fraction of the books returned were overdue?",
     correct: "correctcorrectcorrect",
-    options: [
-      "AAAAAAAAAAA",
-      "BBBBBBBBBB",
-      "CCCCCCCCCC",
-      "DDDDDDDDDD",
-      "EEEEEEEEE",
-    ],
+    options: ["6/19", "6/25", "", "3/8", "5/11", "6/15"],
     multi: true,
   },
   {
@@ -114,11 +109,11 @@ const problem = [
     correct: "correctcorrectcorrect",
     unit: "%",
   },
-  {
-    question: "What percentage of this grid is shaded?",
-    correct: "correctcorrectcorrect",
-    unit: "%",
-  },
+  //   {
+  //     question: "What percentage of this grid is shaded?",
+  //     correct: "correctcorrectcorrect",
+  //     unit: "%",
+  //   },
   {
     question:
       "Bob's school sold 300 tickets for a raffle. 4% of the tickets won a prize. How many tickets did not win a prize?",
@@ -145,7 +140,6 @@ const problem = [
     question:
       "During a TV quiz game, the quesitons are answered correctly by presenters Ant and Dec in teh ration of 5:4. If Ant answered 20 questions right, how many questions did Dec answer correctly?",
     correct: "correctcorrectcorrect",
-    multi: true,
   },
   {
     question:
@@ -156,7 +150,6 @@ const problem = [
     question:
       "In the graph above, how many more complaint letters were received in week 1 than in week 5?",
     correct: "correctcorrectcorrect",
-    multi: true,
   },
   {
     question:
@@ -186,6 +179,7 @@ const problem = [
   {
     question: "What is the perimeter of the following shape?",
     correct: "correctcorrectcorrect",
+    img: "https://i.imgur.com/YELCAJ2.png",
   },
   {
     question: "What is the area of the above shape?",
@@ -194,6 +188,7 @@ const problem = [
   {
     question: "What is the size of angle 'a' in the diagram?",
     correct: "correctcorrectcorrect",
+    img: "https://i.imgur.com/ao043Y9.png",
     unit: "°",
   },
   {
@@ -203,9 +198,16 @@ const problem = [
   },
   {
     question:
-      "The diagram shows a square. Two straigh lines cut the square into four rectangles. The area of one of the rectangles is shown. Work out the area of the rectangle marked A",
+      "The diagram shows a square. Two straight lines cut the square into four rectangles. The area of one of the rectangles is shown. Work out the area of the rectangle marked A",
     correct: "correctcorrectcorrect",
+    img: "https://i.imgur.com/ao043Y9.png",
     unit: "²",
+  },
+  {
+    question: "Name the following 2D shape.",
+    options: ["Pentagon", "Hexagon", "Octogon", "Paralellogram", "Trapezium"],
+    img: "https://i.imgur.com/w4b6zrF.png",
+    multi: true,
   },
   //   {
   //     question:
