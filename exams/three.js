@@ -41,7 +41,7 @@ const problems = [
   },
   {
     question:
-      "The Glitz Fashion shop was having a sale. Jessica bought five T-shirts for £12.89, four bracelets for £15.73, and six rings for £19.22. How much money did Jessica spend altogether on accessories?",
+      "The Glitz Fashion shop was having a sale. Jessica bought five T-shirts for £12.89 each, four bracelets for £15.73 each, and six rings for £19.22 each. How much money did Jessica spend altogether at the shop?",
     correct: "242.69",
     unit: "£",
   },
@@ -214,8 +214,8 @@ const problems = [
   {
     question:
       "The diagram shows a square. Two straight lines cut the square into four rectangles. The area of one of the rectangles is shown. Work out the area of the rectangle marked A",
-    correct: 24,
-    img: "https://i.imgur.com/ao043Y9.png",
+    correct: 42,
+    img: "https://i.imgur.com/5SqdfEu.png",
     unit: "cm²",
   },
   {
@@ -291,7 +291,7 @@ const problems = [
   {
     question:
       "A family's journey to their holiday destination involved a car journey to the airport, a wait of 2 hours, a flight, a wait of one hour and a further car journey to the hotel. Their son, David, worked out that his family had spent three times longer in the aeroplane than on the two car journeys added together. The total journey time was 8 hours from start to finish. How long was the family on the aeroplane?",
-    correct: 75,
+    correct: 225,
     unit: "minutes",
   },
 ]
