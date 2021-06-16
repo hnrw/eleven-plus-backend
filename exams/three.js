@@ -10,6 +10,10 @@ const problems = [
     correct: 38,
   },
   {
+    question: "Calculate √169 (the square root of 169)",
+    correct: 13,
+  },
+  {
     question: "Calculate 987 + 494",
     correct: 1481,
   },
@@ -25,7 +29,7 @@ const problems = [
   },
   {
     question:
-      "Which of the following numbers is the lowest Common Multiple (LCM) of 5 and 30?",
+      "Which of the following numbers is the Lowest Common Multiple (LCM) of 5 and 30?",
     correct: "30",
     options: ["5", "10", "6", "30", "3"],
     multi: true,
@@ -42,7 +46,7 @@ const problems = [
   },
   {
     question:
-      "Which of the following numbers it the remainder when you divide 46 by 6?",
+      "Which of the following numbers is the remainder when you divide 46 by 6?",
     correct: "4",
     options: ["1", "2", "3", "4", "5", "7"],
     multi: true,
@@ -76,7 +80,7 @@ const problems = [
   },
   {
     question:
-      "Wrte the following number as a decimal number. 76 + 4 + ²⁄₁₀ + ⁸⁄₁₀₀",
+      "Write the following number as a decimal number. 76 + 4 + ²⁄₁₀ + ⁸⁄₁₀₀",
     correct: "80.28",
   },
   {
@@ -87,14 +91,14 @@ const problems = [
   },
   {
     question:
-      "At the local library, 76 books were retunred on the 1st day of the week, of which 24 were overdue. What fraction of the books returned were overdue?",
+      "At the local library, 76 books were returned on the 1st day of the week, of which 24 were overdue. What fraction of the books returned were overdue?",
     correct: "6/19",
     options: ["6/19", "6/25", "3/8", "5/11", "6/15"],
     multi: true,
   },
   {
     question:
-      "What is the new price of a bike which normally costs £75 but it is reduced by 20% in the sale?",
+      "What is the new price of a bike which normally costs £75 but is reduced by 20% in the sale?",
     correct: "60",
     unit: "£",
   },
@@ -127,7 +131,7 @@ const problems = [
     correct: 288,
   },
   {
-    question: "Which answer of the follwing is different from the others?",
+    question: "Which answer of the following is different from the others?",
     correct: "30% of £75",
     options: [
       "50% of £50",
@@ -140,13 +144,13 @@ const problems = [
   },
   {
     question:
-      "Mark has just building a model aeroplane with a scale of 1:72. The model is 20cm long. How long is the actual aeroplane?",
+      "Mark has just built a model aeroplane with a scale of 1:72. The model is 20cm long. How long is the actual aeroplane?",
     correct: 14.4,
     unit: "metres",
   },
   {
     question:
-      "During a TV quiz game, the quesitons are answered correctly by presenters Ant and Dec in the ratio of 5:4. If Ant answered 20 questions right, how many questions did Ant and Dec answer correctly in total?",
+      "During a TV quiz game, the questions are answered correctly by presenters Ant and Dec in the ratio of 5:4. If Ant answered 20 questions right, how many questions did Ant and Dec answer correctly in total?",
     correct: 36,
   },
   {
@@ -162,7 +166,7 @@ const problems = [
   },
   {
     question:
-      "In the graph above, what is the mean number of complain letters received in a  week?",
+      "In the graph above, what is the mean number of complaint letters received in a  week?",
     correct: 150,
   },
   {
@@ -216,7 +220,7 @@ const problems = [
   {
     question: "Name the following 2D shape.",
     correct: "Pentagon",
-    options: ["Pentagon", "Hexagon", "Octogon", "Paralellogram", "Trapezium"],
+    options: ["Pentagon", "Hexagon", "Octagon", "Parallelogram", "Trapezium"],
     img: "https://i.imgur.com/w4b6zrF.png",
     multi: true,
   },
@@ -247,7 +251,7 @@ const problems = [
   },
   {
     question:
-      "A train leaves London at 9.16am and arrives in Scotland at 16.03. How long did the journey take?",
+      "A train leaves London at 9.16 am and arrives in Scotland at 16.03. How long did the journey take?",
     correct: 407,
     unit: "minutes",
   },
@@ -275,7 +279,7 @@ const problems = [
   },
   {
     question:
-      "In the garden, Kylie's father is planting a row of gooseberry bushes. He has alrady planted the first and last bushes in the row and they are 9 metres apart. If gooseberry bushes have to be planted 1.5 metres apart, how many bushes should he plan between the first and last bushes in order to complete the row?",
+      "In the garden, Kylie's father is planting a row of gooseberry bushes. He has already planted the first and last bushes in the row and they are 9 metres apart. If gooseberry bushes have to be planted 1.5 metres apart, how many bushes should he plan between the first and last bushes in order to complete the row?",
     correct: 5,
   },
   {
@@ -290,6 +294,5 @@ const problems = [
     unit: "minutes",
   },
 ]
-console.log(problems.length)
 
 module.exports = problems
