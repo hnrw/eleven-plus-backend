@@ -43,6 +43,7 @@ const problems = [
     question:
       "The Glitz Fashion shop was having a sale. Jessica bought five T-shirts for £12.89, four bracelets for £15.73, and six rings for £19.22. How much money did Jessica spend altogether on accessories?",
     correct: "242.69",
+    unit: "£",
   },
   {
     question:
@@ -117,7 +118,7 @@ const problems = [
   {
     question:
       "37 out of 50 pupils in a school said they have a Nintendo Switch at home. What percentage is this?",
-    correct: 64,
+    correct: 74,
     unit: "%",
   },
   //   {
