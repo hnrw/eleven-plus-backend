@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String  @id @default(uuid())
+  email          String  @unique
+  firstName      String?
+  lastName       String?
+  parentName     String
+  dob            Int?
+  gender         String?
+  passwordHash   String
+  profilePicture String?
+  subEnds        Int?
+  score          Float?
+  date           Int
+}
+
+model Test {
+  id   String @id @default(uuid())
+  num  Int    @unique
+  date Int
+}
+
+model Problem {
+  id      String   @id @default(uuid())
+  multi   Boolean
+  correct String
+  options String[]
+  unit    String?
+  num     Int
+  img     String?
+  date    Int
+}
+
+model Answer {
+  id       String  @id @default(uuid())
+  selected String?
+  date     Int
+}
+
+model GradedTest {
+  id      String @id @default(uuid())
+  marks   Int
+  total   Int
+  percent Float
+  num     Int
+  date    Int
+}
+
+model BouncedUser {
+  id         String @id @default(uuid())
+  email      String
+  parentName String
+  date       Int
+}
+
+model TestSession {
+  id    String @id @default(uuid())
+  start Int
+}
+
+// model Post { id       Int     @id @default(autoincrement())
+//   content  String?
+//   author   User    @relation(fields: [authorId], references: [id])
+//   authorId Int
+// }
+
+// model User {
+//   id    Int     @id @default(autoincrement())
+//   email String  @unique
+//   name  String?
+//   posts Post[]
+// }
