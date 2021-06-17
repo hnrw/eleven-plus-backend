@@ -4,7 +4,6 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-
 }
 
 generator client {
@@ -12,8 +11,8 @@ generator client {
 }
 
 model User {
-  id             String  @id @default(uuid())
-  email          String  @unique
+  id             String       @id @default(uuid())
+  email          String       @unique
   firstName      String?
   lastName       String?
   parentName     String
@@ -21,15 +20,22 @@ model User {
   gender         String?
   passwordHash   String
   profilePicture String?
+  stripeId       String
   subEnds        Int?
   score          Float?
   date           Int
+  answers        Answer[]
+  gradedTests    GradedTest[]
+  testSession    TestSession?
 }
 
 model Test {
-  id   String @id @default(uuid())
-  num  Int    @unique
-  date Int
+  id           String        @id @default(uuid())
+  num          Int           @unique
+  date         Int
+  problems     Problem[]
+  gradedTests  GradedTest[]
+  testSessions TestSession[]
 }
 
 model Problem {
@@ -41,12 +47,19 @@ model Problem {
   num     Int
   img     String?
   date    Int
+  test    Test     @relation(fields: [testId], references: [id])
+  testId  String
+  answers Answer[]
 }
 
 model Answer {
-  id       String  @id @default(uuid())
-  selected String?
-  date     Int
+  id        String  @id @default(uuid())
+  selected  String?
+  date      Int
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  problem   Problem @relation(fields: [problemId], references: [id])
+  problemId String
 }
 
 model GradedTest {
@@ -56,6 +69,10 @@ model GradedTest {
   percent Float
   num     Int
   date    Int
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  test    Test   @relation(fields: [testId], references: [id])
+  testId  String
 }
 
 model BouncedUser {
@@ -66,19 +83,10 @@ model BouncedUser {
 }
 
 model TestSession {
-  id    String @id @default(uuid())
-  start Int
+  id     String  @id @default(uuid())
+  start  Int
+  user   User    @relation(fields: [userId], references: [id])
+  userId String
+  Test   Test?   @relation(fields: [testId], references: [id])
+  testId String?
 }
-
-// model Post { id       Int     @id @default(autoincrement())
-//   content  String?
-//   author   User    @relation(fields: [authorId], references: [id])
-//   authorId Int
-// }
-
-// model User {
-//   id    Int     @id @default(autoincrement())
-//   email String  @unique
-//   name  String?
-//   posts Post[]
-// }
