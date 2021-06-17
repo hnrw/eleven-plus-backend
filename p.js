@@ -3,7 +3,8 @@ const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 const main = async () => {
-  const deleteUsers = await prisma.user.deleteMany({})
+  await prisma.problem.deleteMany({})
+  await prisma.test.deleteMany({})
 }
 
 main()

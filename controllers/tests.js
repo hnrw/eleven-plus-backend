@@ -46,7 +46,6 @@ testsRouter.get("/manual", async (request, response) => {
   const numberedProblems = manualProblems.map((p, i) => ({
     ...p,
     num: i + 1,
-    date: Date.now(),
     correct: p.correct.toString(),
   }))
 
