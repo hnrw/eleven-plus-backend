@@ -39,17 +39,18 @@ model Test {
 }
 
 model Problem {
-  id      String   @id @default(uuid())
-  multi   Boolean  @default(false)
-  correct String
-  options String[]
-  unit    String?
-  num     Int
-  img     String?
-  date    Int
-  test    Test     @relation(fields: [testId], references: [id])
-  testId  String
-  answers Answer[]
+  id       String   @id @default(uuid())
+  question String
+  multi    Boolean?  @default(false)
+  correct  String
+  options  String[]
+  unit     String?
+  num      Int
+  img      String?
+  date     Int
+  test     Test     @relation(fields: [testId], references: [id])
+  testId   String
+  answers  Answer[]
 }
 
 model Answer {

@@ -12,7 +12,11 @@ const manualProblems = require("../exams/three.js")
 const prisma = new PrismaClient()
 
 testsRouter.get("/", async (request, response) => {
-  const tests = await prisma.test.findMany()
+  const tests = await prisma.test.findMany({
+    include: {
+      problems: true,
+    },
+  })
   response.send(tests)
 })
 
@@ -39,17 +43,22 @@ testsRouter.get("/manual", async (request, response) => {
   // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
+  const numberedProblems = manualProblems.map((p, i) => ({
+    ...p,
+    num: i + 1,
+    date: Date.now(),
+  }))
+
   const savedTest = await prisma.test.create({
     data: {
       num: lastNum + 1,
       date: Date.now(),
+      problems: {
+        create: numberedProblems,
+      },
     },
   })
 
-  const numberedProblems = manualProblems.map((p, i) => ({ ...p, num: i + 1 }))
-  await prisma.problem.createMany({
-    data: numberedProblems,
-  })
   response.send(savedTest)
 })
 
