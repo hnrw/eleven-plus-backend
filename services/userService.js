@@ -1,19 +1,15 @@
 const bcrypt = require("bcrypt")
+const { PrismaClient } = require("@prisma/client")
 const jwt = require("jsonwebtoken")
 const Fuse = require("fuse.js")
 const User = require("../models/user")
 const BouncedUser = require("../models/bouncedUser")
 const sendEmail = require("../helpers/sendEmail")
 
-const getUsers = async (user) => {
-  // if (user.email !== "pannicope@gmail.com") {
-  //   return {
-  //     status: 400,
-  //     data: { error: "unauthorized" },
-  //   }
-  // }
+const prisma = new PrismaClient()
 
-  const users = await User.find({}).populate("gradedTests")
+const getUsers = async (user) => {
+  const users = await prisma.user.findMany()
   return {
     status: 200,
     data: users,
@@ -81,25 +77,16 @@ const searchUsers = async (searchParam) => {
 }
 
 const createUser = async (data) => {
-  const {
-    email,
-    name,
-    parentName,
-    dob,
-    gender,
-    password,
-    stripeId,
-    subEnds,
-  } = data
+  const { email, parentName, dob, gender, password, stripeId, subEnds } = data
 
-  if (password && password.length < 3) {
-    return { status: 400, data: { error: "password length too short" } }
-  }
+  // if (password && password.length < 3) {
+  //   return { status: 400, data: { error: "password length too short" } }
+  // }
 
-  const checkEmailUser = await User.findOne({ email })
-  if (checkEmailUser) {
-    return { status: 400, data: { error: "email already in use" } }
-  }
+  // const checkEmailUser = await User.findOne({ email })
+  // if (checkEmailUser) {
+  //   return { status: 400, data: { error: "email already in use" } }
+  // }
 
   // password hash is from stripe
   // but to allow free signups, needs to also support passwords
@@ -111,21 +98,20 @@ const createUser = async (data) => {
     passwordHash = await bcrypt.hash(password, saltRounds)
   }
 
-  const user = new User({
-    email,
-    name,
-    parentName,
-    dob,
-    gender,
-    passwordHash,
-    profilePicture:
-      "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
-    stripeId,
-    subEnds,
-    date: Date.now(),
+  const savedUser = await prisma.user.create({
+    data: {
+      email,
+      parentName,
+      dob,
+      gender,
+      passwordHash,
+      profilePicture:
+        "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
+      stripeId,
+      subEnds,
+      date: Date.now(),
+    },
   })
-
-  const savedUser = await user.save()
 
   const userForToken = {
     email: savedUser.email,

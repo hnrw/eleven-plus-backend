@@ -3,14 +3,7 @@ const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 const main = async () => {
-  const user = await prisma.user.create({
-    data: {
-      name: "bob",
-      email: "bob@boob.com",
-    },
-  })
-  const users = await prisma.user.findMany()
-  console.log(users)
+  const deleteUsers = await prisma.user.deleteMany({})
 }
 
 main()
