@@ -22,13 +22,22 @@ testsRouter.get("/", async (request, response) => {
 
 testsRouter.get("/next", async (req, res) => {
   const user = await verifyUser(req, res)
-  const gradedTests = await GradedTest.find({ user })
+  const gradedTests = await prisma.gradedTest.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
   const lastDone = _.maxBy(gradedTests, (gt) => gt.num)
   const lastDoneNum = (lastDone && lastDone.num) || 0
 
-  const nextTest = await Test.findOne({ num: lastDoneNum + 1 }).populate(
-    "problems"
-  )
+  const nextTest = await prisma.test.findUnique({
+    where: {
+      num: lastDoneNum + 1,
+    },
+    include: {
+      problems: true,
+    },
+  })
 
   if (nextTest) {
     res.send(nextTest)
