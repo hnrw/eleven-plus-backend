@@ -63,7 +63,14 @@ testsRouter.get("/manual", async (request, response) => {
 
 testsRouter.get("/:id", async (request, response) => {
   const { id } = request.params
-  const test = await Test.findById(id).populate("problems")
+  const test = await prisma.test.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      problems: true,
+    },
+  })
   response.send(test)
 })
 
