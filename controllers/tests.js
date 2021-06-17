@@ -1,4 +1,5 @@
 const testsRouter = require("express").Router()
+const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
@@ -8,8 +9,10 @@ const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
 const manualProblems = require("../exams/three.js")
 
+const prisma = new PrismaClient()
+
 testsRouter.get("/", async (request, response) => {
-  const tests = await Test.find({}).populate("problems")
+  const tests = await prisma.test.findMany()
   response.send(tests)
 })
 
