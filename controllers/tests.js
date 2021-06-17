@@ -75,17 +75,19 @@ testsRouter.post("/", async (request, response) => {
   // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
+  const numberedProblems = problems.map((p, i) => ({
+    ...p,
+    num: i + 1,
+    correct: p.correct.toString(),
+  }))
+
   const savedTest = await prisma.test.create({
     data: {
       num: lastNum + 1,
-      date: Date.now(),
+      problems: {
+        create: numberedProblems,
+      },
     },
-  })
-
-  const numberedProblems = problems.map((p, i) => ({ ...p, num: i + 1 }))
-
-  await prisma.problem.createMany({
-    data: numberedProblems,
   })
 
   response.send(savedTest)
@@ -99,14 +101,15 @@ testsRouter.delete("/:id", async (request, response) => {
   }
 
   const { id } = request.params
-  await Test.findByIdAndRemove(id)
 
-  const problems = await Problem.find({})
-  problems.forEach(async (p) => {
-    if (p.test.equals(id)) {
-      await p.remove(p)
-    }
+  await prisma.problem.deleteMany({
+    where: {
+      testId: id,
+    },
   })
+
+  await prisma.test.delete({ where: { id } })
+
   return response.status(204).end()
 })
 
