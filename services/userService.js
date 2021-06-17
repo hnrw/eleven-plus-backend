@@ -79,14 +79,19 @@ const searchUsers = async (searchParam) => {
 const createUser = async (data) => {
   const { email, parentName, dob, gender, password, stripeId, subEnds } = data
 
-  // if (password && password.length < 3) {
-  //   return { status: 400, data: { error: "password length too short" } }
-  // }
+  if (password && password.length < 3) {
+    return { status: 400, data: { error: "password length too short" } }
+  }
 
-  // const checkEmailUser = await User.findOne({ email })
-  // if (checkEmailUser) {
-  //   return { status: 400, data: { error: "email already in use" } }
-  // }
+  const checkEmailUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  if (checkEmailUser) {
+    return { status: 400, data: { error: "email already in use" } }
+  }
 
   // password hash is from stripe
   // but to allow free signups, needs to also support passwords
