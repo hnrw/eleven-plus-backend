@@ -194,11 +194,13 @@ const problems = [
   {
     question: "What is the perimeter of the following shape?",
     correct: 26,
+    unit: "cm",
     img: "https://i.imgur.com/YELCAJ2.png",
   },
   {
     question: "What is the area of the above shape?",
     correct: 35,
+    unit: "cm²",
   },
   {
     question: "What is the size of angle 'a' in the diagram?",
