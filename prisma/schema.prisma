@@ -40,7 +40,7 @@ model Test {
 
 model Problem {
   id      String   @id @default(uuid())
-  multi   Boolean
+  multi   Boolean  @default(false)
   correct String
   options String[]
   unit    String?
