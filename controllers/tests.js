@@ -47,6 +47,7 @@ testsRouter.get("/manual", async (request, response) => {
     ...p,
     num: i + 1,
     date: Date.now(),
+    correct: p.correct.toString(),
   }))
 
   const savedTest = await prisma.test.create({
