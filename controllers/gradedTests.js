@@ -104,20 +104,22 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     },
   })
 
-  // const usersGrades = await GradedTest.find({ user }).populate("gradedProblems")
-  // user.score = _.meanBy(usersGrades, (gt) => gt.percent)
+  const usersGradedTests = await prisma.gradedTest.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
 
-  // await user.save()
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      score: _.meanBy(usersGradedTests, (gt) => gt.percent),
+    },
+  })
 
   await prisma.testSession.delete({ where: { userId: user.id } })
-
-  // answers.forEach((a) => {
-  //   answerService.createAnswer({
-  //     user,
-  //     problemId: a.problemId,
-  //     selected: a.selected,
-  //   })
-  // })
 
   response.send(savedGradedTest)
 })
