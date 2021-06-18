@@ -4,8 +4,7 @@ const prisma = new PrismaClient()
 
 const main = async () => {
   await prisma.answer.deleteMany({})
-  await prisma.test.deleteMany({})
-  await prisma.problem.deleteMany({})
+  await prisma.gradedProblem.deleteMany({})
   await prisma.gradedTest.deleteMany({})
   await prisma.testSession.deleteMany({})
 }
