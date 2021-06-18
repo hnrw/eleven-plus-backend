@@ -1,7 +1,10 @@
 const bcrypt = require("bcrypt")
+const { PrismaClient } = require("@prisma/client")
 const passwordsRouter = require("express").Router()
 const User = require("../models/user")
 const verifyUser = require("../helpers/verifyUser")
+
+const prisma = new PrismaClient()
 
 passwordsRouter.put("/password", async (request, response) => {
   const { newPassword, currentPassword } = request.body
@@ -28,18 +31,23 @@ passwordsRouter.put("/password", async (request, response) => {
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(newPassword, saltRounds)
 
-  user.passwordHash = passwordHash
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      passwordHash,
+    },
+  })
 
-  const savedUser = await user.save()
-
-  return response.status(200).json(savedUser)
+  return response.status(200).json(updatedUser)
 })
 
 passwordsRouter.put("/reset-password", async (request, response) => {
   const { id, newPassword } = request.body
   // needs to be given id before verifying jwt so can fetch current password used for jwt secret
 
-  const user = await User.findById(id)
+  const user = await prisma.user.findUnique({ where: { id } })
 
   const verifiedUser = await verifyUser(request, response, user.passwordHash)
 
@@ -50,10 +58,16 @@ passwordsRouter.put("/reset-password", async (request, response) => {
   const saltRounds = 10
   const newPasswordHash = await bcrypt.hash(newPassword, saltRounds)
 
-  user.passwordHash = newPasswordHash
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      passwordHash: newPasswordHash,
+    },
+  })
 
-  const savedUser = await user.save()
-  return response.status(200).send(savedUser)
+  return response.status(200).send(updatedUser)
 })
 
 module.exports = passwordsRouter
