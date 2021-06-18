@@ -57,7 +57,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     const submitted = answers.find((a) => p.id === a.problemId)
     const gp = {
       question: p.question,
-      correct: p.correct,
+      correct: p.correct.toString(),
       multi: p.multi,
       num: p.num,
       img: p.img,
@@ -86,7 +86,12 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       total: test.problems.length,
       num: test.num,
       percent,
-      // gradedProblems,
+      gradedProblems: {
+        create: gradedProblems,
+      },
+    },
+    include: {
+      gradedProblems: true,
     },
   })
 
