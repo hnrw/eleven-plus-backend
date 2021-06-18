@@ -27,6 +27,7 @@ const fufillOrder = async (session) => {
     stripeId: customer.id,
     subEnds,
     passwordHash: session.metadata.passwordHash,
+    parentName: session.metadata.parentName,
   })
   const savedUser = response.data
 

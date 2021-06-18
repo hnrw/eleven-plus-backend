@@ -54,7 +54,6 @@ const createUser = async (data) => {
         "https://backstage-profile-pictures.s3.eu-west-2.amazonaws.com/default.png",
       stripeId,
       subEnds,
-      date: Date.now(),
     },
   })
 

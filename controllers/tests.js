@@ -22,6 +22,7 @@ testsRouter.get("/", async (request, response) => {
 
 testsRouter.get("/next", async (req, res) => {
   const user = await verifyUser(req, res)
+  console.log(user)
   const gradedTests = await prisma.gradedTest.findMany({
     where: {
       userId: user.id,
