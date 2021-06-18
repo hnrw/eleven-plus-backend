@@ -16,7 +16,7 @@ testSessionsRouter.get("/", async (req, res) => {
   if (!testSession) {
     return res.send("no session exists")
   }
-  res.send(testSession)
+  return res.send(testSession)
 })
 
 testSessionsRouter.get("/all", async (req, res) => {

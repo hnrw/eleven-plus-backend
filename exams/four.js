@@ -21,6 +21,7 @@ const problems = [
   {
     question: "What is the lowest common multiple of 2, 4, 6 and 8?",
     correct: "correctcorrectcorrect",
+  },
   {
     question: "What is the next higher number in the following series?",
     correct: "correctcorrectcorrect",

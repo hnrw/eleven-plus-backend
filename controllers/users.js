@@ -49,7 +49,7 @@ usersRouter.delete("/:id", async (request, response) => {
   }
   const { id } = request.params
   const user = await prisma.user.delete({ where: { id } })
-  response.send(user)
+  return response.send(user)
 })
 
 module.exports = usersRouter
