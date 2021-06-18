@@ -30,14 +30,12 @@ bouncedUsersRouter.post("/", async (req, res) => {
   })
 
   if (existingBounced) {
-    const date = new Date()
     const updatedBouncedUser = await prisma.bouncedUser.update({
       where: {
         email,
       },
       data: {
         parentName,
-        // date,
       },
     })
     return res.send(updatedBouncedUser)
