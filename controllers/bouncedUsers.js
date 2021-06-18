@@ -1,7 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
 const bouncedUsersRouter = require("express").Router()
-const User = require("../models/user")
-const BouncedUser = require("../models/bouncedUser")
 
 const prisma = new PrismaClient()
 

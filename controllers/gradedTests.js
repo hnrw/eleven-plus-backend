@@ -1,12 +1,7 @@
 const gradedTestsRouter = require("express").Router()
 const _ = require("lodash")
 const { PrismaClient } = require("@prisma/client")
-const GradedTest = require("../models/gradedTest")
-const Test = require("../models/test")
-const Problem = require("../models/problem")
-const TestSession = require("../models/testSession")
 const verifyUser = require("../helpers/verifyUser")
-const answerService = require("../services/answerService")
 
 const prisma = new PrismaClient()
 

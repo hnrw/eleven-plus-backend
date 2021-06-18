@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken")
 const { PrismaClient } = require("@prisma/client")
-const User = require("../models/user")
 
 const prisma = new PrismaClient()
 

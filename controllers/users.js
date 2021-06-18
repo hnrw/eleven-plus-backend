@@ -1,5 +1,4 @@
 const usersRouter = require("express").Router()
-const User = require("../models/user")
 const verifyUser = require("../helpers/verifyUser")
 const userService = require("../services/userService")
 

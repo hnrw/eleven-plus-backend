@@ -1,8 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
 const profilesRouter = require("express").Router()
-const User = require("../models/user")
-const verifyUser = require("../helpers/verifyUser")
-const userService = require("../services/userService")
 
 const prisma = new PrismaClient()
 

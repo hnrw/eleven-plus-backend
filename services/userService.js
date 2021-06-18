@@ -1,10 +1,6 @@
 const bcrypt = require("bcrypt")
 const { PrismaClient } = require("@prisma/client")
 const jwt = require("jsonwebtoken")
-const Fuse = require("fuse.js")
-const User = require("../models/user")
-const BouncedUser = require("../models/bouncedUser")
-const sendEmail = require("../helpers/sendEmail")
 
 const prisma = new PrismaClient()
 

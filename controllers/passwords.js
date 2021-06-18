@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt")
 const { PrismaClient } = require("@prisma/client")
 const passwordsRouter = require("express").Router()
-const User = require("../models/user")
 const verifyUser = require("../helpers/verifyUser")
 
 const prisma = new PrismaClient()

@@ -1,7 +1,6 @@
 const webhooksRouter = require("express").Router()
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const bodyParser = require("body-parser")
-const User = require("../models/user")
 const userService = require("../services/userService")
 const logger = require("../utils/logger")
 

@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client")
 const problemsRouter = require("express").Router()
-const Problem = require("../models/problem")
 const verifyUser = require("../helpers/verifyUser")
+
 const prisma = new PrismaClient()
 
 problemsRouter.get("/", async (request, response) => {

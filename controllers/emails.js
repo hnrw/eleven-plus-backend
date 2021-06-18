@@ -1,7 +1,6 @@
 const { PrismaClient } = require("@prisma/client")
 const emailsRouter = require("express").Router()
 const jwt = require("jsonwebtoken")
-const User = require("../models/user")
 const sendEmail = require("../helpers/sendEmail")
 
 const prisma = new PrismaClient()
