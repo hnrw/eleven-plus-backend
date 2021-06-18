@@ -41,7 +41,7 @@ bouncedUsersRouter.post("/", async (req, res) => {
     return res.send(updatedBouncedUser)
   }
 
-  const savedBouncedUser = prisma.bouncedUser.create({
+  const savedBouncedUser = await prisma.bouncedUser.create({
     data: {
       parentName,
       email,
