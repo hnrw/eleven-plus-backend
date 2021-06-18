@@ -1,8 +1,11 @@
+const { PrismaClient } = require("@prisma/client")
 const webhooksRouter = require("express").Router()
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const bodyParser = require("body-parser")
 const userService = require("../services/userService")
 const logger = require("../utils/logger")
+
+const prisma = new PrismaClient()
 
 const endpointSecret = process.env.ENDPOINT_SECRET
 
@@ -15,13 +18,6 @@ const fufillOrder = async (session) => {
   logger.info("Fulfilling order", session)
 
   const customer = await stripe.customers.retrieve(session.customer)
-  const user = await User.findById(customer.metadata.id)
-
-  if (user) {
-    user.subEnds = subEnds
-    await user.save()
-    return
-  }
 
   const response = await userService.createUser({
     email: customer.email,
@@ -33,12 +29,20 @@ const fufillOrder = async (session) => {
   const savedUser = response.data
 
   stripe.customers.update(session.customer, {
-    metadata: { id: savedUser.id, email: savedUser.id },
+    metadata: { id: savedUser.id },
   })
 }
 
 const updateSubscription = async (session) => {
   logger.info("Updating subscription", session)
+
+  const customer = await stripe.customers.retrieve(session.customer)
+  await prisma.user.update({
+    where: { id: customer.metadata.id },
+    data: {
+      subEnds,
+    },
+  })
 }
 
 const onPaymentFailed = async (session) => {
@@ -69,7 +73,8 @@ webhooksRouter.post(
         break
       }
       case "invoice.paid": {
-        await updateSubscription(event.type)
+        const paymentIntent = event.data.object
+        await updateSubscription(paymentIntent)
         break
       }
       case "invoice.payment_failed": {
