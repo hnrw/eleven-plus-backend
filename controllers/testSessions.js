@@ -1,5 +1,4 @@
 const testSessionsRouter = require("express").Router()
-const _ = require("lodash")
 const { PrismaClient } = require("@prisma/client")
 const verifyUser = require("../helpers/verifyUser")
 
