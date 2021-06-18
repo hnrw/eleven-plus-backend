@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 const endpointSecret = process.env.ENDPOINT_SECRET
 
 const today = dayjs()
-const subEnds = today.add(32, "days")
+const subEnds = today.add(32, "days").toDate()
 
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
