@@ -6,8 +6,10 @@ const userService = require("../services/userService")
 const logger = require("../utils/logger")
 
 const endpointSecret = process.env.ENDPOINT_SECRET
-const time32days = 3600 * 1000 * 24 * 32
-const subEnds = Date.now() + time32days
+
+const today = new Date()
+const subEnds = new Date()
+subEnds.setDate(today.getDate() + 32)
 
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
