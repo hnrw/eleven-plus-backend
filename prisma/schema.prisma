@@ -78,7 +78,7 @@ model GradedTest {
 
 model BouncedUser {
   id         String   @id @default(uuid())
-  email      String
+  email      String   @unique
   parentName String
   date       DateTime @default(now())
 
