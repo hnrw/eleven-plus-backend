@@ -48,7 +48,11 @@ testSessionsRouter.post("/", async (req, res) => {
 
     res.send(savedTestSession)
   } catch (err) {
-    const testSession = await TestSession.findOne({ user: user._id })
+    const testSession = await prisma.testSession.findUnique({
+      where: {
+        userId: user.id,
+      },
+    })
     res.send(testSession)
   }
 })
