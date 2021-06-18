@@ -24,6 +24,7 @@ model User {
   subEnds        Int?
   score          Float?
   dateTime       DateTime     @default(now())
+  date           BigInt
   answers        Answer[]
   gradedTests    GradedTest[]
   testSession    TestSession?
@@ -33,6 +34,7 @@ model Test {
   id           String        @id @default(uuid())
   num          Int           @unique
   dateTime     DateTime      @default(now())
+  date         BigInt
   problems     Problem[]
   gradedTests  GradedTest[]
   testSessions TestSession[]
@@ -48,6 +50,7 @@ model Problem {
   num      Int
   img      String?
   dateTime DateTime @default(now())
+  date     BigInt
   test     Test     @relation(fields: [testId], references: [id])
   testId   String
   answers  Answer[]
@@ -57,6 +60,7 @@ model Answer {
   id        String   @id @default(uuid())
   selected  String?
   dateTime  DateTime @default(now())
+  date      BigInt
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   problem   Problem  @relation(fields: [problemId], references: [id])
@@ -70,6 +74,7 @@ model GradedTest {
   percent  Float
   num      Int
   dateTime DateTime @default(now())
+  date     BigInt
   user     User     @relation(fields: [userId], references: [id])
   userId   String
   test     Test     @relation(fields: [testId], references: [id])
@@ -81,6 +86,7 @@ model BouncedUser {
   email      String   @unique
   parentName String
   dateTime   DateTime @default(now())
+  date       BigInt
 
 }
 
