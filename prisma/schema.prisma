@@ -76,6 +76,18 @@ model GradedTest {
   testId  String
 }
 
+model GradedProblem {
+  id       String   @id @default(uuid())
+  correct  String
+  selected String
+  num      Int
+  multi    Boolean  @default(false)
+  img      String?
+  options  String[]
+  unit     String?
+  date     DateTime @default(now())
+}
+
 model BouncedUser {
   id         String   @id @default(uuid())
   email      String   @unique
