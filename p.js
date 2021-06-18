@@ -7,6 +7,10 @@ const main = async () => {
   await prisma.gradedProblem.deleteMany({})
   await prisma.gradedTest.deleteMany({})
   await prisma.testSession.deleteMany({})
+
+  await prisma.problem.deleteMany({})
+  await prisma.test.deleteMany({})
+  await prisma.user.deleteMany({})
 }
 
 main()

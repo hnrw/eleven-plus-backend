@@ -24,7 +24,6 @@ model User {
   subEnds        DateTime?
   score          Float?
   date           DateTime     @default(now())
-  answers        Answer[]
   gradedTests    GradedTest[]
   testSession    TestSession?
 }
@@ -50,17 +49,6 @@ model Problem {
   date     DateTime @default(now())
   test     Test     @relation(fields: [testId], references: [id])
   testId   String
-  answers  Answer[]
-}
-
-model Answer {
-  id        String   @id @default(uuid())
-  selected  String?
-  date      DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  problem   Problem  @relation(fields: [problemId], references: [id])
-  problemId String
 }
 
 model GradedTest {
