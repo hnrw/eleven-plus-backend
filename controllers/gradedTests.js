@@ -1,5 +1,6 @@
 const gradedTestsRouter = require("express").Router()
 const _ = require("lodash")
+const { PrismaClient } = require("@prisma/client")
 const GradedTest = require("../models/gradedTest")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
@@ -7,16 +8,26 @@ const TestSession = require("../models/testSession")
 const verifyUser = require("../helpers/verifyUser")
 const answerService = require("../services/answerService")
 
+const prisma = new PrismaClient()
+
 gradedTestsRouter.get("/", async (request, response) => {
   const user = await verifyUser(request, response)
-  const gradedTests = await GradedTest.find({ user })
+  const gradedTests = await prisma.gradedTest.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
   response.send(gradedTests)
 })
 
 gradedTestsRouter.get("/:id", async (request, response) => {
   const user = await verifyUser(request, response)
   const { id } = request.params
-  const gradedTest = await GradedTest.findById(id)
+  const gradedTest = await prisma.gradedTest.findUnique({
+    where: {
+      userId: id,
+    },
+  })
 
   if (!gradedTest.user.equals(user._id)) {
     return response.status(400).send({ error: "unauthorized" })
@@ -26,7 +37,7 @@ gradedTestsRouter.get("/:id", async (request, response) => {
 })
 
 gradedTestsRouter.get("/all", async (request, response) => {
-  const gradedTests = await GradedTest.find({})
+  const gradedTests = await prisma.gradedTest.findMany()
   response.send(gradedTests)
 })
 
