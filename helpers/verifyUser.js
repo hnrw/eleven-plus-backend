@@ -16,7 +16,10 @@ const verifyUser = async (request, response, secret = process.env.SECRET) => {
 
   try {
     const decodedToken = jwt.verify(token, secret)
-    const user = await prisma.findUnique({ where: { id: decodedToken.id } })
+    console.log("decodedToken: ", decodedToken)
+    const user = await prisma.user.findUnique({
+      where: { id: decodedToken.id },
+    })
     return user
   } catch (err) {
     response.status(400).send({ error: "invalid token" })
