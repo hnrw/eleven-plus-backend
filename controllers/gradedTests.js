@@ -68,7 +68,6 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     return gp
   })
 
-  // const marks = gradedProblems.filter((p) => p.selected === p.correct).length
   const marks = gradedProblems.filter((p) => {
     if (p.multi) {
       return p.selected === p.correct
