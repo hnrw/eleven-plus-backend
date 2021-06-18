@@ -64,28 +64,31 @@ model Answer {
 }
 
 model GradedTest {
-  id      String   @id @default(uuid())
-  marks   Int
-  total   Int
-  percent Float
-  num     Int
-  date    DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-  test    Test     @relation(fields: [testId], references: [id])
-  testId  String
+  id             String          @id @default(uuid())
+  marks          Int
+  total          Int
+  percent        Float
+  num            Int
+  date           DateTime        @default(now())
+  user           User            @relation(fields: [userId], references: [id])
+  userId         String
+  test           Test            @relation(fields: [testId], references: [id])
+  testId         String
+  gradedProblems GradedProblem[]
 }
 
 model GradedProblem {
-  id       String   @id @default(uuid())
-  correct  String
-  selected String
-  num      Int
-  multi    Boolean  @default(false)
-  img      String?
-  options  String[]
-  unit     String?
-  date     DateTime @default(now())
+  id           String      @id @default(uuid())
+  correct      String
+  selected     String
+  num          Int
+  multi        Boolean     @default(false)
+  img          String?
+  options      String[]
+  unit         String?
+  date         DateTime    @default(now())
+  gradedTest   GradedTest? @relation(fields: [gradedTestId], references: [id])
+  gradedTestId String?
 }
 
 model BouncedUser {
