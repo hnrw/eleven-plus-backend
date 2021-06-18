@@ -77,40 +77,38 @@ const createUser = async (data) => {
   }
 }
 
-// const editUser = async (user, data) => {
-//   const fieldToUpdate = {
-//     firstName: data.firstName,
-//     lastName: data.lastName,
-//     dob: data.dob,
-//     gender: data.gender,
-//   }
+const editUser = async (user, data) => {
+  const fieldToUpdate = {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dob: data.dob,
+    gender: data.gender,
+  }
 
-//   Object.keys(fieldToUpdate).forEach((key) => {
-//     const value = fieldToUpdate[key]
-//     if (!value) {
-//       delete fieldToUpdate[key]
-//     }
-//   })
+  Object.keys(fieldToUpdate).forEach((key) => {
+    const value = fieldToUpdate[key]
+    if (!value) {
+      delete fieldToUpdate[key]
+    }
+  })
 
-//   const savedUser = await User.findByIdAndUpdate(
-//     user.id,
-//     { $set: { ...fieldToUpdate } },
-//     {
-//       runValidators: true,
-//       new: true,
-//     }
-//   )
+  const savedUser = await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      ...fieldToUpdate,
+    },
+  })
 
-//   return {
-//     status: 200,
-//     data: savedUser,
-//   }
-// }
+  return {
+    status: 200,
+    data: savedUser,
+  }
+}
 
 module.exports = {
   getUsers,
   createUser,
-  // editUser,
+  editUser,
   // getProfile,
   // searchUsers,
 }
