@@ -75,7 +75,7 @@ webhooksRouter.post(
       }
       case "invoice.paid": {
         const paymentIntent = event.data.object
-        await updateSubscription(paymentIntent)
+        // await updateSubscription(paymentIntent)
         break
       }
       case "invoice.payment_failed": {
