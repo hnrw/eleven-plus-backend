@@ -39,7 +39,7 @@ bouncedUsersRouter.post("/", async (req, res) => {
       },
       data: {
         parentName,
-        date,
+        // date,
       },
     })
     return res.send(updatedBouncedUser)

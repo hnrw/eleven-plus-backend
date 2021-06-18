@@ -104,6 +104,7 @@ testsRouter.post("/", async (request, response) => {
       problems: {
         create: numberedProblems,
       },
+      date: Date.now(),
     },
   })
 
