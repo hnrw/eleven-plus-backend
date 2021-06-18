@@ -43,6 +43,7 @@ testSessionsRouter.post("/", async (req, res) => {
       data: {
         user: user.id,
         testId,
+        date: Date.now(),
       },
     })
 

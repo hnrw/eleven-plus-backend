@@ -23,7 +23,7 @@ model User {
   stripeId       String?
   subEnds        Int?
   score          Float?
-  date           DateTime     @default(now())
+  dateTime       DateTime     @default(now())
   answers        Answer[]
   gradedTests    GradedTest[]
   testSession    TestSession?
@@ -32,7 +32,7 @@ model User {
 model Test {
   id           String        @id @default(uuid())
   num          Int           @unique
-  date         DateTime      @default(now())
+  dateTime     DateTime      @default(now())
   problems     Problem[]
   gradedTests  GradedTest[]
   testSessions TestSession[]
@@ -47,7 +47,7 @@ model Problem {
   unit     String?
   num      Int
   img      String?
-  date     DateTime @default(now())
+  dateTime DateTime @default(now())
   test     Test     @relation(fields: [testId], references: [id])
   testId   String
   answers  Answer[]
@@ -56,7 +56,7 @@ model Problem {
 model Answer {
   id        String   @id @default(uuid())
   selected  String?
-  date      DateTime @default(now())
+  dateTime  DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   problem   Problem  @relation(fields: [problemId], references: [id])
@@ -64,33 +64,34 @@ model Answer {
 }
 
 model GradedTest {
-  id      String   @id @default(uuid())
-  marks   Int
-  total   Int
-  percent Float
-  num     Int
-  date    DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-  test    Test     @relation(fields: [testId], references: [id])
-  testId  String
+  id       String   @id @default(uuid())
+  marks    Int
+  total    Int
+  percent  Float
+  num      Int
+  dateTime DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  test     Test     @relation(fields: [testId], references: [id])
+  testId   String
 }
 
 model BouncedUser {
   id         String   @id @default(uuid())
   email      String   @unique
   parentName String
-  date       DateTime @default(now())
+  dateTime   DateTime @default(now())
 
 }
 
 model TestSession {
-  id     String   @id @default(uuid())
-  start  Int
-  user   User     @relation(fields: [userId], references: [id])
-  userId String   @unique
-  Test   Test?    @relation(fields: [testId], references: [id])
-  testId String?
-  date   DateTime @default(now())
+  id       String   @id @default(uuid())
+  start    Int
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String   @unique
+  Test     Test?    @relation(fields: [testId], references: [id])
+  testId   String?
+  date     BigInt
+  dateTime DateTime @default(now())
 
 }
