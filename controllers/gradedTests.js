@@ -25,11 +25,14 @@ gradedTestsRouter.get("/:id", async (request, response) => {
   const { id } = request.params
   const gradedTest = await prisma.gradedTest.findUnique({
     where: {
-      userId: id,
+      id,
+    },
+    include: {
+      user: true,
     },
   })
 
-  if (!gradedTest.user.equals(user.id)) {
+  if (!gradedTest.user.id === user.id) {
     return response.status(400).send({ error: "unauthorized" })
   }
 
