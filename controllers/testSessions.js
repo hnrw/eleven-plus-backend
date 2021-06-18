@@ -38,22 +38,14 @@ testSessionsRouter.post("/", async (req, res) => {
   // Uses try/catch because frontend sometimes tries to make a new session
   // even when one already exists.
   // I tried to debug on frontend, but I couldn't figure out what was causing it
-  const savedTestSession = await prisma.testSession.create({
-    data: {
-      userId: user.id,
-      testId,
-    },
-  })
 
   try {
-    // const savedTestSession = prisma.testSession.create({
-    //   data: {
-    //     user: user.id,
-    //     testId,
-    //     date: Date.now(),
-    //   },
-    // })
-
+    const savedTestSession = await prisma.testSession.create({
+      data: {
+        userId: user.id,
+        testId,
+      },
+    })
     res.send(savedTestSession)
   } catch (err) {
     const testSession = await prisma.testSession.findUnique({
