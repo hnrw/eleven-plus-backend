@@ -1,5 +1,6 @@
 const testSessionsRouter = require("express").Router()
 const _ = require("lodash")
+const { PrismaClient } = require("@prisma/client")
 const Test = require("../models/test")
 const Problem = require("../models/problem")
 const GradedTest = require("../models/gradedTest")
@@ -8,10 +9,17 @@ const verifyUser = require("../helpers/verifyUser")
 const { createProblem } = require("../services/problemService")
 const answerService = require("../services/answerService")
 
+const prisma = new PrismaClient()
+
 testSessionsRouter.get("/", async (req, res) => {
   const user = await verifyUser(req, res)
 
-  const testSession = await TestSession.findOne({ user: user._id })
+  const testSession = await prisma.testSession.findUnique({
+    where: {
+      userId: user.id,
+    },
+  })
+
   if (!testSession) {
     return res.send("no session exists")
   }
@@ -19,7 +27,7 @@ testSessionsRouter.get("/", async (req, res) => {
 })
 
 testSessionsRouter.get("/all", async (req, res) => {
-  const testSessions = await TestSession.find({})
+  const testSessions = await prisma.testSessions.findMany()
   res.send(testSessions)
 })
 
@@ -31,13 +39,13 @@ testSessionsRouter.post("/", async (req, res) => {
   // even when one already exists.
   // I tried to debug on frontend, but I couldn't figure out what was causing it
   try {
-    const testSession = new TestSession({
-      user: user.id,
-      test: testId,
-      start: Date.now(),
+    const savedTestSession = prisma.testSession.create({
+      data: {
+        user: user.id,
+        testId,
+      },
     })
 
-    const savedTestSession = await testSession.save()
     res.send(savedTestSession)
   } catch (err) {
     const testSession = await TestSession.findOne({ user: user._id })

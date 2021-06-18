@@ -16,7 +16,6 @@ const verifyUser = async (request, response, secret = process.env.SECRET) => {
 
   try {
     const decodedToken = jwt.verify(token, secret)
-    console.log("decodedToken: ", decodedToken)
     const user = await prisma.user.findUnique({
       where: { id: decodedToken.id },
     })
