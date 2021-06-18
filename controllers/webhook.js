@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
+const dayjs = require("dayjs")
 const webhooksRouter = require("express").Router()
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const bodyParser = require("body-parser")
@@ -9,9 +10,8 @@ const prisma = new PrismaClient()
 
 const endpointSecret = process.env.ENDPOINT_SECRET
 
-const today = new Date()
-const subEnds = new Date()
-subEnds.setDate(today.getDate() + 32)
+const today = dayjs()
+const subEnds = today.add(32, "days")
 
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
@@ -26,6 +26,7 @@ const fufillOrder = async (session) => {
     passwordHash: session.metadata.passwordHash,
     parentName: session.metadata.parentName,
   })
+
   const savedUser = response.data
 
   stripe.customers.update(session.customer, {
