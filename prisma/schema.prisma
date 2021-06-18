@@ -21,7 +21,7 @@ model User {
   passwordHash   String
   profilePicture String?
   stripeId       String?
-  subEnds        BigInt?
+  subEnds        DateTime?
   score          Float?
   date           DateTime     @default(now())
   answers        Answer[]
