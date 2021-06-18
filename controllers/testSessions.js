@@ -27,7 +27,7 @@ testSessionsRouter.get("/", async (req, res) => {
 })
 
 testSessionsRouter.get("/all", async (req, res) => {
-  const testSessions = await prisma.testSessions.findMany()
+  const testSessions = await prisma.testSession.findMany()
   res.send(testSessions)
 })
 
