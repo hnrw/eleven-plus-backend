@@ -1,13 +1,15 @@
+const { PrismaClient } = require("@prisma/client")
 const emailsRouter = require("express").Router()
 const jwt = require("jsonwebtoken")
-const User = require("../models/user")
 const sendEmail = require("../helpers/sendEmail")
+
+const prisma = new PrismaClient()
 
 // reset password email
 emailsRouter.post("/password", async (request, response) => {
   const { email } = request.body
 
-  const user = await User.findOne({ email })
+  const user = await prisma.user.findUnique({ where: { email } })
 
   if (!user) {
     return response.status(401).json({
@@ -17,11 +19,11 @@ emailsRouter.post("/password", async (request, response) => {
 
   const userForToken = {
     email: user.email,
-    id: user._id,
+    id: user.id,
   }
   const token = jwt.sign(userForToken, user.passwordHash)
 
-  const resetUrl = `${process.env.FRONTEND}/reset-password/${token}/${user._id}`
+  const resetUrl = `${process.env.FRONTEND}/reset-password/${token}/${user.id}`
 
   // doesn't await because this takes a long time
   // makes it slow to show success message on front end

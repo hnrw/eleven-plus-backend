@@ -1,17 +1,17 @@
+const { PrismaClient } = require("@prisma/client")
 const bouncedUsersRouter = require("express").Router()
-const User = require("../models/user")
-const BouncedUser = require("../models/bouncedUser")
+
+const prisma = new PrismaClient()
 
 bouncedUsersRouter.get("/", async (req, res) => {
-  // const user = await verifyUser(request, response)
-  // const service = await userService.getUsers(user)
-  const bouncedUsers = await BouncedUser.find({})
+  const bouncedUsers = await prisma.bouncedUser.findMany()
   res.send(bouncedUsers)
 })
 
 bouncedUsersRouter.get("/:id", async (req, res) => {
   const { id } = req.params
-  const bouncedUser = BouncedUser.findById(id)
+
+  const bouncedUser = prisma.bouncedUser.findUnique({ where: { id } })
 
   res.send(bouncedUser)
 })
@@ -20,28 +20,35 @@ bouncedUsersRouter.get("/:id", async (req, res) => {
 bouncedUsersRouter.post("/", async (req, res) => {
   const { parentName, email } = req.body
 
-  const existingBounced = await BouncedUser.findOne({ email })
-
-  const existingUser = await User.findOne({ email })
+  const existingUser = await prisma.user.findUnique({ where: { email } })
   if (existingUser) {
     return res.status(400).send({ error: "email already in use" })
   }
 
-  if (existingBounced) {
-    existingBounced.parentName = parentName
-    existingBounced.date = Date.now()
-    await existingBounced.save()
-    return res.status(200).end()
-  }
-
-  const bouncedUser = new BouncedUser({
-    parentName,
-    email,
-    date: Date.now(),
+  const existingBounced = await prisma.bouncedUser.findUnique({
+    where: { email },
   })
 
-  const savedUser = await bouncedUser.save()
-  res.send(savedUser)
+  if (existingBounced) {
+    const updatedBouncedUser = await prisma.bouncedUser.update({
+      where: {
+        email,
+      },
+      data: {
+        parentName,
+      },
+    })
+    return res.send(updatedBouncedUser)
+  }
+
+  const savedBouncedUser = await prisma.bouncedUser.create({
+    data: {
+      parentName,
+      email,
+    },
+  })
+
+  res.send(savedBouncedUser)
 })
 
 module.exports = bouncedUsersRouter

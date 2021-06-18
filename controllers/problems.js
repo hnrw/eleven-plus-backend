@@ -1,23 +1,12 @@
+const { PrismaClient } = require("@prisma/client")
 const problemsRouter = require("express").Router()
-const Problem = require("../models/problem")
 const verifyUser = require("../helpers/verifyUser")
 
+const prisma = new PrismaClient()
+
 problemsRouter.get("/", async (request, response) => {
-  const problems = await Problem.find({}).populate("problems", { id: 1 })
+  const problems = await prisma.problem.findMany()
   response.send(problems)
-})
-
-problemsRouter.post("/", async (request, response) => {
-  const { question, correct, options } = request.body
-  const problem = new Problem({
-    question,
-    correct,
-    options,
-    date: Date.now(),
-  })
-
-  const savedProblem = await problem.save()
-  response.send(savedProblem)
 })
 
 problemsRouter.delete("/:id", async (request, response) => {
@@ -26,9 +15,11 @@ problemsRouter.delete("/:id", async (request, response) => {
   if (admin.email !== "pannicope@gmail.com") {
     return response.status(400).json({ error: "unauthorized" })
   }
+
   const { id } = request.params
-  await Problem.findByIdAndRemove(id)
-  return response.status(204).end()
+
+  const deletedProblem = await prisma.problem.delete({ where: { id } })
+  return response.send(deletedProblem)
 })
 
 module.exports = problemsRouter

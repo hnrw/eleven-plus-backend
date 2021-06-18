@@ -1,7 +1,9 @@
+const { PrismaClient } = require("@prisma/client")
 const usersRouter = require("express").Router()
-const User = require("../models/user")
 const verifyUser = require("../helpers/verifyUser")
 const userService = require("../services/userService")
+
+const prisma = new PrismaClient()
 
 usersRouter.get("/", async (request, response) => {
   // const user = await verifyUser(request, response)
@@ -46,8 +48,8 @@ usersRouter.delete("/:id", async (request, response) => {
     return response.status(400).json({ error: "unauthorized" })
   }
   const { id } = request.params
-  await User.findByIdAndRemove(id)
-  return response.status(204).end()
+  const user = await prisma.user.delete({ where: { id } })
+  return response.send(user)
 })
 
 module.exports = usersRouter

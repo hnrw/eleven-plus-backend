@@ -1,42 +1,49 @@
+const { PrismaClient } = require("@prisma/client")
+const dayjs = require("dayjs")
 const webhooksRouter = require("express").Router()
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const bodyParser = require("body-parser")
-const User = require("../models/user")
 const userService = require("../services/userService")
 const logger = require("../utils/logger")
 
+const prisma = new PrismaClient()
+
 const endpointSecret = process.env.ENDPOINT_SECRET
-const time32days = 3600 * 1000 * 24 * 32
-const subEnds = Date.now() + time32days
+
+const today = dayjs()
+const subEnds = today.add(32, "days").toDate()
 
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
   logger.info("Fulfilling order", session)
 
   const customer = await stripe.customers.retrieve(session.customer)
-  const user = await User.findById(customer.metadata.id)
-
-  if (user) {
-    user.subEnds = subEnds
-    await user.save()
-    return
-  }
 
   const response = await userService.createUser({
     email: customer.email,
     stripeId: customer.id,
     subEnds,
     passwordHash: session.metadata.passwordHash,
+    parentName: session.metadata.parentName,
   })
+
   const savedUser = response.data
 
   stripe.customers.update(session.customer, {
-    metadata: { id: savedUser.id, email: savedUser.id },
+    metadata: { id: savedUser.id },
   })
 }
 
 const updateSubscription = async (session) => {
   logger.info("Updating subscription", session)
+
+  const customer = await stripe.customers.retrieve(session.customer)
+  await prisma.user.update({
+    where: { id: customer.metadata.id },
+    data: {
+      subEnds,
+    },
+  })
 }
 
 const onPaymentFailed = async (session) => {
@@ -67,7 +74,8 @@ webhooksRouter.post(
         break
       }
       case "invoice.paid": {
-        await updateSubscription(event.type)
+        const paymentIntent = event.data.object
+        // await updateSubscription(paymentIntent)
         break
       }
       case "invoice.payment_failed": {

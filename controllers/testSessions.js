@@ -1,25 +1,26 @@
 const testSessionsRouter = require("express").Router()
-const _ = require("lodash")
-const Test = require("../models/test")
-const Problem = require("../models/problem")
-const GradedTest = require("../models/gradedTest")
-const TestSession = require("../models/testSession")
+const { PrismaClient } = require("@prisma/client")
 const verifyUser = require("../helpers/verifyUser")
-const { createProblem } = require("../services/problemService")
-const answerService = require("../services/answerService")
+
+const prisma = new PrismaClient()
 
 testSessionsRouter.get("/", async (req, res) => {
   const user = await verifyUser(req, res)
 
-  const testSession = await TestSession.findOne({ user: user._id })
+  const testSession = await prisma.testSession.findUnique({
+    where: {
+      userId: user.id,
+    },
+  })
+
   if (!testSession) {
     return res.send("no session exists")
   }
-  res.send(testSession)
+  return res.send(testSession)
 })
 
 testSessionsRouter.get("/all", async (req, res) => {
-  const testSessions = await TestSession.find({})
+  const testSessions = await prisma.testSession.findMany()
   res.send(testSessions)
 })
 
@@ -30,17 +31,21 @@ testSessionsRouter.post("/", async (req, res) => {
   // Uses try/catch because frontend sometimes tries to make a new session
   // even when one already exists.
   // I tried to debug on frontend, but I couldn't figure out what was causing it
-  try {
-    const testSession = new TestSession({
-      user: user.id,
-      test: testId,
-      start: Date.now(),
-    })
 
-    const savedTestSession = await testSession.save()
+  try {
+    const savedTestSession = await prisma.testSession.create({
+      data: {
+        userId: user.id,
+        testId,
+      },
+    })
     res.send(savedTestSession)
   } catch (err) {
-    const testSession = await TestSession.findOne({ user: user._id })
+    const testSession = await prisma.testSession.findUnique({
+      where: {
+        userId: user.id,
+      },
+    })
     res.send(testSession)
   }
 })

@@ -1,27 +1,38 @@
 const testsRouter = require("express").Router()
+const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
-const Test = require("../models/test")
-const Problem = require("../models/problem")
-const GradedTest = require("../models/gradedTest")
 const verifyUser = require("../helpers/verifyUser")
-const { createProblem } = require("../services/problemService")
-const answerService = require("../services/answerService")
 const manualProblems = require("../exams/three.js")
 
+const prisma = new PrismaClient()
+
 testsRouter.get("/", async (request, response) => {
-  const tests = await Test.find({}).populate("problems")
+  const tests = await prisma.test.findMany({
+    include: {
+      problems: true,
+    },
+  })
   response.send(tests)
 })
 
 testsRouter.get("/next", async (req, res) => {
   const user = await verifyUser(req, res)
-  const gradedTests = await GradedTest.find({ user })
+  const gradedTests = await prisma.gradedTest.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
   const lastDone = _.maxBy(gradedTests, (gt) => gt.num)
   const lastDoneNum = (lastDone && lastDone.num) || 0
 
-  const nextTest = await Test.findOne({ num: lastDoneNum + 1 }).populate(
-    "problems"
-  )
+  const nextTest = await prisma.test.findUnique({
+    where: {
+      num: lastDoneNum + 1,
+    },
+    include: {
+      problems: true,
+    },
+  })
 
   if (nextTest) {
     res.send(nextTest)
@@ -31,21 +42,24 @@ testsRouter.get("/next", async (req, res) => {
 })
 
 testsRouter.get("/manual", async (request, response) => {
-  const tests = await Test.find({})
+  const tests = await prisma.test.findMany()
   const lastTest = _.maxBy(tests, (test) => test.num)
   // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
-  const test = new Test({
-    num: lastNum + 1,
-    date: Date.now(),
-  })
+  const numberedProblems = manualProblems.map((p, i) => ({
+    ...p,
+    num: i + 1,
+    correct: p.correct.toString(),
+  }))
 
-  const savedTest = await test.save()
-
-  const numberedProblems = manualProblems.map((p, i) => ({ ...p, num: i + 1 }))
-  numberedProblems.map(async (p) => {
-    await createProblem(p, savedTest.id)
+  const savedTest = await prisma.test.create({
+    data: {
+      num: lastNum + 1,
+      problems: {
+        create: numberedProblems,
+      },
+    },
   })
 
   response.send(savedTest)
@@ -53,28 +67,39 @@ testsRouter.get("/manual", async (request, response) => {
 
 testsRouter.get("/:id", async (request, response) => {
   const { id } = request.params
-  const test = await Test.findById(id).populate("problems")
+  const test = await prisma.test.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      problems: true,
+    },
+  })
   response.send(test)
 })
 
 testsRouter.post("/", async (request, response) => {
   const { problems } = request.body
 
-  const tests = await Test.find({})
+  const tests = await prisma.test.findMany()
   const lastTest = _.maxBy(tests, (test) => test.num)
   // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
-  const test = new Test({
-    num: lastNum + 1,
-    date: Date.now(),
-  })
+  const numberedProblems = problems.map((p, i) => ({
+    ...p,
+    num: i + 1,
+    correct: p.correct.toString(),
+  }))
 
-  const savedTest = await test.save()
-
-  const numberedProblems = problems.map((p, i) => ({ ...p, num: i + 1 }))
-  numberedProblems.map(async (p) => {
-    await createProblem(p, savedTest.id)
+  const savedTest = await prisma.test.create({
+    data: {
+      num: lastNum + 1,
+      problems: {
+        create: numberedProblems,
+      },
+      date: Date.now(),
+    },
   })
 
   response.send(savedTest)
@@ -88,14 +113,15 @@ testsRouter.delete("/:id", async (request, response) => {
   }
 
   const { id } = request.params
-  await Test.findByIdAndRemove(id)
 
-  const problems = await Problem.find({})
-  problems.forEach(async (p) => {
-    if (p.test.equals(id)) {
-      await p.remove(p)
-    }
+  await prisma.problem.deleteMany({
+    where: {
+      testId: id,
+    },
   })
+
+  await prisma.test.delete({ where: { id } })
+
   return response.status(204).end()
 })
 

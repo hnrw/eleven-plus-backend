@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken")
-const User = require("../models/user")
+const { PrismaClient } = require("@prisma/client")
+
+const prisma = new PrismaClient()
 
 // eslint-disable-next-line consistent-return
 const verifyUser = async (request, response, secret = process.env.SECRET) => {
@@ -13,7 +15,9 @@ const verifyUser = async (request, response, secret = process.env.SECRET) => {
 
   try {
     const decodedToken = jwt.verify(token, secret)
-    const user = await User.findById(decodedToken.id)
+    const user = await prisma.user.findUnique({
+      where: { id: decodedToken.id },
+    })
     return user
   } catch (err) {
     response.status(400).send({ error: "invalid token" })

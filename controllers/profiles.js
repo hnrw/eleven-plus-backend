@@ -1,7 +1,7 @@
+const { PrismaClient } = require("@prisma/client")
 const profilesRouter = require("express").Router()
-const User = require("../models/user")
-const verifyUser = require("../helpers/verifyUser")
-const userService = require("../services/userService")
+
+const prisma = new PrismaClient()
 
 const getProfile = (user) => {
   const profile = {
@@ -16,14 +16,14 @@ const getProfile = (user) => {
 }
 
 profilesRouter.get("/", async (request, response) => {
-  const users = await User.find({})
+  const users = await prisma.user.findMany()
   const profiles = users.map((user) => getProfile(user))
   response.send(profiles)
 })
 
 profilesRouter.get("/:id", async (request, response) => {
   const { id } = request.params
-  const user = await User.findById(id)
+  const user = await prisma.user.findUnique({ where: { id } })
   const profile = getProfile(user)
   response.send(profile)
 })

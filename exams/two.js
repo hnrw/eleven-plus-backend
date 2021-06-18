@@ -334,5 +334,4 @@ const problems = [
   },
 ]
 
-console.log(problems.length)
 module.exports = problems
