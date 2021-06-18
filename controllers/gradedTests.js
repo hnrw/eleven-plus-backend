@@ -63,10 +63,11 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       img: p.img,
       options: p.options,
       unit: p.unit,
-      selected: submitted.selected,
+      selected: submitted.selected.toString(),
     }
     return gp
   })
+
 
   const marks = gradedProblems.filter((p) => {
     if (p.multi) {

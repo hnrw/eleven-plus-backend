@@ -81,7 +81,7 @@ model GradedProblem {
   id           String     @id @default(uuid())
   question     String
   correct      String
-  selected     String
+  selected     String?
   num          Int
   multi        Boolean    @default(false)
   img          String?
