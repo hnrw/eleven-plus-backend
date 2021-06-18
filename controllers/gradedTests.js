@@ -16,6 +16,9 @@ gradedTestsRouter.get("/", async (request, response) => {
     where: {
       userId: user.id,
     },
+    include: {
+      gradedProblems: true,
+    },
   })
   response.send(gradedTests)
 })
@@ -28,6 +31,7 @@ gradedTestsRouter.get("/:id", async (request, response) => {
       id,
     },
     include: {
+      gradedProblems: true,
       user: true,
     },
   })
@@ -35,6 +39,10 @@ gradedTestsRouter.get("/:id", async (request, response) => {
   if (!gradedTest.user.id === user.id) {
     return response.status(400).send({ error: "unauthorized" })
   }
+
+  // don't send to client, just used to validate request
+  delete gradedTest.user
+  delete gradedTest.userId
 
   return response.send(gradedTest)
 })
