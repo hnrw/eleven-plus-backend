@@ -57,6 +57,7 @@ model GradedTest {
   total          Int
   percent        Float
   num            Int
+  firstAttempt   Boolean
   date           DateTime        @default(now())
   user           User            @relation(fields: [userId], references: [id])
   userId         String

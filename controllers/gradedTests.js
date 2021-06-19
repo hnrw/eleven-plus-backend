@@ -111,12 +111,15 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     },
   })
 
+  const withNewTest = usersGradedTests.concat(savedGradedTest)
+  const onlyFirstAttempt = withNewTest.filter((gt) => gt.firstAttempt)
+
   await prisma.user.update({
     where: {
       id: user.id,
     },
     data: {
-      score: _.meanBy(usersGradedTests, (gt) => gt.percent),
+      score: _.meanBy(onlyFirstAttempt, (gt) => gt.percent),
     },
   })
 
