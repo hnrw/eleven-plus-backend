@@ -82,6 +82,17 @@ gradedTestsRouter.post("/submit", async (request, response) => {
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
+  const usersGradedTests = await prisma.gradedTest.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
+
+  let firstAttempt = true
+  if (usersGradedTests.filter((gt) => gt.testId === testId).length > 0) {
+    firstAttempt = false
+  }
+
   const savedGradedTest = await prisma.gradedTest.create({
     data: {
       testId: test.id,
@@ -90,18 +101,13 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       total: test.problems.length,
       num: test.num,
       percent,
+      firstAttempt,
       gradedProblems: {
         create: gradedProblems,
       },
     },
     include: {
       gradedProblems: true,
-    },
-  })
-
-  const usersGradedTests = await prisma.gradedTest.findMany({
-    where: {
-      userId: user.id,
     },
   })
 
