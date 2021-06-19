@@ -11,21 +11,23 @@ generator client {
 }
 
 model User {
-  id             String       @id @default(uuid())
-  email          String       @unique
-  firstName      String?
-  lastName       String?
-  parentName     String
-  dob            DateTime?
-  gender         String?
-  passwordHash   String
-  profilePicture String?
-  stripeId       String?
-  subEnds        DateTime?
-  score          Float?
-  date           DateTime     @default(now())
-  gradedTests    GradedTest[]
-  testSession    TestSession?
+  id                 String       @id @default(uuid())
+  email              String       @unique
+  firstName          String?
+  lastName           String?
+  parentName         String
+  dob                DateTime?
+  gender             String?
+  passwordHash       String
+  profilePicture     String?
+  stripeId           String?
+  stripeSubscription String?
+  active             Boolean      @default(false)
+  subEnds            DateTime?
+  score              Float?
+  date               DateTime     @default(now())
+  gradedTests        GradedTest[]
+  testSession        TestSession?
 }
 
 model Test {
