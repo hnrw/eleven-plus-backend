@@ -47,9 +47,11 @@ const updateSubscription = async (invoice) => {
   const customer = await stripe.customers.retrieve(invoice.customer)
 
   await prisma.user.update({
-    where: { id: customer.metadata.id },
+    where: { email: customer.email },
     data: {
       subEnds,
+      stripeId: customer.id,
+      active: true,
     },
   })
 }
@@ -77,7 +79,7 @@ webhooksRouter.post(
     switch (event.type) {
       case "checkout.session.completed": {
         const paymentIntent = event.data.object
-        await fufillOrder(paymentIntent)
+        // await fufillOrder(paymentIntent)
         logger.info(`PaymentIntent for ${paymentIntent.amount} was successful!`)
         break
       }
