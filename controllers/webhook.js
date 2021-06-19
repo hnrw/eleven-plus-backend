@@ -10,14 +10,13 @@ const prisma = new PrismaClient()
 
 const endpointSecret = process.env.ENDPOINT_SECRET
 
-const today = dayjs()
-const subEnds = today.add(32, "days").toDate()
-
 const fufillOrder = async (session) => {
   // eslint-disable-next-line no-console
   logger.info("Fulfilling order", session)
 
   const customer = await stripe.customers.retrieve(session.customer)
+
+  const subEnds = dayjs.add(7, "days").toDate()
 
   const response = await userService.createUser({
     email: customer.email,
@@ -34,10 +33,17 @@ const fufillOrder = async (session) => {
   })
 }
 
-const updateSubscription = async (session) => {
-  logger.info("Updating subscription", session)
+const updateSubscription = async (invoice) => {
+  logger.info("Invoice paid", invoice)
 
-  const customer = await stripe.customers.retrieve(session.customer)
+  const subscriptionId = invoice.subscription
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+
+  logger.info("Subscription: ", subscription)
+
+  const subEnds = dayjs(subscription.current_period_end).add(1, "day").toDate()
+  const customer = await stripe.customers.retrieve(invoice.customer)
+
   await prisma.user.update({
     where: { id: customer.metadata.id },
     data: {
@@ -74,8 +80,8 @@ webhooksRouter.post(
         break
       }
       case "invoice.paid": {
-        const paymentIntent = event.data.object
-        // await updateSubscription(paymentIntent)
+        const invoice = event.data.object
+        await updateSubscription(invoice)
         break
       }
       case "invoice.payment_failed": {

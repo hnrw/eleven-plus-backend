@@ -35,6 +35,9 @@ stripeRouter.post("/checkout", async (req, res) => {
       parentName,
       passwordHash,
     },
+    subscription_data: {
+      trial_period_days: 7,
+    },
     success_url: successUrl,
     cancel_url: cancelUrl,
   })
