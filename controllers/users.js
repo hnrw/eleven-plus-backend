@@ -13,6 +13,18 @@ usersRouter.get("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
+usersRouter.get("/stripe", async (req, res) => {
+  const user = await verifyUser(req, res)
+
+  const data = {
+    stripeId: user.stripeId,
+    subEnds: user.subEnds,
+    active: user.active,
+  }
+
+  res.send(data)
+})
+
 usersRouter.get("/:id", async (request, response) => {
   const { id } = request.params
   const service = await userService.getProfile(id)
