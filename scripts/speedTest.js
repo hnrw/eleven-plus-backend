@@ -1,12 +1,13 @@
 const { PrismaClient } = require("@prisma/client")
+const logger = require("../utils/logger")
 
 const prisma = new PrismaClient()
 
 const main = async () => {
   const start = Date.now()
   const users = await prisma.user.findMany()
-  console.log(Date.now() - start)
-  console.log(users)
+  logger.info(Date.now() - start)
+  logger.info(users)
 }
 
 main()
