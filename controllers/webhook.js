@@ -41,7 +41,9 @@ const updateSubscription = async (invoice) => {
 
   logger.info("Subscription: ", subscription)
 
-  const subEnds = dayjs(subscription.current_period_end).add(1, "day").toDate()
+  const subEnds = dayjs(subscription.current_period_end * 1000)
+    .add(1, "day")
+    .toDate()
   const customer = await stripe.customers.retrieve(invoice.customer)
 
   await prisma.user.update({
