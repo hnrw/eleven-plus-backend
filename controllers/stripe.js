@@ -1,15 +1,11 @@
 require("dotenv").config()
-const bcrypt = require("bcrypt")
 
 const stripeRouter = require("express").Router()
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 stripeRouter.post("/checkout", async (req, res) => {
-  const { item, email, parentName, password } = req.body
-
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  const { item, email } = req.body
 
   let price
   if (item === "month") {
@@ -18,7 +14,7 @@ stripeRouter.post("/checkout", async (req, res) => {
     price = process.env.STRIPE_PRICE_YEAR
   }
 
-  const successUrl = `${process.env.FRONTEND}/login`
+  const successUrl = `${process.env.FRONTEND}/home`
   const cancelUrl = `${process.env.FRONTEND}/signup`
 
   const session = await stripe.checkout.sessions.create({
@@ -31,10 +27,7 @@ stripeRouter.post("/checkout", async (req, res) => {
     ],
     mode: "subscription",
     customer_email: email,
-    metadata: {
-      parentName,
-      passwordHash,
-    },
+    metadata: {},
     subscription_data: {
       trial_period_days: 7,
     },
