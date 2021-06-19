@@ -9,6 +9,7 @@ const getUsers = async () => {
   const users = await prisma.user.findMany()
   console.log(Date.now() - start, "ms")
   console.log(users)
+  console.log("new heroku db")
   return {
     status: 200,
     data: users,
