@@ -61,8 +61,6 @@ const createUser = async (data) => {
     id: savedUser._id,
   }
 
-  await prisma.bouncedUser.delete({ where: { email } })
-
   const token = jwt.sign(userForToken, process.env.SECRET)
 
   return {
