@@ -16,7 +16,7 @@ const fufillOrder = async (session) => {
 
   const customer = await stripe.customers.retrieve(session.customer)
 
-  const subEnds = dayjs.add(7, "days").toDate()
+  const subEnds = dayjs().add(7, "days").toDate()
 
   const response = await userService.createUser({
     email: customer.email,
