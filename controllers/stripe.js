@@ -1,8 +1,10 @@
 require("dotenv").config()
-
 const stripeRouter = require("express").Router()
 
+const { PrismaClient } = require("@prisma/client")
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
+
+const prisma = new PrismaClient()
 
 stripeRouter.post("/checkout", async (req, res) => {
   const { item, email } = req.body
@@ -17,7 +19,10 @@ stripeRouter.post("/checkout", async (req, res) => {
   const successUrl = `${process.env.FRONTEND}/home`
   const cancelUrl = `${process.env.FRONTEND}/signup`
 
-  const session = await stripe.checkout.sessions.create({
+  const user = await prisma.user.findUnique({ where: { email } })
+  const previouslySubscribed = user?.stripeId
+
+  const sessionData = {
     payment_method_types: ["card"],
     line_items: [
       {
@@ -26,14 +31,21 @@ stripeRouter.post("/checkout", async (req, res) => {
       },
     ],
     mode: "subscription",
-    customer_email: email,
     metadata: {},
-    subscription_data: {
-      trial_period_days: 7,
-    },
     success_url: successUrl,
     cancel_url: cancelUrl,
-  })
+  }
+
+  if (previouslySubscribed) {
+    sessionData.customer = user.stripeId
+  } else {
+    const subscriptionData = { trial_period_days: 7 }
+    sessionData.customer_email = email
+    sessionData.subscription_data = subscriptionData
+  }
+  console.log(sessionData)
+
+  const session = await stripe.checkout.sessions.create(sessionData)
 
   res.json({ id: session.id })
 })
