@@ -16,7 +16,9 @@ usersRouter.get("/", async (request, response) => {
 
 usersRouter.get("/stripe", async (req, res) => {
   const user = await verifyUser(req, res)
-  const subscription = await stripe.subscriptions.retrieve(user.stripeSubId)
+
+  const subscription =
+    user.stripeSubId && (await stripe.subscriptions.retrieve(user.stripeSubId))
 
   const data = {
     stripeId: user.stripeId,
