@@ -18,6 +18,11 @@ gradedTestsRouter.get("/", async (request, response) => {
   response.send(gradedTests)
 })
 
+gradedTestsRouter.get("/all", async (request, response) => {
+  const gradedTests = await prisma.gradedTest.findMany()
+  response.send(gradedTests)
+})
+
 gradedTestsRouter.get("/:id", async (request, response) => {
   const user = await verifyUser(request, response)
   const { id } = request.params
@@ -40,11 +45,6 @@ gradedTestsRouter.get("/:id", async (request, response) => {
   delete gradedTest.userId
 
   return response.send(gradedTest)
-})
-
-gradedTestsRouter.get("/all", async (request, response) => {
-  const gradedTests = await prisma.gradedTest.findMany()
-  response.send(gradedTests)
 })
 
 gradedTestsRouter.post("/submit", async (request, response) => {
