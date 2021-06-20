@@ -18,6 +18,30 @@ gradedTestsRouter.get("/", async (request, response) => {
   response.send(gradedTests)
 })
 
+gradedTestsRouter.get("/test-sorted", async (request, response) => {
+  const user = await verifyUser(request, response)
+
+  const gradedTests = await prisma.gradedTest.findMany({
+    where: { userId: user.id },
+  })
+  const tests = await prisma.test.findMany()
+
+  let testSorted = []
+
+  tests.forEach((t) => {
+    const usersAttempts = gradedTests.filter((gt) => gt.testId === t.id)
+    const testEntry = {
+      testId: t.id,
+      attempts: usersAttempts,
+    }
+    if (usersAttempts.length > 0) {
+      testSorted = testSorted.concat(testEntry)
+    }
+  })
+
+  response.send(testSorted)
+})
+
 gradedTestsRouter.get("/all", async (request, response) => {
   const gradedTests = await prisma.gradedTest.findMany()
   response.send(gradedTests)
