@@ -57,7 +57,7 @@ const updateSubscription = async (invoice) => {
     },
   })
 
-  stripe.customers.update(customer.id, {
+  await stripe.customers.update(customer.id, {
     metadata: {
       id: updatedUser.id,
       parentName: updatedUser.parentName,
