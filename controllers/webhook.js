@@ -47,13 +47,21 @@ const updateSubscription = async (invoice) => {
     .add(1, "day")
     .toDate()
 
-  await prisma.user.update({
+  const updatedUser = await prisma.user.update({
     where: { email: customer.email },
     data: {
       subEnds,
       stripeId: customer.id,
       stripeSubId: subscription.id,
       active: true,
+    },
+  })
+
+  stripe.customers.update(customer.id, {
+    metadata: {
+      id: updatedUser.id,
+      parentName: updatedUser.parentName,
+      email: updatedUser.email,
     },
   })
 }
