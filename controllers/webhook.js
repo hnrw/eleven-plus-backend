@@ -38,19 +38,21 @@ const updateSubscription = async (invoice) => {
 
   const subscriptionId = invoice.subscription
   const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+  const customer = await stripe.customers.retrieve(invoice.customer)
 
   logger.info("Subscription: ", subscription)
+  logger.info("Customer: ", customer)
 
   const subEnds = dayjs(subscription.current_period_end * 1000)
     .add(1, "day")
     .toDate()
-  const customer = await stripe.customers.retrieve(invoice.customer)
 
   await prisma.user.update({
     where: { email: customer.email },
     data: {
       subEnds,
       stripeId: customer.id,
+      stripeSubId: subscription.id,
       active: true,
     },
   })
