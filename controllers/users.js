@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const usersRouter = require("express").Router()
 const verifyUser = require("../helpers/verifyUser")
 const userService = require("../services/userService")
@@ -15,11 +16,13 @@ usersRouter.get("/", async (request, response) => {
 
 usersRouter.get("/stripe", async (req, res) => {
   const user = await verifyUser(req, res)
+  const subscription = await stripe.subscriptions.retrieve(user.stripeSubId)
 
   const data = {
     stripeId: user.stripeId,
     subEnds: user.subEnds,
     active: user.active,
+    subscription,
   }
 
   res.send(data)
