@@ -43,7 +43,6 @@ stripeRouter.post("/checkout", async (req, res) => {
     sessionData.customer_email = email
     sessionData.subscription_data = subscriptionData
   }
-  console.log(sessionData)
 
   const session = await stripe.checkout.sessions.create(sessionData)
 
