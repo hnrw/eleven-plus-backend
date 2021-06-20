@@ -32,6 +32,7 @@ gradedTestsRouter.get("/test-sorted", async (request, response) => {
     const usersAttempts = gradedTests.filter((gt) => gt.testId === t.id)
     const testEntry = {
       testId: t.id,
+      num: t.num,
       attempts: usersAttempts,
     }
     if (usersAttempts.length > 0) {
