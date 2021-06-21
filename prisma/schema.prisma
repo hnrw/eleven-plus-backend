@@ -83,14 +83,6 @@ model GradedProblem {
   gradedTestId String
 }
 
-model BouncedUser {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  parentName String
-  date       DateTime @default(now())
-
-}
-
 model TestSession {
   id     String   @id @default(uuid())
   start  DateTime @default(now())
