@@ -10,29 +10,6 @@ const prisma = new PrismaClient()
 
 const endpointSecret = process.env.ENDPOINT_SECRET
 
-const fufillOrder = async (session) => {
-  // eslint-disable-next-line no-console
-  logger.info("Fulfilling order", session)
-
-  const customer = await stripe.customers.retrieve(session.customer)
-
-  const subEnds = dayjs().add(7, "days").toDate()
-
-  const response = await userService.createUser({
-    email: customer.email,
-    stripeId: customer.id,
-    subEnds,
-    passwordHash: session.metadata.passwordHash,
-    parentName: session.metadata.parentName,
-  })
-
-  const savedUser = response.data
-
-  stripe.customers.update(session.customer, {
-    metadata: { id: savedUser.id },
-  })
-}
-
 const updateSubscription = async (invoice) => {
   logger.info("Invoice paid", invoice)
 
