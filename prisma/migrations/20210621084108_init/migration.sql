@@ -5,11 +5,13 @@ CREATE TABLE "User" (
     "firstName" TEXT,
     "lastName" TEXT,
     "parentName" TEXT NOT NULL,
-    "dob" INTEGER,
+    "dob" TIMESTAMP(3),
     "gender" TEXT,
     "passwordHash" TEXT NOT NULL,
     "profilePicture" TEXT,
     "stripeId" TEXT,
+    "stripeSubId" TEXT,
+    "active" BOOLEAN NOT NULL DEFAULT false,
     "subEnds" TIMESTAMP(3),
     "score" DOUBLE PRECISION,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -49,6 +51,7 @@ CREATE TABLE "GradedTest" (
     "total" INTEGER NOT NULL,
     "percent" DOUBLE PRECISION NOT NULL,
     "num" INTEGER NOT NULL,
+    "firstAttempt" BOOLEAN NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
     "testId" TEXT NOT NULL,
@@ -74,16 +77,6 @@ CREATE TABLE "GradedProblem" (
 );
 
 -- CreateTable
-CREATE TABLE "BouncedUser" (
-    "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "parentName" TEXT NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "TestSession" (
     "id" TEXT NOT NULL,
     "start" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -98,9 +91,6 @@ CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Test.num_unique" ON "Test"("num");
-
--- CreateIndex
-CREATE UNIQUE INDEX "BouncedUser.email_unique" ON "BouncedUser"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "TestSession.userId_unique" ON "TestSession"("userId");
