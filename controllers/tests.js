@@ -41,16 +41,18 @@ testsRouter.get("/next", async (req, res) => {
   }
 })
 
-testsRouter.get("/manual", async (request, response) => {
+const createTest = async (newProblems) => {
   const tests = await prisma.test.findMany()
   const lastTest = _.maxBy(tests, (test) => test.num)
-  // const lastTest = tests[tests.length - 1]
   const lastNum = (lastTest && lastTest.num) || 0
 
-  const numberedProblems = manualProblems.map((p, i) => ({
+  const numberedProblems = newProblems.map((p, i) => ({
     ...p,
     num: i + 1,
     correct: p.correct.toString(),
+    categories: p.categories && {
+      connect: p.categories.map((c) => ({ name: c })),
+    },
   }))
 
   const savedTest = await prisma.test.create({
@@ -62,7 +64,12 @@ testsRouter.get("/manual", async (request, response) => {
     },
   })
 
-  response.send(savedTest)
+  return { status: 200, data: savedTest }
+}
+
+testsRouter.get("/manual", async (request, response) => {
+  const { status, data } = await createTest(manualProblems)
+  response.status(status).send(data)
 })
 
 testsRouter.get("/:id", async (request, response) => {
@@ -80,29 +87,8 @@ testsRouter.get("/:id", async (request, response) => {
 
 testsRouter.post("/", async (request, response) => {
   const { problems } = request.body
-
-  const tests = await prisma.test.findMany()
-  const lastTest = _.maxBy(tests, (test) => test.num)
-  // const lastTest = tests[tests.length - 1]
-  const lastNum = (lastTest && lastTest.num) || 0
-
-  const numberedProblems = problems.map((p, i) => ({
-    ...p,
-    num: i + 1,
-    correct: p.correct.toString(),
-  }))
-
-  const savedTest = await prisma.test.create({
-    data: {
-      num: lastNum + 1,
-      problems: {
-        create: numberedProblems,
-      },
-      date: Date.now(),
-    },
-  })
-
-  response.send(savedTest)
+  const { status, data } = await createTest(problems)
+  response.status(status).send(data)
 })
 
 testsRouter.delete("/:id", async (request, response) => {
