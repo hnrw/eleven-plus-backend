@@ -15,26 +15,15 @@ usersRouter.get("/", async (request, response) => {
 })
 
 usersRouter.get("/load-test", async (request, response) => {
-  function makeid(length) {
-    let result = ""
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-    const charactersLength = characters.length
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength))
-    }
-    return result
-  }
-  const n = await prisma.user.create({
-    data: {
-      email: makeid(10),
-      parentName: makeid(10),
-      passwordHash: makeid(10),
-      active: true,
+  const d = Date.now()
+  await prisma.user.deleteMany({
+    where: {
+      NOT: {
+        email: "pannicope@gmail.com",
+      },
     },
   })
-  console.log(n)
+  console.log(Date.not() - d)
 
   const service = await userService.getUsers()
 
