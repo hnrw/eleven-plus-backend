@@ -14,22 +14,6 @@ usersRouter.get("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
-usersRouter.get("/load-test", async (request, response) => {
-  const d = Date.now()
-  await prisma.user.deleteMany({
-    where: {
-      NOT: {
-        email: "pannicope@gmail.com",
-      },
-    },
-  })
-  console.log(Date.not() - d)
-
-  const service = await userService.getUsers()
-
-  response.status(service.status).send(service.data)
-})
-
 usersRouter.get("/stripe", async (req, res) => {
   const user = await verifyUser(req, res)
 
