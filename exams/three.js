@@ -14,12 +14,12 @@ const problems = [
   {
     question: "Calculate √169 (the square root of 169)",
     correct: 13,
-    categories: ["multipcation and division"],
+    categories: ["multiplication and division"],
   },
   {
     question: "Calculate 987 + 494",
     correct: 1481,
-    categories: ["multipication and division"],
+    categories: ["multiplication and division"],
   },
   {
     question: "Calculate 15²",
@@ -52,7 +52,7 @@ const problems = [
       "The Glitz Fashion shop was having a sale. Jessica bought five T-shirts for £12.89 each, four bracelets for £15.73 each, and six rings for £19.22 each. How much money did Jessica spend altogether at the shop?",
     correct: "242.69",
     unit: "£",
-    categories: ["addition", "measurement"],
+    categories: ["addition and subtraction", "measurement"],
   },
   {
     question:
@@ -102,14 +102,14 @@ const problems = [
     question:
       "Write the following number as a decimal number. 76 + 4 + ²⁄₁₀ + ⁸⁄₁₀₀",
     correct: "80.28",
-    categories: ["numbers, fractions"],
+    categories: ["numbers", "fractions"],
   },
   {
     question: "Which of the following fractions is closest to 1/5?",
     correct: "6/25",
     options: ["1/2", "5/10", "3/4", "6/25", "3/8"],
     multi: true,
-    categories: ["fractinos"],
+    categories: ["fractions"],
   },
   {
     question:
