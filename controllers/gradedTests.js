@@ -2,6 +2,7 @@ const gradedTestsRouter = require("express").Router()
 const _ = require("lodash")
 const { PrismaClient } = require("@prisma/client")
 const verifyUser = require("../helpers/verifyUser")
+const isProblemCorrect = require("../helpers/isProblemCorrect")
 
 const prisma = new PrismaClient()
 
@@ -104,13 +105,6 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     return gp
   })
 
-  const isCorrect = (problem) => {
-    if (problem.multi) {
-      return problem.selected === problem.correct
-    }
-    return Number(problem.selected) === Number(problem.correct)
-  }
-
   // grade the users gradedCategories
   gradedProblems.forEach(async (gp) => {
     gp.categories?.forEach(async (c) => {
@@ -126,7 +120,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
             increment: 1,
           },
           correct: {
-            increment: isCorrect(gp) ? 1 : 0,
+            increment: isProblemCorrect(gp) ? 1 : 0,
           },
         },
         create: {
@@ -137,7 +131,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     })
   })
 
-  // const marks = gradedProblems.filter((p) => isCorrect(p)).length
+  // const marks = gradedProblems.filter((p) => isProblemCorrect(p)).length
 
   // const totalMarks = gradedProblems.length
   // const percent = Math.round((100 / totalMarks) * marks)
