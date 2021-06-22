@@ -100,7 +100,9 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       img: p.img,
       options: p.options,
       unit: p.unit,
-      categories: p.categories,
+      categories: {
+        connect: p.categories,
+      },
       selected: submitted.selected?.toString() || null,
     }
 
@@ -109,12 +111,12 @@ gradedTestsRouter.post("/submit", async (request, response) => {
 
   // grade the users GradedCategories
   gradedProblems.forEach(async (gp) => {
-    gp.categories?.forEach(async (c) => {
+    gp.categories.connect.forEach(async (c) => {
       await prisma.gradedCategory.upsert({
         where: {
           userId_categoryName: {
             userId: user.id,
-            categoryId: c.name,
+            categoryName: c.name,
           },
         },
         update: {
@@ -127,7 +129,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
         },
         create: {
           userId: user.id,
-          categoryId: c.name,
+          categoryName: c.name,
         },
       })
     })
