@@ -14,6 +14,33 @@ usersRouter.get("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
+usersRouter.get("/load-test", async (request, response) => {
+  function makeid(length) {
+    let result = ""
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    const charactersLength = characters.length
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+  }
+  const n = await prisma.user.create({
+    data: {
+      email: makeid(10),
+      parentName: makeid(10),
+      passwordHash: makeid(10),
+      active: true,
+    },
+  })
+  console.log(n)
+
+  const service = await userService.getUsers()
+
+  response.status(service.status).send(service.data)
+})
+
 usersRouter.get("/stripe", async (req, res) => {
   const user = await verifyUser(req, res)
 
