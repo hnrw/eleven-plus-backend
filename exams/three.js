@@ -4,27 +4,33 @@ const problems = [
   {
     question: "Calculate 7 x 191",
     correct: 1337,
+    categories: ["arithmetic"],
   },
   {
     question: "Calculate 456 ÷ 12",
     correct: 38,
+    categories: ["arithmetic"],
   },
   {
     question: "Calculate √169 (the square root of 169)",
     correct: 13,
+    categories: ["arithmetic"],
   },
   {
     question: "Calculate 987 + 494",
     correct: 1481,
+    categories: ["arithmetic"],
   },
   {
     question: "Calculate 15²",
     correct: 225,
+    categories: ["arithmetic"],
   },
   {
     question: "Which number is closest to zero?",
     correct: "0.053",
     options: ["0.053", "0.06", "0.1", "0.078", "0.12"],
+    categories: ["ratio", "graphs"],
     multi: true,
   },
   {
@@ -32,6 +38,7 @@ const problems = [
       "Which of the following numbers is the Lowest Common Multiple (LCM) of 5 and 30?",
     correct: "30",
     options: ["5", "10", "6", "30", "3"],
+    categories: ["algebra"],
     multi: true,
   },
   {
