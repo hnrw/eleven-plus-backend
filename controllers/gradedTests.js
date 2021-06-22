@@ -112,24 +112,20 @@ gradedTestsRouter.post("/submit", async (request, response) => {
   // grade the users GradedCategories
   gradedProblems.forEach(async (gp) => {
     gp.categories.connect.forEach(async (c) => {
-      await prisma.gradedCategory.upsert({
+      await prisma.gradedCategory.update({
         where: {
           userId_categoryName: {
             userId: user.id,
             categoryName: c.name,
           },
         },
-        update: {
+        data: {
           attempts: {
             increment: 1,
           },
           correct: {
             increment: isProblemCorrect(gp) ? 1 : 0,
           },
-        },
-        create: {
-          userId: user.id,
-          categoryName: c.name,
         },
       })
     })
