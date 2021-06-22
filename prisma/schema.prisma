@@ -41,17 +41,19 @@ model Test {
 }
 
 model Problem {
-  id       String   @id @default(uuid())
-  question String
-  multi    Boolean  @default(false)
-  correct  String
-  options  String[]
-  unit     String?
-  num      Int
-  img      String?
-  date     DateTime @default(now())
-  test     Test     @relation(fields: [testId], references: [id])
-  testId   String
+  id         String    @id @default(uuid())
+  question   String
+  multi      Boolean   @default(false)
+  correct    String
+  options    String[]
+  unit       String?
+  num        Int
+  img        String?
+  date       DateTime  @default(now())
+  test       Test      @relation(fields: [testId], references: [id])
+  testId     String
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
 }
 
 model GradedTest {
@@ -96,6 +98,7 @@ model TestSession {
 model Category {
   id               String           @id @default(uuid())
   name             String           @unique
+  problems         Problem[]
   gradedCategories GradedCategory[]
 }
 
