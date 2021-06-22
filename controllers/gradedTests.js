@@ -78,7 +78,13 @@ gradedTestsRouter.post("/submit", async (request, response) => {
 
   const test = await prisma.test.findUnique({
     where: { id: testId },
-    include: { problems: 1 },
+    include: {
+      problems: {
+        include: {
+          categories: true,
+        },
+      },
+    },
   })
 
   const gradedProblems = test.problems.map((p) => {
@@ -91,66 +97,96 @@ gradedTestsRouter.post("/submit", async (request, response) => {
       img: p.img,
       options: p.options,
       unit: p.unit,
+      categories: p.categories,
       selected: submitted.selected?.toString() || null,
     }
 
     return gp
   })
 
-  const marks = gradedProblems.filter((p) => {
-    if (p.multi) {
-      return p.selected === p.correct
-    }
-    return Number(p.selected) === Number(p.correct)
-  }).length
+  gradedProblems.forEach(async (gp) => {
+    gp.categories?.forEach(async (c) => {
+      console.log(c)
 
-  const totalMarks = gradedProblems.length
-  const percent = Math.round((100 / totalMarks) * marks)
-
-  const usersGradedTests = await prisma.gradedTest.findMany({
-    where: {
-      userId: user.id,
-    },
+      await prisma.gradedCategory.upsert({
+        where: {
+          userId: {
+            equals: user.id,
+          },
+          category: {
+            equals: c.id,
+          },
+        },
+        update: {
+          attempts: {
+            increment: 1,
+          },
+        },
+        create: {
+          userId: user.id,
+          categoryId: c.id,
+        },
+      })
+    })
+    // console.log(gp)
   })
 
-  let firstAttempt = true
-  if (usersGradedTests.filter((gt) => gt.testId === testId).length > 0) {
-    firstAttempt = false
-  }
+  // const isCorrect = (problem) => {
+  //   if (problem.multi) {
+  //     return problem.selected === problem.correct
+  //   }
+  //   return Number(problem.selected) === Number(problem.correct)
+  // }
 
-  const savedGradedTest = await prisma.gradedTest.create({
-    data: {
-      testId: test.id,
-      userId: user.id,
-      marks,
-      total: test.problems.length,
-      num: test.num,
-      percent,
-      firstAttempt,
-      gradedProblems: {
-        create: gradedProblems,
-      },
-    },
-    include: {
-      gradedProblems: true,
-    },
-  })
+  // const marks = gradedProblems.filter((p) => isCorrect(p)).length
 
-  const withNewTest = usersGradedTests.concat(savedGradedTest)
-  const onlyFirstAttempt = withNewTest.filter((gt) => gt.firstAttempt)
+  // const totalMarks = gradedProblems.length
+  // const percent = Math.round((100 / totalMarks) * marks)
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      score: _.meanBy(onlyFirstAttempt, (gt) => gt.percent),
-    },
-  })
+  // const usersGradedTests = await prisma.gradedTest.findMany({
+  //   where: {
+  //     userId: user.id,
+  //   },
+  // })
 
-  await prisma.testSession.delete({ where: { userId: user.id } })
+  // let firstAttempt = true
+  // if (usersGradedTests.filter((gt) => gt.testId === testId).length > 0) {
+  //   firstAttempt = false
+  // }
 
-  response.send(savedGradedTest)
+  // const savedGradedTest = await prisma.gradedTest.create({
+  //   data: {
+  //     testId: test.id,
+  //     userId: user.id,
+  //     marks,
+  //     total: test.problems.length,
+  //     num: test.num,
+  //     percent,
+  //     firstAttempt,
+  //     gradedProblems: {
+  //       create: gradedProblems,
+  //     },
+  //   },
+  //   include: {
+  //     gradedProblems: true,
+  //   },
+  // })
+
+  // const withNewTest = usersGradedTests.concat(savedGradedTest)
+  // const onlyFirstAttempt = withNewTest.filter((gt) => gt.firstAttempt)
+
+  // await prisma.user.update({
+  //   where: {
+  //     id: user.id,
+  //   },
+  //   data: {
+  //     score: _.meanBy(onlyFirstAttempt, (gt) => gt.percent),
+  //   },
+  // })
+
+  // await prisma.testSession.delete({ where: { userId: user.id } })
+
+  // response.send(savedGradedTest)
 })
 
 module.exports = gradedTestsRouter

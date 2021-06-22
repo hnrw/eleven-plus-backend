@@ -109,4 +109,6 @@ model GradedCategory {
   userId     String
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
+
+  @@unique([userId, categoryId])
 }
