@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
 const verifyUser = require("../helpers/verifyUser")
 const manualProblems = require("../exams/three.js")
+const allCategoriesValid = require("../helpers/isValidCategory")
 
 const prisma = new PrismaClient()
 
@@ -42,6 +43,8 @@ testsRouter.get("/next", async (req, res) => {
 })
 
 const createTest = async (newProblems) => {
+  allCategoriesValid(newProblems)
+
   const tests = await prisma.test.findMany()
   const lastTest = _.maxBy(tests, (test) => test.num)
   const lastNum = (lastTest && lastTest.num) || 0
