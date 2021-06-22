@@ -3,6 +3,7 @@ const _ = require("lodash")
 const { PrismaClient } = require("@prisma/client")
 const verifyUser = require("../helpers/verifyUser")
 const isProblemCorrect = require("../helpers/isProblemCorrect")
+const isFirstAttemptAtTest = require("../helpers/isFirstAttemptAtTest")
 
 const prisma = new PrismaClient()
 
@@ -109,43 +110,42 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     return gp
   })
 
-  // grade the users GradedCategories
-  gradedProblems.forEach(async (gp) => {
-    gp.categories.connect.forEach(async (c) => {
-      await prisma.gradedCategory.update({
-        where: {
-          userId_categoryName: {
-            userId: user.id,
-            categoryName: c.name,
-          },
-        },
-        data: {
-          attempts: {
-            increment: 1,
-          },
-          correct: {
-            increment: isProblemCorrect(gp) ? 1 : 0,
-          },
-        },
-      })
-    })
-  })
-
-  const marks = gradedProblems.filter((p) => isProblemCorrect(p)).length
-
-  const totalMarks = gradedProblems.length
-  const percent = Math.round((100 / totalMarks) * marks)
-
   const usersGradedTests = await prisma.gradedTest.findMany({
     where: {
       userId: user.id,
     },
   })
 
-  let firstAttempt = true
-  if (usersGradedTests.filter((gt) => gt.testId === testId).length > 0) {
-    firstAttempt = false
+  const firstAttempt = await isFirstAttemptAtTest(usersGradedTests, testId)
+
+  // grade the users GradedCategories
+  if (firstAttempt) {
+    gradedProblems.forEach(async (gp) => {
+      gp.categories.connect.forEach(async (c) => {
+        await prisma.gradedCategory.update({
+          where: {
+            userId_categoryName: {
+              userId: user.id,
+              categoryName: c.name,
+            },
+          },
+          data: {
+            attempts: {
+              increment: 1,
+            },
+            correct: {
+              increment: isProblemCorrect(gp) ? 1 : 0,
+            },
+          },
+        })
+      })
+    })
   }
+
+  const marks = gradedProblems.filter((p) => isProblemCorrect(p)).length
+
+  const totalMarks = gradedProblems.length
+  const percent = Math.round((100 / totalMarks) * marks)
 
   const savedGradedTest = await prisma.gradedTest.create({
     data: {

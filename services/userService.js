@@ -53,9 +53,9 @@ const createUser = async (data) => {
   })
 
   // create gradedCategories for the user upfront so I can atomically update them in gradedTests
-  const categories = await prisma.categories.findMany()
+  const categories = await prisma.category.findMany()
   categories.forEach(async (c) => {
-    await prisma.gradedCategories.createMany({
+    await prisma.gradedCategory.createMany({
       data: [
         {
           userId: savedUser.id,
