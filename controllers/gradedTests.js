@@ -104,22 +104,29 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     return gp
   })
 
+  const isCorrect = (problem) => {
+    if (problem.multi) {
+      return problem.selected === problem.correct
+    }
+    return Number(problem.selected) === Number(problem.correct)
+  }
+
+  // grade the users gradedCategories
   gradedProblems.forEach(async (gp) => {
     gp.categories?.forEach(async (c) => {
-      console.log(c)
-
       await prisma.gradedCategory.upsert({
         where: {
-          userId: {
-            equals: user.id,
-          },
-          category: {
-            equals: c.id,
+          userId_categoryId: {
+            userId: user.id,
+            categoryId: c.id,
           },
         },
         update: {
           attempts: {
             increment: 1,
+          },
+          correct: {
+            increment: isCorrect(gp) ? 1 : 0,
           },
         },
         create: {
@@ -128,15 +135,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
         },
       })
     })
-    // console.log(gp)
   })
-
-  // const isCorrect = (problem) => {
-  //   if (problem.multi) {
-  //     return problem.selected === problem.correct
-  //   }
-  //   return Number(problem.selected) === Number(problem.correct)
-  // }
 
   // const marks = gradedProblems.filter((p) => isCorrect(p)).length
 
@@ -186,7 +185,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
 
   // await prisma.testSession.delete({ where: { userId: user.id } })
 
-  // response.send(savedGradedTest)
+  response.send(savedGradedTest)
 })
 
 module.exports = gradedTestsRouter
