@@ -96,21 +96,20 @@ model TestSession {
 }
 
 model Category {
-  id               String           @id @default(uuid())
-  name             String           @unique
+  name             String           @id
   gradedCategories GradedCategory[]
   problems         Problem[]
   gradedProblems   GradedProblem[]
 }
 
 model GradedCategory {
-  id         String   @id @default(uuid())
-  correct    Int      @default(0)
-  attempts   Int      @default(0)
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
+  id           String   @id @default(uuid())
+  correct      Int      @default(0)
+  attempts     Int      @default(0)
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  category     Category @relation(fields: [categoryName], references: [name])
+  categoryName String
 
-  @@unique([userId, categoryId])
+  @@unique([userId, categoryName])
 }

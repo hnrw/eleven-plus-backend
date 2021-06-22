@@ -112,9 +112,9 @@ gradedTestsRouter.post("/submit", async (request, response) => {
     gp.categories?.forEach(async (c) => {
       await prisma.gradedCategory.upsert({
         where: {
-          userId_categoryId: {
+          userId_categoryName: {
             userId: user.id,
-            categoryId: c.id,
+            categoryId: c.name,
           },
         },
         update: {
@@ -127,13 +127,7 @@ gradedTestsRouter.post("/submit", async (request, response) => {
         },
         create: {
           userId: user.id,
-          categoryId: c.id,
-          attempts: {
-            increment: 1,
-          },
-          correct: {
-            increment: isProblemCorrect(gp) ? 1 : 0,
-          },
+          categoryId: c.name,
         },
       })
     })
