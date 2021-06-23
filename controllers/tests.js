@@ -4,6 +4,7 @@ const _ = require("lodash")
 const verifyUser = require("../helpers/verifyUser")
 const manualProblems = require("../exams/three.js")
 const allCategoriesValid = require("../helpers/isValidCategory")
+const testService = require("../services/testService")
 
 const prisma = new PrismaClient()
 
@@ -42,36 +43,8 @@ testsRouter.get("/next", async (req, res) => {
   }
 })
 
-const createTest = async (newProblems) => {
-  allCategoriesValid(newProblems)
-
-  const tests = await prisma.test.findMany()
-  const lastTest = _.maxBy(tests, (test) => test.num)
-  const lastNum = (lastTest && lastTest.num) || 0
-
-  const numberedProblems = newProblems.map((p, i) => ({
-    ...p,
-    num: i + 1,
-    correct: p.correct.toString(),
-    categories: p.categories && {
-      connect: p.categories.map((c) => ({ name: c })),
-    },
-  }))
-
-  const savedTest = await prisma.test.create({
-    data: {
-      num: lastNum + 1,
-      problems: {
-        create: numberedProblems,
-      },
-    },
-  })
-
-  return { status: 200, data: savedTest }
-}
-
 testsRouter.get("/manual", async (request, response) => {
-  const { status, data } = await createTest(manualProblems)
+  const { status, data } = await testService.createTest(manualProblems)
   response.status(status).send(data)
 })
 
@@ -90,7 +63,7 @@ testsRouter.get("/:id", async (request, response) => {
 
 testsRouter.post("/", async (request, response) => {
   const { problems } = request.body
-  const { status, data } = await createTest(problems)
+  const { status, data } = await testService.createTest(problems)
   response.status(status).send(data)
 })
 
