@@ -3,7 +3,6 @@ const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
 const verifyUser = require("../helpers/verifyUser")
 const manualProblems = require("../exams/three.js")
-const allCategoriesValid = require("../helpers/isValidCategory")
 const testService = require("../services/testService")
 
 const prisma = new PrismaClient()
