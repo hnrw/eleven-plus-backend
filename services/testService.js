@@ -27,6 +27,9 @@ const createTest = async (newProblems) => {
         create: numberedProblems,
       },
     },
+    include: {
+      problems: true,
+    },
   })
 
   return { status: 200, data: savedTest }
