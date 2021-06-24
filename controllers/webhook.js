@@ -24,14 +24,26 @@ const updateSubscription = async (invoice) => {
     .add(1, "day")
     .toDate()
 
+  // check if user is subscribing for the first time
+  const currentUser = await prisma.user.findUnique({
+    where: { email: customer.email },
+  })
+
+  const updatedData = {
+    subEnds,
+    stripeId: customer.id,
+    stripeSubId: subscription.id,
+    active: true,
+  }
+
+  // if first time, update their dateSub field
+  if (!currentUser.dateSub) {
+    updatedData.dateSub = dayjs().toDate()
+  }
+
   const updatedUser = await prisma.user.update({
     where: { email: customer.email },
-    data: {
-      subEnds,
-      stripeId: customer.id,
-      stripeSubId: subscription.id,
-      active: true,
-    },
+    data: updatedData,
   })
 
   await stripe.customers.update(customer.id, {
