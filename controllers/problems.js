@@ -5,7 +5,9 @@ const verifyUser = require("../helpers/verifyUser")
 const prisma = new PrismaClient()
 
 problemsRouter.get("/", async (request, response) => {
-  const problems = await prisma.problem.findMany()
+  const problems = await prisma.problem.findMany({
+    include: { categories: true },
+  })
   response.send(problems)
 })
 
