@@ -26,6 +26,7 @@ model User {
   subEnds          DateTime?
   score            Float?
   date             DateTime         @default(now())
+  dateSub          DateTime?
   gradedTests      GradedTest[]
   testSession      TestSession?
   gradedCategories GradedCategory[]
