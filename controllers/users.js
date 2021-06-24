@@ -14,6 +14,33 @@ usersRouter.get("/", async (request, response) => {
   response.status(service.status).send(service.data)
 })
 
+usersRouter.get("/test", async (req, res) => {
+  await prisma.gradedProblem.deleteMany()
+  await prisma.gradedCategory.deleteMany()
+  await prisma.gradedTest.deleteMany()
+  await prisma.category.deleteMany()
+  await prisma.testSession.deleteMany()
+  await prisma.problem.deleteMany()
+  await prisma.test.deleteMany()
+  await prisma.user.deleteMany()
+
+  const categories = [
+    { name: "numbers" },
+    { name: "addition and subtraction" },
+    { name: "multiplication and division" },
+    { name: "fractions" },
+    { name: "measurement" },
+    { name: "geometry" },
+    { name: "statistics" },
+    { name: "ratio and proportion" },
+    { name: "algebra" },
+  ]
+
+  await prisma.category.createMany({
+    data: categories,
+  })
+})
+
 usersRouter.get("/stripe", async (req, res) => {
   const user = await verifyUser(req, res)
 
