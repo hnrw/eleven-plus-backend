@@ -3,7 +3,6 @@ const dayjs = require("dayjs")
 const webhooksRouter = require("express").Router()
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const bodyParser = require("body-parser")
-const userService = require("../services/userService")
 const logger = require("../utils/logger")
 
 const prisma = new PrismaClient()
@@ -59,6 +58,19 @@ const onPaymentFailed = async (session) => {
   logger.info("Payemnt failed", session)
 }
 
+const onSubscriptionCancelled = async (subscription) => {
+  logger.info("Subscription cancelled", subscription)
+  const customer = await stripe.customers.retrieve(subscription.customer)
+  await prisma.user.update({
+    where: {
+      id: customer.metadata.id,
+    },
+    data: {
+      active: false,
+    },
+  })
+}
+
 webhooksRouter.post(
   "/",
   bodyParser.raw({ type: "application/json" }),
@@ -91,6 +103,9 @@ webhooksRouter.post(
         await onPaymentFailed(event.type)
         break
       }
+      case "customer.subscription.deleted":
+        await onSubscriptionCancelled(event.data.object)
+        break
       default:
         // Unexpected event type
         logger.error(`Unhandled event type ${event.type}.`)
