@@ -59,6 +59,10 @@ const onPaymentFailed = async (session) => {
 }
 
 const onSubscriptionCancelled = async (subscription) => {
+  // sets active field to false on cancelling
+  // this isn't actually needed right now
+  // since frontend checks the status of the stripe subscription by talking to stripe
+  // but in the future can just use this field
   logger.info("Subscription cancelled", subscription)
   const customer = await stripe.customers.retrieve(subscription.customer)
   await prisma.user.update({
