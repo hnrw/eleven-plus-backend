@@ -2,11 +2,13 @@ const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
 const isProblemCorrect = require("../helpers/isProblemCorrect")
 const isFirstAttemptAtTest = require("../helpers/isFirstAttemptAtTest")
+const logger = require("../utils/logger")
 
 const prisma = new PrismaClient()
 
 const submitTest = async (user, testId, answers) => {
   // fetch the Test the user just completed
+  logger.info("Fetching test")
   const test = await prisma.test.findUnique({
     where: { id: testId },
     include: {
@@ -19,6 +21,7 @@ const submitTest = async (user, testId, answers) => {
   })
 
   // reconcile the Test's problems with the user's submissions
+  logger.info("Reconcilling users selections with test problems")
   const gradedProblems = test.problems.map((p) => {
     const submitted = answers.find((a) => p.id === a.problemId)
     const gp = {
@@ -38,6 +41,8 @@ const submitTest = async (user, testId, answers) => {
     return gp
   })
 
+  logger.info("Fetching user's gradedTests")
+  logger.info("Checking if first attempt")
   const usersGradedTests = await prisma.gradedTest.findMany({
     where: {
       userId: user.id,
@@ -48,6 +53,7 @@ const submitTest = async (user, testId, answers) => {
 
   // grade the users GradedCategories
   if (firstAttempt) {
+    logger.info("It is first attempt, marking gradedCategories")
     gradedProblems.forEach(async (gp) => {
       gp.categories.connect.forEach(async (c) => {
         await prisma.gradedCategory.update({
@@ -68,6 +74,7 @@ const submitTest = async (user, testId, answers) => {
         })
       })
     })
+    logger.info("Grading categories done")
   }
 
   const marks = gradedProblems.filter((p) => isProblemCorrect(p)).length
@@ -75,6 +82,7 @@ const submitTest = async (user, testId, answers) => {
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
+  logger.info("Saving gradedTest")
   const savedGradedTest = await prisma.gradedTest.create({
     data: {
       testId: test.id,
@@ -96,6 +104,7 @@ const submitTest = async (user, testId, answers) => {
   const withNewTest = usersGradedTests.concat(savedGradedTest)
   const onlyFirstAttempt = withNewTest.filter((gt) => gt.firstAttempt)
 
+  logger.info("Updating user")
   await prisma.user.update({
     where: {
       id: user.id,
