@@ -2,8 +2,6 @@ const gradedTestsRouter = require("express").Router()
 const _ = require("lodash")
 const { PrismaClient } = require("@prisma/client")
 const verifyUser = require("../helpers/verifyUser")
-const isProblemCorrect = require("../helpers/isProblemCorrect")
-const isFirstAttemptAtTest = require("../helpers/isFirstAttemptAtTest")
 const gradedTestService = require("../services/gradedTestService")
 
 const prisma = new PrismaClient()
