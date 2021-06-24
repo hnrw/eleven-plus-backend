@@ -10,7 +10,11 @@ const prisma = new PrismaClient()
 testsRouter.get("/", async (request, response) => {
   const tests = await prisma.test.findMany({
     include: {
-      problems: true,
+      problems: {
+        include: {
+          categories: true,
+        },
+      },
     },
   })
   response.send(tests)
