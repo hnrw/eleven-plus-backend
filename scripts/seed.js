@@ -137,16 +137,16 @@ const createAnswers = async (test) => {
 const main = async () => {
   await deleteAll()
   await createCategories()
-  await createUsers()
-  await createGradedCatergories()
-  const test = await createTest()
-  const user = await getUser()
-  await createTestSession(user, test)
-  const seedAnswers = await createAnswers(test)
+  // await createUsers()
+  // await createGradedCatergories()
+  // const test = await createTest()
+  // const user = await getUser()
+  // await createTestSession(user, test)
+  // const seedAnswers = await createAnswers(test)
 
-  logger.info("submitting test")
-  await gradedTestService.submitTest(user, test.id, seedAnswers)
-  logger.info("done")
+  // logger.info("submitting test")
+  // await gradedTestService.submitTest(user, test.id, seedAnswers)
+  // logger.info("done")
 }
 
 main()
