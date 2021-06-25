@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client")
 const _ = require("lodash")
+const dayjs = require("dayjs")
 const isProblemCorrect = require("../helpers/isProblemCorrect")
 const isFirstAttemptAtTest = require("../helpers/isFirstAttemptAtTest")
 const logger = require("../utils/logger")
@@ -82,6 +83,13 @@ const submitTest = async (user, testId, answers) => {
   const totalMarks = gradedProblems.length
   const percent = Math.round((100 / totalMarks) * marks)
 
+  logger.info("Deleting test session")
+  const testSession = await prisma.testSession.delete({
+    where: { userId: user.id },
+  })
+
+  const time = Math.round((dayjs() - dayjs(testSession.start)) / 1000)
+
   logger.info("Saving gradedTest")
   const savedGradedTest = await prisma.gradedTest.create({
     data: {
@@ -92,6 +100,7 @@ const submitTest = async (user, testId, answers) => {
       num: test.num,
       percent,
       firstAttempt,
+      time,
       gradedProblems: {
         create: gradedProblems,
       },
@@ -113,8 +122,6 @@ const submitTest = async (user, testId, answers) => {
       score: _.meanBy(onlyFirstAttempt, (gt) => gt.percent),
     },
   })
-
-  await prisma.testSession.delete({ where: { userId: user.id } })
 
   return { data: savedGradedTest, status: 200 }
 }
