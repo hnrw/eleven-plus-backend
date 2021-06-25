@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "GradedTest" ADD COLUMN     "time" INTEGER NOT NULL DEFAULT 2100;
