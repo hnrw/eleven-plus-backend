@@ -105,7 +105,7 @@ const createTest = async () => {
 }
 
 const getUser = async () => {
-  const user = await prisma.find({
+  const user = await prisma.user.findUnique({
     where: {
       email: "pannicope@gmail.com",
     },
@@ -142,7 +142,7 @@ const main = async () => {
   const test = await createTest()
   const user = await getUser()
   await createTestSession(user, test)
-  const seedAnswers = await createAnswers()(test)
+  const seedAnswers = await createAnswers(test)
 
   logger.info("submitting test")
   await gradedTestService.submitTest(user, test.id, seedAnswers)
