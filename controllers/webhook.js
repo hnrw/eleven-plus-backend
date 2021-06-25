@@ -28,6 +28,9 @@ const updateSubscription = async (invoice) => {
     where: { email: customer.email },
   })
 
+  const firstTime = !currentUser.dateSub
+  console.log("firstTime", firstTime)
+
   const updatedData = {
     subEnds,
     stripeId: customer.id,
@@ -36,7 +39,7 @@ const updateSubscription = async (invoice) => {
   }
 
   // if first time, update their dateSub field
-  if (!currentUser.dateSub) {
+  if (!firstTime) {
     updatedData.dateSub = dayjs().toDate()
   }
 
@@ -44,6 +47,21 @@ const updateSubscription = async (invoice) => {
     where: { email: customer.email },
     data: updatedData,
   })
+
+  // create gradedCategories for the user upfront so I can atomically update them in gradedTests
+  if (firstTime) {
+    const categories = await prisma.category.findMany()
+    categories.forEach(async (c) => {
+      await prisma.gradedCategory.createMany({
+        data: [
+          {
+            userId: updatedUser.id,
+            categoryName: c.name,
+          },
+        ],
+      })
+    })
+  }
 
   await stripe.customers.update(customer.id, {
     metadata: {
