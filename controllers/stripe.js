@@ -39,7 +39,7 @@ stripeRouter.post("/checkout", async (req, res) => {
   if (previouslySubscribed) {
     sessionData.customer = user.stripeId
   } else {
-    const subscriptionData = { trial_period_days: 7 }
+    const subscriptionData = { trial_period_days: 14 }
     sessionData.customer_email = email
     sessionData.subscription_data = subscriptionData
   }
