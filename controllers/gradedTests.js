@@ -62,7 +62,7 @@ gradedTestsRouter.get("/:id", async (request, response) => {
     },
   })
 
-  if (!gradedTest.user.id === user.id) {
+  if (gradedTest.user.id !== user.id && !user.admin) {
     return response.status(400).send({ error: "unauthorized" })
   }
 
